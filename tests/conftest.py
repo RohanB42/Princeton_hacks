@@ -11,11 +11,14 @@ def pytest_configure(config):
     config.addinivalue_line(
         "markers", "upstream: needs the pinned OligoGym environment; fails if absent"
     )
+    config.addinivalue_line("markers", "rnafm: requires the RNA-FM research runtime")
 
 
 def pytest_ignore_collect(collection_path, config):
+    selected = " ".join(str(arg) for arg in config.invocation_params.args)
+    if collection_path.name.startswith("test_rnafm"):
+        return "rnafm" not in selected
     if collection_path.name == "upstream" and collection_path.is_dir():
-        selected = " ".join(str(arg) for arg in config.invocation_params.args)
         return "upstream" not in selected
     return None
 
@@ -26,3 +29,5 @@ def pytest_collection_modifyitems(items):
     for item in items:
         if "tests/upstream/" in item.nodeid:
             item.add_marker(pytest.mark.upstream)
+        if "test_rnafm" in item.nodeid:
+            item.add_marker(pytest.mark.rnafm)
