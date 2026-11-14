@@ -1,0 +1,27 @@
+# Frozen source-faithful helper rerun, not recovery of the historical RNG states.
+# Uses native downloader, prepare_data, feature helpers and prepare_model.
+# Seed Python/NumPy once per repeated holdout; no estimator overrides.
+upstream_revision = "97f5b9f58d9e445a8ecb0218037af7465c3708c0"
+loader_key = "Huesken"
+benchmark_alias = "siRNA1"
+seeds = [0, 1, 2, 3, 4]
+reference_mean_pearson = 0.5910367239114824
+tolerance = 0.03
+execution_mode = "benchmark_helpers"
+
+[split]
+strategy = "nucleobase"
+test_size = 0.2
+n_clusters = 8
+kmer = true
+kmer_max = 3
+strand = "RNA1"
+
+[featurizer]
+name = "OneHotEncoder"
+encode_components = ["base"]
+
+[model]
+name = "RandomForestModel"
+n_estimators = 100
+max_depth = 20
