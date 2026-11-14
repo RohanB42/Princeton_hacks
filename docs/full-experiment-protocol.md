@@ -98,8 +98,12 @@ Full-pool references are trained separately for each dataset/split/seed and reus
 only between matched policies. All reported runs retain the original sparse backend.
 A training-only dense-matrix timing check was considered during the long Sherwood
 fits, but the original jobs finished before an amendment was needed; no dense
-results are included. The exact experiment source is archived locally and matches
-current `src/oligo_engine/` byte for byte.
+results are included. The exact experiment source is archived locally. Subsequent
+Gate 1 work changes reproduction modules and adds the efficacy-suite runner and
+raw-parser cache; the acquisition implementation used for these campaigns is
+unchanged. See the separate
+gate1-reproducibility-study.md rather than treating current reproduction code as
+byte-identical to the archived full-experiment source.
 
 Sequence-group outcomes below are mean final Pearson correlations and paired
 normalized learning-curve-area differences. Positive area differences favor
