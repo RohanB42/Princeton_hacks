@@ -1,1 +1,1 @@
-"""Future leakage-safe evaluation and split boundary."""
+"""Budget-controlled replay and deferred held-out evaluation."""
