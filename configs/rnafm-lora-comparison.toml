@@ -1,0 +1,16 @@
+# Frozen before any seed400-404 test score is evaluated.
+dataset = "Huesken"
+purpose = "diagnostic"
+seeds = [400, 401, 402, 403, 404]
+budgets = [50, 100, 200]
+arms = ["onehot_ridge", "frozen_ridge", "frozen_head", "lora_head"]
+epoch_candidates = [3, 10]
+batch_size = 8
+rank = 4
+lora_alpha = 8.0
+learning_rate = 0.001
+inner_validation_fraction = 0.2
+ridge_alphas = [0.1, 1.0, 10.0, 100.0, 1000.0]
+ridge_folds = 3
+pearson_target = 0.60
+max_runtime_seconds = 7200
