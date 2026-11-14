@@ -26,6 +26,15 @@ of 30 paired seeds. This endpoint stays strictly separate from siRNA efficacy: n
 combined safety/efficacy score exists and none is claimed. See
 [the endpoint study](docs/neurotox-moe-predictor.md).
 
+**Immunomodulation endpoints, 2026-11-14.** Both Alharbi 2020 TLR assays, 192 ASOs
+each, 30 seeds on the official `nucleobase` split: TLR8 potentiation at Pearson
+r 0.666 +- 0.115 (GP) and TLR7 inhibition at 0.598 +- 0.097 (RF). Both published RF
+anchors reproduce within 0.01, the closest reproductions in the project. Resolving
+these endpoints required fixing an upstream labelling bug: the registry's `key`
+column is swapped relative to the assay descriptions, so the published row labelled
+`immune_modulation_TLR7` is in fact the TLR8 assay. See
+[the endpoint study](docs/tlr-immunomodulation-predictors.md).
+
 **Gate 1 is closed** under a 30-seed noise-aware criterion: the frozen linear and RF
 configurations reproduce within noise, not exactly (gaps -0.021 and -0.027, both
 inside 2 combined SE). Upstream's published folds are unseeded, so exact
