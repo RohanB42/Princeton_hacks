@@ -1,7 +1,9 @@
 # Simple Huesken statistical baselines, 2026-11-14
 
 This is a **local measured-data diagnostic**, not a reproduction of the
-published OligoGym benchmark. Gate 1 remains open. The model and split settings
+published OligoGym benchmark. At the time of this run, the earlier five-seed
+Gate 1 criterion remained open; the subsequent 30-seed reassessment is recorded
+in [Gate 1 resolution](gate1-resolution.md). The model and split settings
 were fixed before inspecting the five-seed results. No source labels or rows
 were changed, clipped, averaged, or excluded. The 134 Huesken labels above
 100 remain in training or testing according to the saved splits.

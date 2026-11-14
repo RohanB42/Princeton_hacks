@@ -3,9 +3,11 @@
 Implemented at the user's explicit request on 2026-11-14. All 12 released processed
 datasets now live in `data/oligogym/`; no temporary checkout is needed for collection
 validation or measured diagnostic replay. This authorization supersedes the old
-dataset exclusion and synthetic-only implementation boundary. Gate 1 historical
-reproduction remains unresolved, so these replays explicitly declare diagnostic
-purpose. They do not claim baseline reproduction or scientific generalization.
+dataset exclusion and synthetic-only implementation boundary. Exact historical
+fold reproduction remains unresolved; the later
+[30-seed Gate 1 reassessment](gate1-resolution.md) addresses baseline agreement
+within noise. These replays declare diagnostic purpose and do not claim baseline
+reproduction or scientific generalization.
 
 ## Exact source collection
 

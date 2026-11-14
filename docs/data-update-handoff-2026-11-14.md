@@ -80,8 +80,10 @@ strings. Their row-level mapping remains unverified.
   matched-split evaluation.
 - TLR7/TLR8 registry keys and assay descriptions conflict. Do not assert an
   endpoint identity until source mapping is resolved.
-- Gate 1 historical benchmark reproduction remains open. The local split
-  audits do not alter that status or establish a published-score comparison.
+- Exact historical benchmark folds remain unrecovered. A subsequent
+  [30-seed reassessment](gate1-resolution.md) revised the earlier five-seed
+  Gate 1 verdict; these local split audits do not establish a published-score
+  comparison.
 
 The subsequent [simple Huesken baseline study](simple-huesken-baselines-2026-11-14.md)
 uses these audited local splits with training-only Ridge selection. Its results
