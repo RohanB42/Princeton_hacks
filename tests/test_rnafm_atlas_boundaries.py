@@ -25,7 +25,7 @@ def fixture():
     )
 
 
-def test_label_column_rejected_and_hidden_labels_cannot_fit():
+def test_label_column_rejected_and_fit_reproducible():
     x = fixture()
     y = np.arange(12, dtype=float)
     with pytest.raises(ValueError):

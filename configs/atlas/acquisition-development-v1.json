@@ -1,0 +1,21 @@
+{
+  "purpose": "exploratory_geometry_diagnostic",
+  "targets": ["F7", "STAT3", "NLRP3"],
+  "seeds": [710, 711, 712],
+  "initial": 50,
+  "batch": 25,
+  "max_labels": 200,
+  "source_labels": 1000,
+  "source_seed": 510,
+  "predictor": "source chemistry Ridge plus acquired-only tuned residual Ridge",
+  "policies": ["random", "diversity_classical", "uncertainty_classical", "maxdet_classical", "maxdet_frozen", "maxdet_lora"],
+  "geometry": "64-dim source-trained fusion or fixed random projection of classical features; source-only standardization then L2 normalize",
+  "projection_seed": 920,
+  "posterior_ridge": 1.0,
+  "full_reference": "same source prior plus residual Ridge fitted separately on full eligible campaign pool",
+  "threshold": "1.10 times reference test RMSE, reporting only; never policy feedback",
+  "primary_development_contrast": "maxdet_lora minus maxdet_classical normalized RMSE AULC",
+  "reserved_targets_scored": false,
+  "adaptive_target_fm": false,
+  "wall_cap_seconds": 3600
+}
