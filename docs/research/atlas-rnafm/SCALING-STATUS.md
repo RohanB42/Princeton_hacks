@@ -3,12 +3,16 @@
 Updated November 14, 2026. Isolated branch `codex/atlas-lora-scaling`, base `9fd9f10`.
 Read SCALING-HANDOFF.md for authorization and scientific boundaries.
 
-State: **full matched matrix running**, PID78172, tool session70225.
-Latest publication snapshot: 2026-11-14 20:44:57 UTC.
-Completed 136/240 planned fit/calibration records; failures 0;
-recorded elapsed 69.77 minutes. No target test metrics have been scored.
-Both source budgets for seeds 510 and 511 are complete; seed 512 remains.
-See [intermediate results](SCALING-INTERMEDIATE-2026-11-14.md) for the frozen publication snapshot.
+State: **full matched matrix running**, PID 78172, tool session 70225.
+Latest checked: 2026-11-14T20:59:25+00:00.
+Completed 170/240 fit/calibration records; failures 0;
+recorded elapsed 83.3 minutes. Target test scoring remains deferred.
+Five of six source-size/seed conditions are complete. The final 5%/seed512 condition
+is active, followed by the target-only controls and deferred scoring.
+
+The published 136-record snapshot remains unchanged in
+[SCALING-INTERMEDIATE-2026-11-14.md](SCALING-INTERMEDIATE-2026-11-14.md), commit
+`1b3fc1e`. Subsequent work stays local until integrator review; no automatic push.
 The continuously updated machine-readable status is `scaling-v1/suite.json`.
 
 Current command: `scripts/run_atlas_scaling.py --phase run`, with the runtime and
@@ -130,3 +134,11 @@ Its internal validation RMSE improved from32.102 at epoch3 to28.987 at epoch4;
 later epochs reduced training error but did not beat that validation checkpoint.
 Target-transfer comparisons are now running. This differs from the earlier source
 fits and reinforces reporting all paired seeds rather than generalizing one trace.
+
+Source coverage audit: total source cohorts are nested, but the budget-internal
+patent validation repartition means inner fitting cohorts are not nested. Moving
+from3% to5% replaces440/340/336 earlier fitting rows for seeds510/511/512. Thus
+source-size comparisons include source-group composition changes; pointwise model
+comparisons and within-budget source-epoch comparisons retain matched fitting data.
+This limitation is explicit in METHODS and the final comparison-figure captions.
+No memberships or model settings were altered after observing outcomes.

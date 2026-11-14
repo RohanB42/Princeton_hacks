@@ -174,43 +174,69 @@ def report(output: Path) -> None:
     (output / "paired-comparisons.json").write_text(
         json.dumps(comparisons, indent=2) + "\n"
     )
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4.5), sharey=True)
-    selected = table[
-        table.protocol.isin(["sourcebest_target3_all", "sourcebest_offset_all"])
-    ]
-    for ax, target in zip(axes, ["F7", "STAT3", "NLRP3"]):
-        for model in ["lora_chemistry", "frozen_chemistry", "ridge", "xgb"]:
-            subset = selected[(selected.target == target) & (selected.model == model)]
-            g = subset.groupby("source_budget").metric_rmse.agg(["mean", "std"])
-            ax.errorbar(
-                g.index / 95638 * 100,
-                g["mean"],
-                yerr=g["std"],
-                label=model,
-                marker="o",
-                capsize=3,
+    for neural_protocol, offset_protocol, target_mode, title, filename in [
+        (
+            "sourcebest_target3_all",
+            "sourcebest_offset_all",
+            "all",
+            "Neural target adaptation: fixed 3 epochs / all 200 labels",
+            "target-scaling-comparison.png",
+        ),
+        (
+            "sourcebest_targetselected_inner",
+            "sourcebest_offset_inner",
+            "inner",
+            "Neural target adaptation: validation-selected / 160–166 fitting labels",
+            "target-scaling-selected-target.png",
+        ),
+    ]:
+        fig, axes = plt.subplots(1, 3, figsize=(15, 4.5), sharey=True)
+        selected = table[table.protocol.isin([neural_protocol, offset_protocol])]
+        for ax, target in zip(axes, ["F7", "STAT3", "NLRP3"]):
+            for model in ["lora_chemistry", "frozen_chemistry", "ridge", "xgb"]:
+                subset = selected[
+                    (selected.target == target) & (selected.model == model)
+                ]
+                g = subset.groupby("source_budget").metric_rmse.agg(["mean", "std"])
+                ax.errorbar(
+                    g.index / 95638 * 100,
+                    g["mean"],
+                    yerr=g["std"],
+                    label=model,
+                    marker="o",
+                    capsize=3,
+                )
+            reference = table[
+                (table.model == "target_only_ridge")
+                & (table.protocol == f"target_only_{target_mode}")
+                & (table.target == target)
+            ].metric_rmse.mean()
+            ax.axhline(
+                reference,
+                color="gray",
+                linestyle=":",
+                label="target-only Ridge (no source labels)",
             )
-        ax.set_title(target)
-        ax.set_xlabel("Source-label fraction (%)")
-        ax.set_ylabel("Held-out target RMSE")
-        ax.grid(alpha=0.2)
-    axes[0].legend(fontsize=7)
-    fig.suptitle(
-        "200 new-target labels; source validation selected models\n"
-        "Error bars: paired-seed sample SD, not confidence intervals; "
-        "three development targets"
-    )
-    fig.text(
-        0.5,
-        0.01,
-        "Budgets include validation; inner source fitting cohorts "
-        "are not strictly nested.",
-        ha="center",
-        fontsize=8,
-    )
-    fig.tight_layout(rect=(0, 0.05, 1, 0.9))
-    fig.savefig(output / "target-scaling-comparison.png", dpi=180)
-    plt.close(fig)
+            ax.set_title(target)
+            ax.set_xlabel("Source-label fraction (%)")
+            ax.set_ylabel("Held-out target RMSE")
+            ax.grid(alpha=0.2)
+        axes[0].legend(fontsize=7)
+        fig.suptitle(
+            title + "\n200 total target labels; error bars: paired-seed SD, "
+            "not confidence intervals; development targets"
+        )
+        fig.text(
+            0.5,
+            0.01,
+            "Source budgets include validation; inner source fitting cohorts "
+            "are not strictly nested. Classical transfer uses matched target offsets.",
+            ha="center",
+            fontsize=8,
+        )
+        fig.tight_layout(rect=(0, 0.05, 1, 0.9))
+        fig.savefig(output / filename, dpi=180)
+        plt.close(fig)
     # Each duration-selected target fit uses budget-internal validation.
     for model in COLORS:
         for time_axis in [False, True]:
