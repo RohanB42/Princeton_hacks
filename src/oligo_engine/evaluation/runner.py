@@ -88,12 +88,21 @@ def run_campaign(
     reference_oracle: LabelOracle,
     reference_cache: dict | None = None,
     progress: Callable[[str, int], None] | None = None,
+    checkpoint_labels: tuple[int, ...] | None = None,
 ) -> RunArtifact:
     """Evaluation owns both oracles; policies only receive label-free records."""
     started = perf_counter()
     split.validate(dataset)
     if config.max_labels > len(split.train_ids):
         raise ValueError("Label budget exceeds eligible training pool")
+    if checkpoint_labels is not None and (
+        not checkpoint_labels
+        or any(type(n) is not int for n in checkpoint_labels)
+        or tuple(sorted(set(checkpoint_labels))) != checkpoint_labels
+        or checkpoint_labels[0] != config.initial_labels
+        or checkpoint_labels[-1] != config.max_labels
+    ):
+        raise ValueError("Checkpoint schedule must increase from initial to maximum")
     if evaluator.ids != split.test_ids:
         raise ValueError("Evaluator ordering must match fixed test manifest")
     if oracle.revealed_ids or reference_oracle.revealed_ids:
@@ -139,6 +148,10 @@ def run_campaign(
         acquired = set(labeled_ids)
         eligible = tuple(rows[i] for i in split.train_ids if i not in acquired)
         size = min(config.batch_size, config.max_labels - len(labeled_ids))
+        if checkpoint_labels is not None:
+            size = next(n for n in checkpoint_labels if n > len(labeled_ids)) - len(
+                labeled_ids
+            )
         batch = tuple(policy.choose(eligible, labeled, size, rng, predictor))
         valid_ids = {row.sample_id for row in eligible}
         if len(batch) != size or len(set(batch)) != size or not set(batch) <= valid_ids:
@@ -252,6 +265,7 @@ def run_campaign(
             is not None,
             "fit_order": "sample_id_lexicographic",
             "data_audit": audit_split(dataset, split),
+            "checkpoint_labels": checkpoint_labels,
         },
         caveats=(
             "Synthetic contract fixture; not measured biological data or a finding.",

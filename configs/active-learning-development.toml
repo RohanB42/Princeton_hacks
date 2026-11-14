@@ -1,0 +1,6 @@
+# Development protocol. Settings frozen before new policy outcomes.
+dataset = "Huesken"
+seeds = [200, 201, 202, 203, 204]
+policies = ["random", "diversity", "uncertainty", "hybrid"]
+# Executable protocol constants: initial 50; 50-step budgets to 1000;
+# then 1250, 1500, full pool (if eligible); initial-only three-fold kernel selection.
