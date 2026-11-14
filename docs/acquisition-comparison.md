@@ -60,4 +60,55 @@ changed after seeing results; failed runs are recorded, never dropped.
 
 ## Results
 
-(pending)
+Run 2026-11-14: 80 runs (4 arms x 2 predictors x 10 seeds), no failures. Every r is
+on the official `nucleobase` split. Dispersion is sample SD across seeds, not a
+confidence interval. Per-seed paired differences are in the generated `summary.json`
+(`scripts/analyze_acquisition.py`); figures are in `docs/figures/`.
+
+![GP predictor](figures/acquisition-huesken-gp.png)
+![RF predictor](figures/acquisition-huesken-rf.png)
+
+### GP predictor (primary), all-data reference r = 0.605 +- 0.039
+
+| Arm | r@100 | r@200 | r@500 | r@1000 | AULC minus random (mean +- SD) | Seeds above random | Median labels to reach reference - 0.03 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Random | 0.339 | 0.480 | 0.546 | 0.586 | 0 | n/a | 825 (10/10 seeds) |
+| Uncertainty | 0.361 | 0.495 | 0.572 | 0.592 | +0.0157 +- 0.0187 | 9/10 | 550 (10/10) |
+| Diversity | 0.396 | 0.484 | 0.563 | 0.589 | +0.0130 +- 0.0210 | 8/10 | 650 (9/10) |
+| Uncertainty + diversity | 0.388 | 0.483 | 0.566 | 0.591 | +0.0137 +- 0.0171 | 9/10 | 600 (10/10) |
+
+### RF predictor (secondary), all-data reference r = 0.556 +- 0.050
+
+| Arm | r@100 | r@200 | r@500 | r@1000 | AULC minus random (mean +- SD) | Seeds above random | Median labels to reach reference - 0.03 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Random | 0.385 | 0.453 | 0.506 | 0.538 | 0 | n/a | 600 (10/10 seeds) |
+| Uncertainty (tree spread) | 0.394 | 0.462 | 0.509 | 0.541 | +0.0015 +- 0.0162 | 4/10 | 700 (9/10) |
+| Diversity | 0.428 | 0.474 | 0.515 | 0.542 | +0.0135 +- 0.0208 | 8/10 | 675 (10/10) |
+| Uncertainty + diversity | 0.411 | 0.466 | 0.508 | 0.535 | +0.0049 +- 0.0147 | 6/10 | 600 (9/10) |
+
+### Reading
+
+- With the GP, all three non-random arms beat random by a modest, early margin: about
+  +0.013 to +0.016 normalized AULC (roughly 1.5 correlation points averaged over the
+  curve), positive in 8-9 of 10 seeds, largest at 100 labels (+0.02 to +0.06) and
+  essentially gone by 800-1,000 labels (at most +0.006 at 1,000). The paired standard
+  error is about 0.006 with n = 10 seeds on one dataset, so this is descriptive, not
+  a significance claim. Seed 108 was negative for all three GP arms (-0.017 to
+  -0.022) and seed 107 for diversity (-0.019).
+- Label efficiency: GP random needs a median 825 labels to get within 0.03 of its own
+  all-data reference; uncertainty needs 550 and the hybrid 600, i.e. roughly a third
+  of the pool instead of roughly 45%. The reference itself is weak (r about 0.6), so
+  this is a label-saving on a modest target, not a discovery result. Absolute 0.60 was
+  reached in 6 (random, uncertainty) or 7 (diversity, hybrid) of 10 seeds.
+- The hybrid did not beat either parent: the three GP arms differ from each other by
+  at most 0.003 AULC against seed SDs near 0.02. The plan's promise that
+  uncertainty + diversity is the winning arm is **not supported** here.
+- Consistent with, but not proof of, the earlier diagnosis that GP latent SD is
+  mostly a novelty signal: RF tree-spread uncertainty, which tracked neither error nor
+  novelty, did no better than random (+0.0015, 4/10 seeds) while explicit diversity
+  helped the RF about as much as it helped the GP (+0.0135, 8/10). The common factor
+  of the arms that help is coverage of sequence space, not model uncertainty. This
+  inference was not tested directly.
+- Limits: seeds 100-109 only; one dataset; fixed predictors; all curves converge
+  toward the reference as labels grow; runs carry `purpose="diagnostic"` because the
+  runner's research guard has not been updated for the closed Gate 1.
