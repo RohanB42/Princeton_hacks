@@ -1,1 +1,1 @@
-"""Documentation-only package for the planned oligo design engine."""
+"""OligoAL dataset catalog, isolated diagnostic replays and baseline verification."""
