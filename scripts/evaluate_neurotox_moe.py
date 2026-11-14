@@ -30,7 +30,7 @@ import time
 from pathlib import Path
 
 from _moe_neurotox import load, split
-from evaluate_predictors import spread, uncertainty_report
+from evaluate_predictors import uncertainty_report
 
 # Published nucleobase means for this dataset, from the upstream benchmark CSV
 # (45,950 runs, five unseeded folds each). The RF entries are the exact
@@ -41,7 +41,11 @@ PUBLISHED = {
 }
 # Best published configuration on this dataset and split, for context only: a
 # Transformer over base+sugar+phosphate. Five folds, SD 0.0558.
-PUBLISHED_BEST = {"model": "Transformer", "featurizer": "OneHotEncoder+chem", "mean": 0.7025396179890501}
+PUBLISHED_BEST = {
+    "model": "Transformer",
+    "featurizer": "OneHotEncoder+chem",
+    "mean": 0.7025396179890501,
+}
 
 
 def metrics(truth, pred):
