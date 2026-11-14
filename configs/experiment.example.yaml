@@ -1,12 +1,13 @@
-# Specification template only; no experiment runner exists.
-upstream_revision: null
+# Measured-study planning template. Executable synthetic config: fixture.toml.
+# Gate 1 discrepancy remains unresolved; this is not an experiment command.
+upstream_revision: 97f5b9f58d9e445a8ecb0218037af7465c3708c0
 split:
   headline: nucleobase_split
   target_split_when_feasible: true
-  cluster_count_to_verify: 8
-  kmer_to_verify: true
-  kmer_max_to_verify: 3
-  strand_to_verify: RNA1
+  cluster_count: 8
+  kmer: true
+  kmer_max: 3
+  strand: RNA1  # ignored by upstream's kmer branch
 comparison: [active_acquisition, random_acquisition, all_training_labels]
 minimum_seeds: 5
 initial_label_budget: null

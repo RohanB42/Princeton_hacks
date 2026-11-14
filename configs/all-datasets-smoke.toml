@@ -1,0 +1,21 @@
+# Engineering check, not a benchmark or claim of active-learning benefit.
+dataset = "all"
+purpose = "diagnostic"
+max_rows = 128
+selection_seed = 2026
+seeds = [0]
+policies = ["random", "uncertainty"]
+
+[split]
+strategy = "sequence_group"
+test_size = 0.2
+
+[budget]
+initial_labels = 8
+batch_size = 8
+max_labels = 24
+
+[model]
+n_estimators = 16
+max_depth = 8
+n_features = 256

@@ -1,0 +1,20 @@
+# Full dataset by default. Replace dataset with any catalog key, name, or alias.
+# This protocol is diagnostic, not the official nucleobase benchmark.
+dataset = "Huesken"
+purpose = "diagnostic"
+seeds = [0, 1, 2, 3, 4]
+policies = ["random", "uncertainty"]
+
+[split]
+strategy = "sequence_group"
+test_size = 0.2
+
+[budget]
+initial_labels = 50
+batch_size = 50
+max_labels = 500
+
+[model]
+n_estimators = 100
+max_depth = 20
+n_features = 512
