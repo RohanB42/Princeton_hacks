@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OligoAL Design Surface</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="brand">
+    <h1>OligoAL</h1>
+    <p>Antisense design surface &mdash; open data, measured endpoints, stated limits</p>
+  </div>
+  <div class="provenance" id="provenance"></div>
+</header>
+
+<section class="controls">
+  <form id="design-form">
+    <label class="field">
+      <span>Target gene</span>
+      <input id="gene" name="gene" value="MAPT" autocomplete="off" spellcheck="false">
+      <small>Human gene symbol; canonical transcript from Ensembl</small>
+    </label>
+    <label class="field">
+      <span>Chemistry</span>
+      <select id="chemistry" name="chemistry">
+        <option value="ps_moe_gapmer">PS / 2'-MOE gapmer (19-mer, 5-10-4)</option>
+        <option value="ps_2ome_gapmer">PS / 2'-OMe gapmer (20-mer, 5-10-5)</option>
+      </select>
+      <small id="chemistry-note">Selects which measured endpoints may be applied</small>
+    </label>
+    <label class="field narrow">
+      <span>Tiling step</span>
+      <input id="step" name="step" type="number" min="1" max="50" value="3">
+      <small>nt between candidate start sites</small>
+    </label>
+    <label class="field narrow">
+      <span>Show</span>
+      <input id="limit" name="limit" type="number" min="5" max="200" value="40">
+      <small>ranked candidates</small>
+    </label>
+    <button type="submit" id="run">Design panel</button>
+  </form>
+  <details class="paste">
+    <summary>No network? Paste a transcript instead</summary>
+    <textarea id="pasted" rows="3" placeholder="Paste cDNA (FASTA or raw) to tile without calling Ensembl"></textarea>
+  </details>
+</section>
+
+<section id="status" class="status" hidden></section>
+
+<section id="honesty" class="honesty" hidden>
+  <div class="honesty-grid" id="honesty-grid"></div>
+</section>
+
+<main class="layout">
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Ranked candidates</h2>
+      <div class="panel-actions">
+        <label>Sort
+          <select id="sort">
+            <option value="safety">predicted safety</option>
+            <option value="accessibility">target accessibility</option>
+            <option value="position">transcript position</option>
+          </select>
+        </label>
+        <a id="download" class="download" href="#">Download CSV</a>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="results">
+        <thead id="results-head"></thead>
+        <tbody id="results-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <aside class="detail" id="detail" hidden>
+    <h2 id="detail-title">Candidate</h2>
+    <div id="viewer" class="viewer"></div>
+    <p class="viewer-caption">
+      Idealized A-form helix drawn from the sequence. <strong>Not a predicted
+      structure</strong> &mdash; no folding, docking or minimisation is run. Chain A is
+      the ASO, chain B its complementary target RNA.
+      <a id="pdb-link" href="#" download>Download PDB (opens in PyMOL)</a>
+    </p>
+    <dl id="detail-facts"></dl>
+    <div id="detail-flags" class="flags"></div>
+  </aside>
+</main>
+
+<footer class="footer">
+  <h2>What this does not claim</h2>
+  <ul id="non-claims"></ul>
+  <p class="endpoints-note" id="endpoints-note"></p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.0/3Dmol-min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

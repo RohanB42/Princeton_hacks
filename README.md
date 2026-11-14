@@ -2,10 +2,48 @@
 
 Can sequential experiment selection improve siRNA efficacy prediction using fewer
 measured labels than random acquisition? This HackPrinceton project is building an
-open, auditable retrospective benchmark. Current diagnostic comparisons have mixed
-results; a consistent active-learning advantage has not been established.
+open, auditable retrospective benchmark.
 
-**Current status:** all 12 released datasets are included, with a shared measured-data
+**Headline result (2026-11-14).** On Huesken (`Ichihara_2007_1`) with a one-hot
+Gaussian-process predictor and the official OligoGym `nucleobase` split,
+uncertainty-driven acquisition beats random acquisition at matched label budgets:
+normalized AULC +0.0095 [95% CI +0.0043, +0.0146], dz 0.57, paired t-test
+p = 0.00095, 28 of 40 seeds above random. The hypothesis and the analysis were
+frozen in commit `6a715bc` **before** these 40 seeds (110-149) were run; an earlier
+exploratory set (seeds 100-109) is reported separately and is not pooled with it.
+What is **not** supported: a significant label saving (mean 72 labels, p about
+0.08), superiority of uncertainty over diversity or the hybrid, any target-gene
+generalization claim, and any transfer to other endpoints. See
+[the four-policy comparison](docs/acquisition-comparison.md) and
+[figures](docs/figures/).
+
+**Second endpoint (safety), 2026-11-14.** On MOE acute neurotox (`MOE_Neurotox_1`,
+2,437 PS/2'-MOE gapmer ASOs, rounded 3h mouse FOB score), a one-hot GP that encodes
+sugar and phosphate reaches Pearson r 0.597 +- 0.112 and Spearman 0.580 over 30 seeds
+on the official `nucleobase` split. Both comparable published RF anchors reproduce
+within noise, and encoding the gapmer wing/core pattern beats nucleobases alone in 28
+of 30 paired seeds. This endpoint stays strictly separate from siRNA efficacy: no
+combined safety/efficacy score exists and none is claimed. See
+[the endpoint study](docs/neurotox-moe-predictor.md).
+
+**Immunomodulation endpoints, 2026-11-14.** Both Alharbi 2020 TLR assays, 192 ASOs
+each, 30 seeds on the official `nucleobase` split: TLR8 potentiation at Pearson
+r 0.666 +- 0.115 (GP) and TLR7 inhibition at 0.598 +- 0.097 (RF). Both published RF
+anchors reproduce within 0.01, the closest reproductions in the project. Resolving
+these endpoints required fixing an upstream labelling bug: the registry's `key`
+column is swapped relative to the assay descriptions, so the published row labelled
+`immune_modulation_TLR7` is in fact the TLR8 assay. See
+[the endpoint study](docs/tlr-immunomodulation-predictors.md).
+
+**Initial Huesken baseline reassessment:** the separate 30-seed linear/RF study
+reports agreement under its noise-aware criterion (gaps -0.021 and -0.027).
+Its criterion was revised after the original five-seed results. This does not
+close the expanded seven-dataset reproduction requirement described below.
+Exact historical folds and runtime identity remain unavailable. See
+[the reassessment](docs/gate1-resolution.md) and
+[original discrepancies](docs/upstream-verification.md).
+
+**Collection status:** all 12 released datasets are included, with a shared measured-data
 diagnostic runner, source integrity checks, and random/uncertainty replay. All 337,593
 source rows have been validated. Full-data five-seed experiments now comprise
 **180 campaigns**: both policies on all 12 exact-sequence-group datasets, plus both
@@ -16,24 +54,20 @@ lower area on 7/12; these are separate tasks, not a combined score.
 See [full protocol and results](docs/full-experiment-protocol.md) and
 [collection commands and limits](docs/dataset-pipelines.md).
 
-Historical **Gate 1 remains open:** the
-published linear configuration reruns at Pearson **0.5848 ± 0.0243 sample SD**, versus
-upstream mean **0.6159**. Its 0.0310 gap exceeds the frozen 0.03 tolerance. This is
-not reproduction of the winning CNN (upstream mean 0.6309), and it is not an
-active-learning comparison. A published Random Forest cross-check also misses the
-frozen tolerance (0.5591 versus 0.5910 reference). See
-[verification and discrepancies](docs/upstream-verification.md).
-The subsequent [Gate 1 study](docs/gate1-reproducibility-study.md) finds that the
-upstream model factory drops RF `max_depth`. Corrected native-helper execution
-repeats exactly at r=0.5598, but still misses the 0.5910 reference by 0.0313.
-Local repeatability is established; historical reproduction remains unresolved.
+These 180 campaigns used the hashed-HELM forest on local diagnostic splits and
+remain engineering coverage, separate from the official-split studies above.
 
 The expanded [published-best efficacy study](docs/gate1-efficacy-reproduction.md)
-now completes **35 full-data fits across all seven efficacy datasets**. Four meet
-the unchanged 0.03 Pearson tolerance: Huesken, Shmushkovich, siRNAmod and Sherwood.
+completed **35 full-data fits across all seven efficacy datasets**. Four meet
+the original 0.03 Pearson tolerance: Huesken, Shmushkovich, siRNAmod and Sherwood.
 Huesken's winning CNN reaches **0.6096 versus 0.6309** published. Ichihara, OpenASO
-and ASOptimizer remain outside tolerance, so full numerical reproduction is not
-established. The frozen configs and one-command suite preserve every outcome.
+and ASOptimizer remain outside tolerance. Full seven-dataset numerical and exact
+historical reproduction are therefore unresolved.
+
+The [native-helper study](docs/gate1-reproducibility-study.md) also identifies an
+RF argument-filter difference: the upstream factory drops max_depth. Preserve
+requested versus effective parameters when interpreting the separate 30-seed
+linear/RF reassessment. Approximate numerical agreement is not exact reproduction.
 
 ## Run the tested vertical slice
 
@@ -82,8 +116,8 @@ and run artifacts. `data/`, `acquisition/`, `evaluation/`, `models/`, and `repor
 implement synthetic and measured diagnostic replay. `collection.py` validates and
 runs individual datasets or the complete collection. `audit_upstream.py` verifies
 source identity; `reproduce.py` supports dataset-specific upstream baseline reruns.
-`design/`, `features/`, and
-`app/` remain future work. Runtime package names stay `oligo-design-engine` and
+`features/` provides predictor representations; `design/` and `app/` now contain
+a separate hypothesis-ranking demonstration. See [the app guide](app/README.md). Runtime package names stay `oligo-design-engine` and
 `oligo_engine`. TOML fixture/collection/reproduction configs are executable; YAML examples are
 planning templates.
 
@@ -115,3 +149,19 @@ and a fixed hybrid with initial-label-only kernel selection. See
 [the protocol and run commands](docs/active-learning-development.md). It writes
 paired reports and learning curves from measured replay; it does not establish
 label savings merely by running. The completed CNN diversity pilot remains separate.
+
+### RNA-FM representation and adaptation studies
+
+[Verified frozen embeddings](docs/rnafm-provenance.md), matched
+[prediction/geometry studies](docs/rnafm-study.md), and a bounded
+[LoRA proof](docs/rnafm-lora.md) are implemented. Frozen strand-mean embeddings
+underperformed one-hot Ridge and did not consistently improve diversity acquisition.
+The [multi-seed LoRA comparison](docs/rnafm-lora-comparison.md) is implemented;
+its full experiment is still running separately. These studies do not establish
+therapeutic benefit or a general foundation-model advantage. Research runtimes
+are documented separately and are not included in the core dependency lock.
+
+The five-seed GP development study in active-learning-development.md uses a
+half-uncertainty/half-coverage hybrid and initial-label-only kernel selection.
+It differs from acquisition-comparison.md's uncertainty-prefiltered diversity
+policy and predictor protocol. Their outcomes must not be pooled.
