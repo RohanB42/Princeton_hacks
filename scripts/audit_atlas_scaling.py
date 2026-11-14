@@ -94,6 +94,28 @@ def audit(output: Path) -> dict:
             )
             assert fit == set(partition["fit_ids"])
             assert val == set(partition["validation_ids"])
+        if path.parent.name.startswith("target-"):
+            saved = json.loads((path.parent / "predictions.json").read_text())
+            meta = saved["metadata"]
+            partition = next(
+                p
+                for p in parts["target"]
+                if p["target"] == meta["target"] and p["seed"] == meta["target_seed"]
+            )
+            inner = meta["protocol"].endswith("inner")
+            expected_fit = partition["fit_ids"] if inner else partition["acquired_ids"]
+            expected_val = partition["validation_ids"] if inner else []
+            assert fit == set(expected_fit) and val == set(expected_val)
+            assert saved["test_ids"] == partition["test_ids"]
+            assert len(saved["predictions"]) == len(partition["test_ids"])
+            if "source_ids" in receipt:
+                source_part = next(
+                    p
+                    for p in parts["source"]
+                    if p["budget"] == meta["source_budget"]
+                    and p["seed"] == meta["source_seed"]
+                )
+                assert receipt["source_ids"] == source_part["fit_ids"]
         if "history" in receipt:
             neural += 1
             assert receipt["base_unchanged"]
@@ -129,9 +151,26 @@ def audit(output: Path) -> dict:
                 assert a["test_ids"] == b["test_ids"]
                 assert a["predictions"] == b["predictions"]
                 equal_checkpoint_pairs += 1
+    report_count = None
+    if (output / "report.json").exists():
+        rows = json.loads((output / "report.json").read_text())["rows"]
+        keys = {
+            (
+                r["model"],
+                r["source_budget"],
+                r["target_seed"],
+                r["target"],
+                r["protocol"],
+            )
+            for r in rows
+        }
+        report_count = len(rows)
+        assert len(keys) == report_count == 216
+        assert report_count == len(list(output.glob("target-*/predictions.json")))
     result = {
         "status": "passed_for_completed_receipts",
         "source_partitions": len(parts["source"]),
+        "unique_finished_report_records": report_count,
         "target_partitions": len(parts["target"]),
         "neural_receipts_checked": neural,
         "classical_receipts_checked": classical,

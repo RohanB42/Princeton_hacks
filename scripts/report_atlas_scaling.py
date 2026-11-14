@@ -264,7 +264,13 @@ def report(output: Path) -> None:
                     g.index / 95638 * 100,
                     g["mean"],
                     yerr=g["std"],
-                    label=model,
+                    label={
+                        "lora_chemistry": "LoRA RNA-FM",
+                        "frozen_chemistry": "Frozen RNA-FM",
+                        "ridge": "Source Ridge + offset",
+                        "xgb": "Source XGBoost + offset",
+                    }[model],
+                    color={**COLORS, "ridge": "#238b45", "xgb": "#756bb1"}[model],
                     marker="o",
                     capsize=3,
                 )
@@ -281,9 +287,19 @@ def report(output: Path) -> None:
             )
             ax.set_title(target)
             ax.set_xlabel("Source-label fraction (%)")
+            ax.set_xticks([3, 5])
             ax.set_ylabel("Held-out target RMSE")
             ax.grid(alpha=0.2)
-        axes[0].legend(fontsize=7)
+        handles, labels = axes[0].get_legend_handles_labels()
+        fig.legend(
+            handles,
+            labels,
+            loc="upper center",
+            bbox_to_anchor=(0.5, 0.86),
+            ncol=5,
+            fontsize=8,
+            frameon=False,
+        )
         fig.suptitle(
             title + "\n200 total target labels; error bars: paired-seed SD, "
             "not confidence intervals; development targets"
