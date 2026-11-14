@@ -1,1 +1,1 @@
-"""Future measured-label acquisition boundary."""
+"""Random and uncertainty policies selecting eligible observation IDs only."""
