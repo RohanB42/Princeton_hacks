@@ -143,10 +143,14 @@ def main() -> None:
     for predictor, r in report.items():
         print(f"== {predictor} primary: AULC minus random (paired, Holm over 3)")
         for e in r["primary_aulc_vs_random"]:
+            low, high = e["ci95_bootstrap"]
             print(
-                f"  {e['arm']:28s} diff {e['mean_diff']:+.4f} ci [{e['ci95_bootstrap'][0]:+.4f},{e['ci95_bootstrap'][1]:+.4f}] "
-                f"dz {e['cohens_dz']:.2f} t_p {e['t_p']:.4f} (holm {e['t_p_holm']:.4f}) "
-                f"wilcoxon_p {e['wilcoxon_exact_p']:.4f} (holm {e['wilcoxon_exact_p_holm']:.4f}) +{e['n_positive']}/10"
+                f"  {e['arm']:28s} diff {e['mean_diff']:+.4f} "
+                f"ci [{low:+.4f},{high:+.4f}] dz {e['cohens_dz']:.2f} "
+                f"t_p {e['t_p']:.4f} (holm {e['t_p_holm']:.4f}) "
+                f"wilcoxon_p {e['wilcoxon_exact_p']:.4f} "
+                f"(holm {e['wilcoxon_exact_p_holm']:.4f}) "
+                f"+{e['n_positive']}/{e['n']}"
             )
 
 
