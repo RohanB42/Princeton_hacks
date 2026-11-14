@@ -22,6 +22,7 @@ from oligo_engine.atlas.scaling import (
     HoldoutClassical,
     grouped_validation,
     read_label_subset,
+    validate_scaling_config,
 )
 from oligo_engine.atlas.splits import sequence_groups
 from oligo_engine.models.aso_rnafm import ASOPredictor, ChemistryHead
@@ -50,7 +51,12 @@ def prepare(output: Path, cfg: dict, frame: pd.DataFrame, manifest: dict) -> dic
         order = np.random.default_rng(seed).permutation(manifest["source_train_ids"])
         for budget in cfg["source_budgets"]:
             ids = order[:budget].tolist()
-            split = grouped_validation(ids, frame.loc[ids, "USPTO ID"].tolist(), seed)
+            split = grouped_validation(
+                ids,
+                frame.loc[ids, "USPTO ID"].tolist(),
+                seed,
+                cfg["validation_fraction"],
+            )
             partitions["source"].append(
                 {"seed": seed, "budget": budget, "selected_ids": ids, **split}
             )
@@ -71,7 +77,9 @@ def prepare(output: Path, cfg: dict, frame: pd.DataFrame, manifest: dict) -> dic
                 .permutation(pool)[: cfg["target_budget"]]
                 .tolist()
             )
-            split = grouped_validation(ids, [groups[i] for i in ids], seed)
+            split = grouped_validation(
+                ids, [groups[i] for i in ids], seed, cfg["validation_fraction"]
+            )
             partitions["target"].append(
                 {
                     "target": campaign["target"],
@@ -93,6 +101,7 @@ def prepare(output: Path, cfg: dict, frame: pd.DataFrame, manifest: dict) -> dic
 def run(args: argparse.Namespace) -> None:
     torch.set_num_threads(1)
     cfg = json.loads(CONFIG.read_text())
+    validate_scaling_config(cfg)
     output = args.output
     output.mkdir(parents=True, exist_ok=True)
     manifest_path = Path(cfg["manifest"])

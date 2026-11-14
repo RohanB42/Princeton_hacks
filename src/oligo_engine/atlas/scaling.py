@@ -92,3 +92,30 @@ def read_label_subset(path: Path, permitted_ids: list[str]) -> pd.Series:
     if set(selected.index) != set(permitted_ids) or not selected.index.is_unique:
         raise ValueError("Endpoint selection did not match permitted IDs")
     return selected.loc[permitted_ids]
+
+
+def validate_scaling_config(config: dict) -> None:
+    """Reject settings the fixed-recipe implementation cannot actually honor."""
+    fixed = {
+        "lora_rank": 4,
+        "lora_alpha": 8.0,
+        "learning_rate": 0.001,
+        "weight_decay": 0.0,
+        "batch_size": 8,
+        "threads": 1,
+        "device": "cpu",
+        "validation_fraction": 0.2,
+    }
+    for name, value in fixed.items():
+        if config[name] != value:
+            raise ValueError(f"Fixed-recipe runner requires {name}={value!r}")
+    expected = [
+        int(np.floor(f * config["source_denominator"]))
+        for f in config["source_fractions"]
+    ]
+    if config["source_budgets"] != expected:
+        raise ValueError("Source budgets disagree with their declared fractions")
+    if len(config["source_seeds"]) != len(config["paired_target_seeds"]):
+        raise ValueError("Every source seed needs one paired target seed")
+    if config["reserved_targets_scored"] or config["external_source_validation_used"]:
+        raise ValueError("This budgeted development study excludes reserved outcomes")

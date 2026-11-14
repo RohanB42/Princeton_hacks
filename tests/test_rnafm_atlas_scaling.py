@@ -165,3 +165,17 @@ def test_endpoint_reader_filters_reserved_rows_before_return(tmp_path):
     assert selected.index.tolist() == ["fit"] and selected.iloc[0] == 4.0
     with pytest.raises(ValueError):
         read_label_subset(path, ["missing"])
+
+
+def test_frozen_config_matches_actual_fixed_recipe():
+    import json
+    from pathlib import Path
+
+    from oligo_engine.atlas.scaling import validate_scaling_config
+
+    config = json.loads(Path("configs/atlas/scaling-v1.json").read_text())
+    validate_scaling_config(config)
+    with pytest.raises(ValueError, match="learning_rate"):
+        validate_scaling_config(config | {"learning_rate": 0.1})
+    with pytest.raises(ValueError, match="fractions"):
+        validate_scaling_config(config | {"source_budgets": [3000, 5000]})
