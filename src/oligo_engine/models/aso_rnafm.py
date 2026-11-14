@@ -2,6 +2,7 @@
 
 import copy
 import time
+from collections.abc import Callable
 from pathlib import Path
 
 import numpy as np
@@ -124,11 +125,33 @@ class ASOPredictor:
         y: np.ndarray,
         epochs: int = 3,
         source: dict | None = None,
+        *,
+        validation: tuple[pd.DataFrame, np.ndarray] | None = None,
+        record_history: bool = False,
+        min_epochs: int = 3,
+        patience: int = 5,
+        min_delta: float = 1e-6,
+        checkpoint_epochs: tuple[int, ...] = (),
+        epoch_callback: Callable[[dict], None] | None = None,
     ) -> dict:
         if "Inhibition_pct" in frame:
             raise ValueError("Labels in predictor records")
         if len(frame) != len(y) or not np.isfinite(y).all():
             raise ValueError("Invalid labels")
+        if epochs < 1 or patience < 1 or min_epochs < 1 or min_delta < 0:
+            raise ValueError("Invalid epoch-selection settings")
+        validation_ids = []
+        if validation is not None:
+            vf, vy = validation
+            if "Inhibition_pct" in vf or len(vf) != len(vy):
+                raise ValueError("Invalid validation records")
+            if not len(vf) or not np.isfinite(vy).all():
+                raise ValueError("Invalid validation labels")
+            validation_ids = vf.source_row_id.tolist()
+            if set(frame.source_row_id) & set(validation_ids):
+                raise ValueError("Fitting and validation rows overlap")
+        self.history, self.checkpoints = [], {}
+        best_state, best_score, best_epoch, stale = None, float("inf"), None, 0
         start = time.monotonic()
         if source is None:
             if self.head is not None:
@@ -157,7 +180,9 @@ class ASOPredictor:
         )
         rng = np.random.default_rng(self.seed)
         self.head.train()
-        for _ in range(epochs):
+        for epoch in range(1, epochs + 1):
+            self.head.train()
+            running_loss = 0.0
             order = rng.permutation(len(frame))
             for start_idx in range(0, len(frame), 8):
                 ix = order[start_idx : start_idx + 8]
@@ -166,9 +191,49 @@ class ASOPredictor:
                     frame.iloc[ix], None if frozen is None else [frozen[i] for i in ix]
                 )
                 loss = nn.functional.mse_loss(pred, target[ix])
+                if not torch.isfinite(loss):
+                    raise FloatingPointError("Nonfinite training loss")
+                running_loss += float(loss.detach()) * len(ix)
                 loss.backward()
                 nn.utils.clip_grad_norm_(params, 1.0)
                 optimizer.step()
+            if record_history or validation is not None:
+                train_mse = float(np.mean((self.predict(frame) - y) ** 2))
+                row = {
+                    "epoch": epoch,
+                    "train_mse": train_mse,
+                    "train_rmse": train_mse**0.5,
+                    "train_normalized_mse": train_mse / self.scale**2,
+                    "minibatch_normalized_mse": running_loss / len(frame),
+                }
+                if validation is not None:
+                    val_mse = float(np.mean((self.predict(vf) - vy) ** 2))
+                    score = val_mse**0.5
+                    if not np.isfinite(score):
+                        raise FloatingPointError("Nonfinite validation loss")
+                    improved = score < best_score - min_delta
+                    if improved:
+                        best_state, best_score = self.snapshot(), score
+                        best_epoch, stale = epoch, 0
+                    else:
+                        stale += 1
+                    row.update(
+                        validation_mse=val_mse,
+                        validation_rmse=score,
+                        validation_normalized_mse=val_mse / self.scale**2,
+                        best_epoch=best_epoch,
+                        improved=improved,
+                    )
+                row["elapsed_s"] = time.monotonic() - start
+                self.history.append(row)
+                if epoch_callback is not None:
+                    epoch_callback(copy.deepcopy(row))
+            if epoch in checkpoint_epochs:
+                self.checkpoints[epoch] = self.snapshot()
+            if validation is not None and epoch >= min_epochs and stale >= patience:
+                break
+        if best_state is not None:
+            self.restore(best_state)
         self.head.eval()
         after = tensor_digest(self._base())
         changed = adapters_before != tensor_digest(self._trainable_state())
@@ -181,7 +246,18 @@ class ASOPredictor:
             "n_labels": len(frame),
             "source_labels": len(self.source_ids),
             "source_ids": self.source_ids,
-            "epochs": epochs,
+            "epochs": epoch,
+            "requested_epochs": epochs,
+            "history": copy.deepcopy(self.history),
+            "validation_ids": validation_ids,
+            "validation_labels": len(validation_ids),
+            "total_fit_validation_labels": len(frame) + len(validation_ids),
+            "selected_epoch": best_epoch if validation is not None else epoch,
+            "restored_best": best_state is not None,
+            "min_epochs": min_epochs if validation is not None else None,
+            "patience": patience if validation is not None else None,
+            "min_delta_rmse": min_delta if validation is not None else None,
+            "saved_checkpoint_epochs": sorted(self.checkpoints),
             "base_unchanged": before == after,
             "adapters_changed": changed,
             "elapsed_s": time.monotonic() - start,
