@@ -14,6 +14,8 @@ registry, per-dataset JSON, upstream license and source attribution. The manifes
 records all upstream resource paths and checksums. Loading rejects changed files,
 unknown dataset keys, missing required columns, invalid labels and row-count mismatch.
 Raw label columns and source values are never rewritten.
+The [Huesken label review](huesken-label-review.md) records its 134 source labels
+above 100 and the limits of the available assay explanation.
 Git line-ending conversion and text-fixing pre-commit hooks are disabled for the
 vendored directory so they cannot invalidate upstream checksums on another platform.
 
@@ -84,10 +86,21 @@ smoke check; its full training reference also uses the entire eligible pool.
   fewer than two distinct groups, or exact sequences crossing the resulting split.
   No fallback to another split and no silent removal of missing-target rows.
   TLR sets have only four target groups: executable does not mean statistically
-  reliable. Cytotox LNA, siRNAmod and Shmushkovich have only one source target group.
+  reliable. Cytotox LNA has one target group; siRNAmod and Shmushkovich
+  have no known targets after their `undefined` placeholders are normalized.
 - Target strings marking unknown/missing are represented as absent; the original
   value is preserved in observation context and source data. Targets are never
-  fabricated or populated from labels.
+  fabricated or populated from labels. The `undefined` token is also treated as
+  missing in the loader and validation report; this affects Shmushkovich (356
+  rows) and siRNAmod (907 rows) without changing their source files.
+- Each new run JSON saves `execution.data_audit`: actual train/test row counts,
+  exact-HELM repeat groups and rows, missing-target rows, full per-target row
+  counts, and exact-HELM/target overlap group counts. This is derived from the
+  frozen split and label-free records; it does not expose held-out labels.
+  The separate `artifacts/data-audit-20261114.json` profiles seeds 0–4 across
+  both local split strategies without retraining or altering older run files.
+  See [the data update handoff](data-update-handoff-2026-11-14.md) and its
+  regeneration command for future work.
 - Budgets are positive integer caps. Effective maximum is min(requested maximum,
   eligible training rows); effective initial count is min(requested initial,
   effective maximum). Effective settings and original requested config are logged.

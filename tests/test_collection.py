@@ -14,6 +14,7 @@ from oligo_engine.acquisition.random import RandomAcquisition
 from oligo_engine.acquisition.uncertainty import UncertaintyAcquisition
 from oligo_engine.collection import effective_budget, run_collection
 from oligo_engine.contracts import Dataset, Observation, Prediction
+from oligo_engine.data.audit import audit_split
 from oligo_engine.data.catalog import Catalog
 from oligo_engine.data.splits import UnsupportedSplit, make_split
 from oligo_engine.evaluation.runner import run_campaign
@@ -81,6 +82,20 @@ def test_assay_context_is_preserved(catalog):
     assert dataset.observations[0].modality == "ASO"
 
 
+def test_undefined_targets_are_missing_without_changing_source(catalog):
+    validation = catalog.validate_all()
+    for name, expected in (("Shmushkovich", 356), ("siRNAmod", 907)):
+        loaded = catalog.load(name)
+        assert all(not row.target_id for row in loaded.dataset.observations)
+        assert all(
+            dict(row.context)["source_target_id"] == "undefined"
+            for row in loaded.dataset.observations
+        )
+        report = next(row for row in validation["datasets"] if row["key"] == name)
+        assert report["missing_target_rows"] == expected
+        assert report["known_targets"] == 0
+
+
 def toy_dataset(targets=("a", "a", "b", "b")):
     return Dataset(
         tuple(
@@ -101,6 +116,20 @@ def test_sequence_groups_stay_together_and_target_limitations_are_explicit():
     assert ("0" in split.train_ids) == ("1" in split.train_ids)
     split.validate(dataset)
     assert split == make_split(dataset, "sequence_group", seed=12)
+    audit = audit_split(dataset, split)
+    assert audit["sequence_overlap_groups"] == 0
+    assert (
+        sum(part["repeated_helm_extra_rows"] for part in audit["partitions"].values())
+        == 1
+    )
+    assert sum(part["rows"] for part in audit["partitions"].values()) == 4
+    assert (
+        sum(
+            part["target_row_counts"].get("a", 0)
+            for part in audit["partitions"].values()
+        )
+        == 2
+    )
     with pytest.raises(UnsupportedSplit, match="known targets"):
         make_split(toy_dataset(("a", "a", "", "b")), "target", seed=0)
     with pytest.raises(UnsupportedSplit, match="two distinct"):
@@ -156,6 +185,16 @@ def test_real_end_to_end_each_dataset(name, catalog, tmp_path):
         assert result.dataset["metadata"]["source_rows"] >= 192
         assert len(result.checkpoints[-1].acquired_ids) == 4
         assert not set(oracle.revealed_ids) & set(split.test_ids)
+        audit = result.execution["data_audit"]
+        assert audit["sequence_overlap_groups"] == 0
+        assert sum(p["rows"] for p in audit["partitions"].values()) == 48
+        assert (
+            sum(
+                p["missing_target_rows"] + sum(p["target_row_counts"].values())
+                for p in audit["partitions"].values()
+            )
+            == 48
+        )
         initial_ids.append(result.initial_ids)
     assert initial_ids[0] == initial_ids[1]
 
@@ -268,6 +307,9 @@ def test_target_holdout_on_eligible_real_dataset(catalog):
         r.target_id for r in loaded.dataset.observations if r.sample_id not in train
     }
     assert train_targets and test_targets and not train_targets & test_targets
+    audit = audit_split(loaded.dataset, split)
+    assert audit["sequence_overlap_groups"] == 0
+    assert audit["target_overlap_groups"] == 0
 
 
 def test_shared_entry_point_and_multi_seed_summary(tmp_path):
@@ -307,6 +349,17 @@ n_features = 64
     suite = json.loads((output / "suite.json").read_text())
     assert suite["status"] == "complete"
     assert len(suite["datasets"][0]["runs"]) == 4
+    saved_run = json.loads(
+        (output / "McQuisten_2007_1/random/run-seed-0.json").read_text()
+    )
+    assert saved_run["execution"]["data_audit"]["sequence_overlap_groups"] == 0
+    assert (
+        sum(
+            part["rows"]
+            for part in saved_run["execution"]["data_audit"]["partitions"].values()
+        )
+        == 32
+    )
     summary = json.loads((output / "McQuisten_2007_1/random/summary.json").read_text())
     assert summary["schema_version"] == "0.2"
     assert summary["seeds"] == [0, 1]

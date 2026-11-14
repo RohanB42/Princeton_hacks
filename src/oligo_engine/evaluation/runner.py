@@ -22,6 +22,7 @@ from oligo_engine.contracts import (
     RunConfig,
     SplitManifest,
 )
+from oligo_engine.data.audit import audit_split
 from oligo_engine.data.oracle import LabelOracle
 from oligo_engine.evaluation.metrics import HeldOutEvaluator
 
@@ -250,6 +251,7 @@ def run_campaign(
             "stateless_feature_cache": getattr(predictor, "feature_cache", None)
             is not None,
             "fit_order": "sample_id_lexicographic",
+            "data_audit": audit_split(dataset, split),
         },
         caveats=(
             "Synthetic contract fixture; not measured biological data or a finding.",

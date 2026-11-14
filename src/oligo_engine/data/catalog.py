@@ -15,7 +15,17 @@ from oligo_engine.data.oracle import LabelOracle
 from oligo_engine.evaluation.metrics import HeldOutEvaluator
 
 DEFAULT_DATA_ROOT = Path(__file__).resolve().parents[3] / "data" / "oligogym"
-MISSING_TARGETS = {"", "nan", "none", "null", "na", "n/a", "unknown", "unk"}
+MISSING_TARGETS = {
+    "",
+    "nan",
+    "none",
+    "null",
+    "na",
+    "n/a",
+    "unknown",
+    "unk",
+    "undefined",
+}
 
 
 class Catalog:
