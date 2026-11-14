@@ -170,6 +170,13 @@ r = 0.620 +- 0.027 on these seeds. Analysis: `significance_acquisition.py
 
 ![GP predictor, confirmatory seeds](figures/acquisition-huesken-gp-confirmatory.png)
 
+Confidence-interval versions (`scripts/plot_confidence.py`; two-sided 95% Student-t
+intervals for the mean across the 40 seeds, pointwise and uncorrected; the p-values in
+the tables below are the multiplicity-adjusted ones):
+
+![Mean curves with 95% CI](figures/acquisition-huesken-gp-confirmatory-ci.png)
+![Effects with 95% CI](figures/acquisition-huesken-gp-confirmatory-effects-ci.png)
+
 **Primary hypothesis (pre-declared, one test, uncorrected, alpha 0.05):** normalized
 AULC of uncertainty minus random is positive.
 
