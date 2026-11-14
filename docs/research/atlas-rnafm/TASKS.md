@@ -1,23 +1,33 @@
 # Execution checklist
 
-Refer to the full plan for invariants and acceptance criteria. Do not skip gates.
+Updated after the bounded development study on 2026-11-14. A checked item means
+its stated local scope was executed, not that a scientific advantage was found.
 
-- [ ] A0: inspect pinned Atlas adapter and chemistry vocabulary; strict parser tests.
-- [ ] A0: stable assay/compound identities; normalize targets with provenance.
-- [ ] A0: cohort attrition and feasible campaign counts without selecting on outcomes.
-- [ ] A0: fold joins, patent/compound/sequence audits and source/target exclusions.
-- [ ] A1: isolated compatible environment and source baseline reproduction receipt.
-- [ ] A1: context-only, chemistry-aware Ridge/XGBoost and transfer calibration controls.
-- [ ] A2: single-strand RNA-FM plus aligned token-level chemistry fusion.
-- [ ] A2: actual LoRA updates, unchanged base, cache/frozen-feature parity tests.
-- [ ] A2: measured compute profile and frozen bounded development allocation.
-- [ ] A3: paired source prediction curves and controls on development data.
-- [ ] A4: source-only, offset/residual and LoRA target adaptation; equal source access.
-- [ ] A4: target-level report and explicit go/no-go for larger studies.
-- [ ] A5: fixed-representation random/diversity/uncertainty/MaxDet acquisition.
-- [ ] A5: task-adapted geometry if justified; independent measured label accounting.
-- [ ] A6: freeze final protocol before final outcomes; execute feasible confirmation.
-- [ ] A6: checks, reproduction instructions, plots and honest claim/limitation report.
+- [x] A0: pinned Atlas adapter and chemistry vocabulary inspected; strict parser tests.
+- [x] A0: stable source-row, compound and assay/campaign identities with provenance.
+- [ ] A0: externally resolve target aliases and patent families; identifiers alone are used.
+- [x] A0: metadata-based attrition/campaign feasibility, deterministic allocation,
+      source exclusions, native/released fold joins and sequence-group checks.
+- [x] A1: isolated compatible local environment and native linear execution receipt.
+- [ ] A1: numerical paper reproduction; pinned source lacks the reference JSON.
+- [x] A1: context-only, chemistry Ridge/XGBoost, offset/residual/target-only controls.
+- [x] A2: single-strand RNA-FM plus aligned positional chemistry fusion.
+- [x] A2: actual LoRA updates, unchanged base, feature parity/source restore profile.
+- [x] A2: CPU compute profile and frozen bounded development allocation.
+- [x] A3: classical source prediction curves at 50/200/1,000 labels, three seeds.
+- [x] A3: matched frozen/LoRA source fit at 1,000 labels; one source seed.
+- [ ] A3: broader source-budget/seed FM curves; not run, no scaling claim.
+- [x] A4: paired target adaptation at 50/100/200 labels; three development targets
+      and three seeds, identical source and acquired label allocations.
+- [x] A4: target-level report and no-go for confirmation with this exact recipe.
+- [x] A5: fixed-predictor random/diversity/uncertainty/MaxDet acquisition and frozen/
+      LoRA source-geometry ablation: 54 campaigns, 378 checkpoints, full references.
+- [ ] A5: target-adapted geometry; deferred because source geometry and prediction
+      show no consistent advantage over classical controls.
+- [ ] A6: independent confirmation; deferred, seven reserved targets unscored.
+- [x] A6: local reproduction commands, generated curves and honest development report.
+- [ ] A6: clean-install optional research environment and independent reproduction.
 
-Record justified deferred stages rather than checking them complete. Full-Atlas
-fine-tuning, multitask modeling, external transcripts and RL are not prerequisites.
+Full-Atlas fine-tuning, multitask modeling, external transcripts and RL remain
+separate extensions. Do not change thresholds or reuse development outcomes as
+confirmation. Propose any future protocol before accessing reserved labels.

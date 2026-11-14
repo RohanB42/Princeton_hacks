@@ -23,15 +23,45 @@ Run all study commands from the research worktree with:
 PYTHONPATH=src OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 .venv-atlas/bin/python SCRIPT
 ```
 
-Optional checks:
+Execute in dependency order in a fresh artifact directory layout (commands refuse
+to overwrite completed runs):
 
 ```sh
-PYTHONPATH=src .venv-atlas/bin/python -m pytest tests/atlas tests/test_rnafm_aso.py
+export PYTHONPATH=src OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+.venv-atlas/bin/python scripts/prepare_atlas_study.py --output artifacts/atlas-rnafm/preparation-v1
+.venv-atlas/bin/python scripts/reproduce_atlas_linear.py --upstream artifacts/atlas-rnafm/upstream --output artifacts/atlas-rnafm/native-linear-anchor
+.venv-atlas/bin/python scripts/run_atlas_classical.py --output artifacts/atlas-rnafm/classical-development-v1
+.venv-atlas/bin/python scripts/profile_atlas_fm.py
+.venv-atlas/bin/python scripts/run_atlas_fm.py --output artifacts/atlas-rnafm/fm-development-v1
+.venv-atlas/bin/python scripts/run_atlas_acquisition.py --output artifacts/atlas-rnafm/acquisition-development-v1
+MPLCONFIGDIR=artifacts/atlas-rnafm/mpl .venv-atlas/bin/python scripts/report_atlas_research.py
+.venv-atlas/bin/python scripts/audit_atlas_research.py
 ```
 
-`tests/atlas/test_boundaries.py` needs the optional pandas/XGBoost research runtime;
-its placement/collection must be coordinated with the integrator before merging
-into core CI. Pure chemistry parser tests need no FM or dataset downloads.
+Before the native anchor, clone the Atlas source at
+`bb90c946013f183379da04678340e193088e5f99` into the indicated ignored upstream path.
+FM scripts currently use the verified local checkpoint at
+`/private/tmp/oligoal-rnafm-20261114/artifacts/rnafm-checkpoint/RNA-FM_pretrained.pth`.
+The library adapter accepts any checkpoint path with matching identity, but these
+local research scripts need that path provided or explicitly updated on another
+machine. This portability limitation is not concealed as a one-command clean install.
+
+Checks actually completed after the study:
+
+```sh
+# Existing core environment, without optional research package requirements:
+PYTHONPATH=src /Users/rohanbutani/Desktop/proj/Princeton_hacks/.venv/bin/python -m pytest -q
+# 160 passed
+
+# Optional Atlas model/oracle tests and pure parser/policy tests:
+PYTHONPATH=src .venv-atlas/bin/python -m pytest -q tests/atlas tests/test_rnafm_atlas_boundaries.py tests/test_rnafm_atlas_oracle.py tests/test_rnafm_aso.py
+# 21 passed (14 also included in core suite; counts are not additive)
+```
+
+Optional tests follow existing `test_rnafm*` collection rules; no core conftest or
+lockfile changes were necessary. Pure parser/policy tests run in core CI. Tests of
+actual model updates and cached/batched parity are additionally backed by the real
+checkpoint profile and full fit receipts, not just mocked/unit execution.
 
 All checkpoints, caches and run outputs stay ignored under `artifacts/atlas-rnafm/`.
 No downloaded upstream source, source-trained weights or generated rows are committed.
