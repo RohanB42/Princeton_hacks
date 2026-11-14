@@ -202,38 +202,46 @@ def report(output: Path) -> None:
     plt.close(fig)
     # Each duration-selected target fit uses budget-internal validation.
     for model in COLORS:
-        fig, axes = plt.subplots(3, 2, figsize=(12, 9), sharey=True)
-        for row, target in enumerate(["F7", "STAT3", "NLRP3"]):
-            for col, budget in enumerate([2869, 4781]):
-                ax = axes[row, col]
-                for seed in [510, 511, 512]:
-                    path = output / (
-                        f"target-{budget}-{seed}-{model}-{target}-"
-                        "sourcebest_targetselected_inner/history.json"
+        for time_axis in [False, True]:
+            fig, axes = plt.subplots(3, 2, figsize=(12, 9), sharey=True)
+            for row, target in enumerate(["F7", "STAT3", "NLRP3"]):
+                for col, budget in enumerate([2869, 4781]):
+                    ax = axes[row, col]
+                    for seed in [510, 511, 512]:
+                        path = output / (
+                            f"target-{budget}-{seed}-{model}-{target}-"
+                            "sourcebest_targetselected_inner/history.json"
+                        )
+                        if not path.exists():
+                            continue
+                        h = pd.DataFrame(json.loads(path.read_text()))
+                        (line,) = ax.plot(
+                            (h.elapsed_s / 60 if time_axis else h.epoch),
+                            h.train_mse,
+                            label=f"seed {seed}",
+                        )
+                        ax.plot(
+                            (h.elapsed_s / 60 if time_axis else h.epoch),
+                            h.validation_mse,
+                            color=line.get_color(),
+                            linestyle="--",
+                        )
+                    ax.set_title(f"{target}; {budget:,} source labels")
+                    ax.set_xlabel(
+                        "Elapsed minutes" if time_axis else "Target adaptation epoch"
                     )
-                    if not path.exists():
-                        continue
-                    h = pd.DataFrame(json.loads(path.read_text()))
-                    (line,) = ax.plot(h.epoch, h.train_mse, label=f"seed {seed}")
-                    ax.plot(
-                        h.epoch,
-                        h.validation_mse,
-                        color=line.get_color(),
-                        linestyle="--",
-                    )
-                ax.set_title(f"{target}; {budget:,} source labels")
-                ax.set_xlabel("Target adaptation epoch")
-                ax.set_ylabel("MSE (percentage points²)")
-                ax.legend(fontsize=7)
-                ax.grid(alpha=0.2)
-        fig.suptitle(
-            f"{model}: target training (solid) and grouped validation (dashed)\n"
-            "Validation rows are inside the 200-label target budget; "
-            "test outcomes never select epochs"
-        )
-        fig.tight_layout(rect=(0, 0, 1, 0.94))
-        fig.savefig(output / f"target-loss-{model}.png", dpi=180)
-        plt.close(fig)
+                    ax.set_ylabel("MSE (percentage points²)")
+                    ax.legend(fontsize=7)
+                    ax.grid(alpha=0.2)
+            fig.suptitle(
+                f"{model}: target training (solid) and grouped validation (dashed)\n"
+                "Validation rows are inside the 200-label target budget; "
+                "test outcomes never select epochs"
+            )
+            fig.tight_layout(rect=(0, 0, 1, 0.94))
+            suffix = "-time" if time_axis else ""
+            fig.savefig(output / f"target-loss-{model}{suffix}.png", dpi=180)
+            plt.close(fig)
     print(summary.to_string(index=False))
     print("Paired comparisons", json.dumps(comparisons, indent=2))
 

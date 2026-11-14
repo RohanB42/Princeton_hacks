@@ -71,3 +71,29 @@ metrics or any analysis. The full runner now reads feature columns separately an
 filters endpoint reads to permitted IDs at the Parquet read boundary. This strengthens
 access control without changing any training row, label, split or hyperparameter.
 Per-invocation script hashes preserve the implementation difference.
+
+Profile completed:6 epochs in383.70seconds; selected source checkpoint epoch1
+(validation RMSE26.179, versus27.557 at epoch3 and29.294 at epoch6). Training
+RMSE fell to15.555. Base weights unchanged and LoRA adapters updated. This first
+source condition shows overfitting with extra epochs at the fixed learning rate;
+it does not yet answer target transfer or the larger-source comparison.
+
+Full matrix resumed with `scripts/run_atlas_scaling.py --phase run`, output redirected
+to `artifacts/atlas-rnafm/scaling-v1/run.log`. Active PID78172; tool session70225.
+The completed profile is reused unchanged. All three paired seeds remain scheduled
+within the original4h cap. Code commits5ec29dc andf509ff3 are isolated, unmerged and
+unpushed. Current completed count:1; failed count:0.
+
+First complete paired source condition (3%, source seed510 / target seed610):
+34/240 planned fit/calibration records now complete, no failures. Both FM arms,
+source Ridge/XGBoost and all three target protocols/offset controls completed for
+F7/STAT3/NLRP3. LoRA source ran6 epochs (best1); frozen source ran11 (best6).
+The5%/seed510 source run is active. Target scoring remains deferred until the whole
+matrix is fitted. Metadata/receipt audit passed for all completed records; actual
+source curves refreshed. Planned totals are24 source models,180 source-conditioned
+adaptations/calibrations and36 target-only controls, yielding216 final scoring rows.
+
+Log formatting caveat: this running invocation prints `validation 0` for the fixed3
+protocols that have no validation input. Their structured histories correctly omit
+validation metrics; zero is not a measured validation error. The script's display
+has been corrected to `None` for future invocations, without changing this run.

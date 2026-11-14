@@ -207,7 +207,11 @@ def run(args: argparse.Namespace) -> None:
                 "train",
                 round(row["train_rmse"], 3),
                 "validation",
-                round(row.get("validation_rmse", 0), 3),
+                (
+                    None
+                    if "validation_rmse" not in row
+                    else round(row["validation_rmse"], 3)
+                ),
                 flush=True,
             )
 

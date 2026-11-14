@@ -88,22 +88,27 @@ def test_history_selection_restores_full_state_and_denies_val_gradients(monkeypa
     assert receipt["history"][0]["train_mse"] >= 0
 
 
-def test_evaluation_label_poisoning_cannot_change_fitting(monkeypatch):
+def test_evaluation_label_poisoning_cannot_change_fitting(monkeypatch, tmp_path):
     patch_head(monkeypatch)
     train, val = frames()
+    from oligo_engine.atlas.scaling import read_label_subset
+
     states, histories = [], []
-    # Evaluation labels deliberately live outside the fit capability.
+    # Exercise the real filtered endpoint reader before the fitting boundary.
     for poisoned in [False, True]:
-        evaluation = pd.DataFrame(
-            {
-                "source_row_id": ["heldout"],
-                "Inhibition_pct": [1e12 if poisoned else 1.0],
-            }
-        )
-        assert evaluation.source_row_id.iloc[0] not in train.source_row_id.tolist()
+        cohort = pd.concat([train, val], ignore_index=True)
+        cohort["Inhibition_pct"] = np.arange(6.0)
+        cohort.loc[len(cohort)] = ["heldout", 99.0, 1e12 if poisoned else 1.0]
+        path = tmp_path / f"cohort-{poisoned}.parquet"
+        cohort.to_parquet(path)
+        permitted = train.source_row_id.tolist() + val.source_row_id.tolist()
+        labels = read_label_subset(path, permitted)
         model = TinyPredictor()
         receipt = model.fit(
-            train, np.arange(4.0), epochs=4, validation=(val, np.array([4.0, 5.0]))
+            train,
+            labels.loc[train.source_row_id].to_numpy(),
+            epochs=4,
+            validation=(val, labels.loc[val.source_row_id].to_numpy()),
         )
         histories.append(
             [
