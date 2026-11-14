@@ -1,23 +1,76 @@
-# Documentation template; keys verified at OligoGym revision 97f5b9f58d9e445a8ecb0218037af7465c3708c0.
+# Planning mirror of the authoritative data/oligogym/manifest.json catalog.
+# Runnable collection configs: all-datasets-smoke.toml and measured-diagnostic.toml.
 # TLR7/8 registry keys conflict with their JSON assay descriptions; confirm identities.
 datasets:
-  - display_name: Huesken potency
-    source_name: Ichihara_2007_1
-    upstream_handle: Huesken
-    role: headline
-  - display_name: TLR7 immune
-    source_name: Alharbi_2020_1
-    upstream_handle: TLR7
-    role: auxiliary
-  - display_name: TLR8 immune
-    source_name: Alharbi_2020_2
-    upstream_handle: TLR8
-    role: auxiliary
-  - display_name: MOE neurotoxicity
-    source_name: MOE_Neurotox_1
-    upstream_handle: Neurotox MOE
-    role: primary_toxicity
-  - display_name: OpenASO potency
-    source_name: McQuisten_2007_1
-    upstream_handle: OpenASO
-    role: stretch
+  - display_name: "Ichihara"
+    source_name: "Ichihara_2007_2"
+    upstream_handle: "Ichihara"
+    benchmark_alias: "siRNA2"
+    modality: "siRNA"
+    role: independent_task
+  - display_name: "TLR8"
+    source_name: "Alharbi_2020_2"
+    upstream_handle: "TLR8"
+    benchmark_alias: "immune_modulation_TLR8"
+    modality: "ASO"
+    role: independent_task
+  - display_name: "Shmushkovich"
+    source_name: "Shmushkovich_2018_1"
+    upstream_handle: "Shmushkovich"
+    benchmark_alias: "siRNA3"
+    modality: "siRNA"
+    role: independent_task
+  - display_name: "ASOptimizer"
+    source_name: "Hwang_2024_1"
+    upstream_handle: "ASOptimizer"
+    benchmark_alias: "asoptimizer_cleaned"
+    modality: "ASO"
+    role: independent_task
+  - display_name: "Neurotox LNA"
+    source_name: "Hagedorn_2022_1"
+    upstream_handle: "Neurotox LNA"
+    benchmark_alias: "acute_neurotox_lna"
+    modality: "ASO"
+    role: independent_task
+  - display_name: "TLR7"
+    source_name: "Alharbi_2020_1"
+    upstream_handle: "TLR7"
+    benchmark_alias: "immune_modulation_TLR7"
+    modality: "ASO"
+    role: independent_task
+  - display_name: "Huesken"
+    source_name: "Ichihara_2007_1"
+    upstream_handle: "Huesken"
+    benchmark_alias: "siRNA1"
+    modality: "siRNA"
+    role: primary_sirna_efficacy
+  - display_name: "OpenASO"
+    source_name: "McQuisten_2007_1"
+    upstream_handle: "OpenASO"
+    benchmark_alias: "openASO"
+    modality: "ASO"
+    role: independent_task
+  - display_name: "Cytotox LNA"
+    source_name: "Papargyri_2020_1"
+    upstream_handle: "Cytotox LNA"
+    benchmark_alias: "cytotox_lna"
+    modality: "ASO"
+    role: independent_task
+  - display_name: "siRNAmod"
+    source_name: "Martinelli_2023_1"
+    upstream_handle: "siRNAmod"
+    benchmark_alias: "siRNAmod"
+    modality: "siRNA"
+    role: independent_task
+  - display_name: "Neurotox MOE"
+    source_name: "MOE_Neurotox_1"
+    upstream_handle: "Neurotox MOE"
+    benchmark_alias: "acute_neurotox_moe_cleaned"
+    modality: "ASO"
+    role: independent_task
+  - display_name: "Sherwood"
+    source_name: "Knott_2014_1"
+    upstream_handle: "Sherwood"
+    benchmark_alias: "sherwood"
+    modality: "shRNA"
+    role: independent_task
