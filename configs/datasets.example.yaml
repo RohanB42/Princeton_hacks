@@ -1,22 +1,23 @@
-# Documentation template; loader handles require pinned upstream verification.
+# Documentation template; keys verified at OligoGym revision 97f5b9f58d9e445a8ecb0218037af7465c3708c0.
+# TLR7/8 registry keys conflict with their JSON assay descriptions; confirm identities.
 datasets:
   - display_name: Huesken potency
     source_name: Ichihara_2007_1
-    upstream_handle: null
+    upstream_handle: Huesken
     role: headline
   - display_name: TLR7 immune
     source_name: Alharbi_2020_1
-    upstream_handle: null
+    upstream_handle: TLR7
     role: auxiliary
   - display_name: TLR8 immune
     source_name: Alharbi_2020_2
-    upstream_handle: null
+    upstream_handle: TLR8
     role: auxiliary
   - display_name: MOE neurotoxicity
     source_name: MOE_Neurotox_1
-    upstream_handle: null
+    upstream_handle: Neurotox MOE
     role: primary_toxicity
   - display_name: OpenASO potency
     source_name: McQuisten_2007_1
-    upstream_handle: null
+    upstream_handle: OpenASO
     role: stretch
