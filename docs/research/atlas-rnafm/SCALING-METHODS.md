@@ -1,5 +1,7 @@
 # Atlas RNA-FM source-size and duration follow-up
 
+Completed results: [SCALING-RESULTS.md](SCALING-RESULTS.md); execution record: [SCALING-STATUS.md](SCALING-STATUS.md).
+
 Authorized November14,2026. This study independently tests whether increasing
 source measurements from the historical1,000-label run to3%/5% of the eligible
 source pool, and selecting training duration using internal validation, improves

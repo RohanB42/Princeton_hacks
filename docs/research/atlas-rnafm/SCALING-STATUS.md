@@ -3,21 +3,25 @@
 Updated November 14, 2026. Isolated branch `codex/atlas-lora-scaling`, base `9fd9f10`.
 Read SCALING-HANDOFF.md for authorization and scientific boundaries.
 
-State: **full matched matrix running**, PID 78172, tool session 70225.
-Latest checked: 2026-11-14T20:59:25+00:00.
-Completed 170/240 fit/calibration records; failures 0;
-recorded elapsed 83.3 minutes. Target test scoring remains deferred.
-Five of six source-size/seed conditions are complete. The final 5%/seed512 condition
-is active, followed by the target-only controls and deferred scoring.
+State: **completed**, with no active training process. All 240 planned fit/calibration
+records and 216 deferred target-score records completed; failures 0. Total recorded
+study elapsed time was 6,037.1 seconds (100.6 minutes), including the retained profile.
+Completed November 14, 2026. The final interpretation, tables and limitations are in
+[SCALING-RESULTS.md](SCALING-RESULTS.md).
+
+Extra source data and validation-selected duration did not establish a LoRA advantage.
+At 3% / 5% source allocation with fixed three-epoch target adaptation, LoRA target
+RMSE was 22.391 / 22.340, versus matched source Ridge 19.883 / 19.656. Training loss
+improvements are not evidence of improved transfer or a better RL reward head.
 
 The published 136-record snapshot remains unchanged in
 [SCALING-INTERMEDIATE-2026-11-14.md](SCALING-INTERMEDIATE-2026-11-14.md), commit
 `1b3fc1e`. Subsequent work stays local until integrator review; no automatic push.
 The continuously updated machine-readable status is `scaling-v1/suite.json`.
 
-Current command: `scripts/run_atlas_scaling.py --phase run`, with the runtime and
+Completed command: `scripts/run_atlas_scaling.py --phase run`, with the runtime and
 environment below; stdout/stderr in `scaling-v1/run.log`. Source profile is complete
-and retained as the first planned fit. All three paired seeds remain scheduled.
+and retained as the first planned fit. All three paired seeds completed.
 
 Initial profile command (completed, from this worktree):
 
@@ -54,8 +58,18 @@ poison invariance, group/budget integrity and preservation of legacy fixed epoch
 Publication checks: 160 core and 28 focused optional tests passed (overlapping suites);
 repository-wide Ruff lint/format and completed-receipt audits passed. No new dependencies or main files changed.
 
-Next: complete the remaining paired seed and target-only controls, then score the
-fixed development-target test predictions after all fitting has ended.
+Final checks: 120 neural receipts and 120 classical/calibration receipts audited;
+216 unique score records match prediction bundles. Base weights unchanged in all
+neural fits; all 60 LoRA fits updated adapters. Six equal-source-checkpoint pairs
+produce exactly equal target predictions. All eight PNGs were regenerated; source,
+target, epoch/time and comparison figures were visually inspected. Final test logs
+are `scaling-v1/final-{core,optional}-tests.log`; analysis provenance is under
+`scaling-v1/provenance/`. No further experiments or pushes were launched.
+
+## Historical execution log
+
+The entries below record intermediate observations and estimates at their original
+checkpoints; the completed state above supersedes their running counts and forecasts.
 
 First measured epoch: 65.41 seconds, source train RMSE30.626 and patent-validation RMSE26.179. One epoch cannot diagnose undertraining/overfitting. A20-epoch3% LoRA source fit projects about22minutes;5% about36minutes if throughput scales linearly. Six maximum-duration LoRA source fits alone project roughly3hours; early stopping may reduce this. The four-hour cap is retained; exact incomplete counts will be reported if reached. First actual PNGs: `scaling-v1/source-loss-epochs.png` and `source-loss-time.png` (pending panels explicitly marked).
 
