@@ -43,7 +43,7 @@ def make_policy(name: str, featurizer):
 
 
 def run_seed(task):
-    seed, train_ids, test_ids, output = task
+    seed, train_ids, test_ids, output, predictors = task
     from oligo_engine.contracts import RunConfig, SplitManifest
     from oligo_engine.data.catalog import Catalog
     from oligo_engine.evaluation.runner import run_campaign
@@ -70,7 +70,7 @@ def run_seed(task):
         "rf": lambda: OneHotRandomForest(seed, n_jobs=2),
     }
     done = []
-    for predictor in PREDICTORS:
+    for predictor in predictors:
         cache: dict = {}
         for arm in ARMS:
             path = output / predictor / arm / f"run-seed-{seed}.json"
@@ -106,6 +106,8 @@ def main() -> None:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--workers", type=int, default=5)
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--seeds", type=int, nargs=2, default=[SEEDS[0], SEEDS[-1] + 1])
+    parser.add_argument("--predictors", nargs="+", default=list(PREDICTORS))
     args = parser.parse_args()
     if args.output.exists() and any(args.output.iterdir()) and not args.resume:
         parser.error("Output exists; pass --resume to add missing runs only")
@@ -115,7 +117,8 @@ def main() -> None:
     data, observations, _labels = load()
     del _labels
     tasks, sizes = [], {}
-    for seed in SEEDS:
+    seeds = tuple(range(*args.seeds))
+    for seed in seeds:
         train, test = split(data, seed)
         if len(train) < MAXIMUM:
             raise ValueError(f"seed {seed}: pool {len(train)} below {MAXIMUM}")
@@ -126,6 +129,7 @@ def main() -> None:
                 [observations[i].sample_id for i in train],
                 [observations[i].sample_id for i in test],
                 args.output,
+                tuple(args.predictors),
             )
         )
     args.output.mkdir(parents=True, exist_ok=True)
@@ -133,9 +137,9 @@ def main() -> None:
         json.dumps(
             {
                 "doc": "docs/acquisition-comparison.md",
-                "seeds": list(SEEDS),
+                "seeds": list(seeds),
                 "arms": list(ARMS),
-                "predictors": list(PREDICTORS),
+                "predictors": list(args.predictors),
                 "initial": INITIAL,
                 "batch": BATCH,
                 "maximum": MAXIMUM,

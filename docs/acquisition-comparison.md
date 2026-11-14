@@ -147,9 +147,9 @@ GP predictor, primary statistic (normalized AULC minus random, Holm over 3 arms)
   +0.0135 (p 0.070, Holm 0.21); label efficiency and fixed budgets also null after
   correction (diversity at 100 labels p 0.036, Holm 0.61).
 
-## Proposed confirmatory run (NOT yet run; frozen only when approved)
+## Confirmatory run (protocol frozen 2026-11-14 on approval, before any run)
 
-- Fresh seeds 110-149 (40), never inspected; GP predictor, same four arms, budgets,
+- Fresh seeds 110-149 (40), never inspected (command: `--seeds 110 150 --predictors gp`); GP predictor, same four arms, budgets,
   split and analysis as above. The seeds 100-109 results stay labeled exploratory.
 - One primary hypothesis fixed in advance: uncertainty minus random normalized AULC
   is positive, two-sided paired t-test at alpha 0.05 (Wilcoxon as a robustness check).
