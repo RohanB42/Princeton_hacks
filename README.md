@@ -23,6 +23,17 @@ not reproduction of the winning CNN (upstream mean 0.6309), and it is not an
 active-learning comparison. A published Random Forest cross-check also misses the
 frozen tolerance (0.5591 versus 0.5910 reference). See
 [verification and discrepancies](docs/upstream-verification.md).
+The subsequent [Gate 1 study](docs/gate1-reproducibility-study.md) finds that the
+upstream model factory drops RF `max_depth`. Corrected native-helper execution
+repeats exactly at r=0.5598, but still misses the 0.5910 reference by 0.0313.
+Local repeatability is established; historical reproduction remains unresolved.
+
+The expanded [published-best efficacy study](docs/gate1-efficacy-reproduction.md)
+now completes **35 full-data fits across all seven efficacy datasets**. Four meet
+the unchanged 0.03 Pearson tolerance: Huesken, Shmushkovich, siRNAmod and Sherwood.
+Huesken's winning CNN reaches **0.6096 versus 0.6309** published. Ichihara, OpenASO
+and ASOptimizer remain outside tolerance, so full numerical reproduction is not
+established. The frozen configs and one-command suite preserve every outcome.
 
 ## Run the tested vertical slice
 
@@ -96,3 +107,11 @@ equivalence is claimed. Generated molecules would remain unvalidated hypotheses.
 Project license and dataset/weight rights still need owner review before publication.
 Released datasets are explicitly authorized for this repository with source notices;
 generated artifacts, other datasets, PDFs and weights remain ignored.
+
+### Model-informed Huesken active learning
+
+The four-policy GP development runner compares random, diversity, model uncertainty
+and a fixed hybrid with initial-label-only kernel selection. See
+[the protocol and run commands](docs/active-learning-development.md). It writes
+paired reports and learning curves from measured replay; it does not establish
+label savings merely by running. The completed CNN diversity pilot remains separate.

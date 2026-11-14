@@ -7,6 +7,13 @@ the generalized official reproduction command accepts `--dataset` and derives it
 reference from the selected dataset. See dataset-pipelines.md. The earlier failed
 Huesken attempts and unresolved Gate 1 remain as recorded below.
 
+Later scope update: the published best models on all seven efficacy datasets now
+run end to end, 35 full-data fits. The headline Huesken CNN agrees within the
+frozen 0.03 numerical tolerance (0.609600 vs 0.630914); four datasets pass that
+criterion, three remain outside. The historical statements below about the CNN
+not yet being rerun describe the earlier attempts only. Current complete results
+and limitations are in [efficacy reproduction](gate1-efficacy-reproduction.md).
+
 ## Source and environment
 
 Upstream: [Roche/OligoGym at 97f5b9f](https://github.com/Roche/OligoGym/tree/97f5b9f58d9e445a8ecb0218037af7465c3708c0).
@@ -88,6 +95,14 @@ of variability. Next verification issue: recover original manifests/environment
 before measured acquisition. Do not hunt for favorable seeds.
 
 ## Independent Random Forest cross-check
+
+November 14 correction: this earlier attempt applied `max_depth=20` directly.
+The audited benchmark's `prepare_model` filters that argument out, creating an
+unlimited-depth forest. Thus it was not a faithful effective-model reproduction.
+The result remains below as historical evidence. The fixed, source-helper study
+and exact repeat are recorded in [Gate 1 reproducibility study](gate1-reproducibility-study.md).
+Its native-helper mean is 0.559769 versus the 0.591037 reference, still outside the
+unchanged 0.03 tolerance. No whole-discrepancy explanation or gate pass is claimed.
 
 After diagnosing the linear training matrix's numerical instability, froze a
 second published configuration in `configs/reproduce-rf.toml`: OneHotEncoder base
