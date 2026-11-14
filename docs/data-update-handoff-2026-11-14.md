@@ -83,6 +83,10 @@ strings. Their row-level mapping remains unverified.
 - Gate 1 historical benchmark reproduction remains open. The local split
   audits do not alter that status or establish a published-score comparison.
 
+The subsequent [simple Huesken baseline study](simple-huesken-baselines-2026-11-14.md)
+uses these audited local splits with training-only Ridge selection. Its results
+remain diagnostic and separate from historical benchmark reproduction.
+
 ## Verification performed
 
 The direct full-collection validator passed all 337,593 rows and manifest
