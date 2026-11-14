@@ -5,6 +5,19 @@
 **Repository:** `/Users/harrisonmartel/hackprinceton/Princeton_hacks`  
 **Repository snapshot reviewed:** `main` at `930b6fa`
 
+**November 14 reconciliation:** see the
+[current implementation plan](aso-rl-implementation-plan-2026-11-14.md), prepared
+after syncing `origin/main` at `97a326d` and reviewing the environment attachment
+and all timestamped updates. It narrows the first environment to fixed-template
+target-site search with one validated potency objective and distinguishes current
+code from proposed integration. The sections below preserve the earlier build
+snapshot; the latest context supersedes its interim status and initial weighting
+proposals.
+
+The subsequent [execution report](aso-rl-execution.md) records the implemented ASO
+fixture, frozen inference adapters, optimizer comparison and remaining real-model
+gates. It distinguishes working engineering code from a validated real ASO run.
+
 ## 1. Decision
 
 Keep OligoGym. The existing OligoGym-trained endpoint models remain the scientific and software foundation of the system.

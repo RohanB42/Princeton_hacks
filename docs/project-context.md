@@ -65,3 +65,15 @@ five-seed Ridge prediction and fixed-predictor geometry studies. Frozen features
 underperformed one-hot; geometry showed no consistent advantage. A bounded real
 LoRA proof completed; the multi-seed LoRA/classical comparison is still running
 in its isolated checkout. See rnafm-study.md and rnafm-lora-comparison.md.
+
+Subsequent user-authorized ASO environment execution is documented in
+[aso-rl-execution.md](aso-rl-execution.md). The existing reward-adapter branch now
+has offline MOE target-site search, a real-candidate frozen inference boundary,
+budgeted Gymnasium transitions, conventional search and optional MaskablePPO. The
+synthetic fixture reaches its known optimum and reloads deterministically; a tighter
+budget comparison is unfavorable to PPO. Final local checks pass 186 core tests and
+5 separate optional RL tests on Python 3.11. These are engineering results. Real
+Atlas artifact parity, assay/transcript profiles, screening validation and the
+locked real benchmark remain pending; expanded Gate 1 and endpoint separation are
+unchanged. No source datasets, model weights or generated artifacts were modified
+or published by this implementation.

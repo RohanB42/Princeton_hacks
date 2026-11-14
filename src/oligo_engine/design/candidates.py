@@ -7,7 +7,7 @@ candidate oligonucleotides and computes sequence-derived properties of them.
 Two chemistries are supported, each chosen to match a training set exactly rather
 than to be generally expressive:
 
-* ``ps_moe_gapmer`` - 5-10-5 2'-MOE wings over a DNA core, full phosphorothioate,
+* ``ps_moe_gapmer`` - 5-10-4 2'-MOE wings over a DNA core, full phosphorothioate,
   5-methylcytosine throughout. This is the chemistry of ``MOE_Neurotox_1`` and the
   chemistry Dr. Sun identified as what the field actually runs.
 * ``ps_2ome_gapmer`` - 5-10-5 2'-O-methyl wings over a DNA core, full

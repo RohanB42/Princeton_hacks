@@ -1,0 +1,12 @@
+# Engineering fixture only. No real transcript, assay or model is implied.
+schema = "aso-fixture-v1"
+purpose = "synthetic_fixture"
+seed = 7
+steps = 2048
+unique_budget = 10
+request_budget = 100
+shortlist_size = 5
+start = 1
+radius = 8
+horizon = 8
+gamma = 1.0
