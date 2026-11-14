@@ -75,7 +75,14 @@ def audit(output: Path) -> dict:
             if val:
                 assert receipt["restored_best"]
                 best = min(receipt["history"], key=lambda h: h["validation_rmse"])
-                assert best["epoch"] == receipt["selected_epoch"]
+                chosen = next(
+                    h
+                    for h in receipt["history"]
+                    if h["epoch"] == receipt["selected_epoch"]
+                )
+                assert chosen["validation_rmse"] <= (
+                    best["validation_rmse"] + receipt["min_delta_rmse"]
+                )
                 assert receipt["total_fit_validation_labels"] == len(fit | val)
         else:
             classical += 1

@@ -158,6 +158,14 @@ def run(args: argparse.Namespace) -> None:
     state.setdefault("invocations", []).append(
         {
             "pid": os.getpid(),
+            "code_revision": subprocess.check_output(
+                ["git", "rev-parse", "HEAD"], text=True
+            ).strip(),
+            "dirty": bool(
+                subprocess.check_output(
+                    ["git", "status", "--porcelain"], text=True
+                ).strip()
+            ),
             "phase": args.phase,
             "time_unix": time.time(),
             "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -218,6 +226,8 @@ def run(args: argparse.Namespace) -> None:
             checkpoint_epochs=tuple(cfg["checkpoint_epochs"]),
             epoch_callback=on_epoch,
         )
+        receipt["encoder_identity"] = model.encoder.identity
+        receipt["encoder_config"] = model.encoder.config
         torch.save(model.snapshot(), directory / "best.pt")
         for epoch, snapshot in model.checkpoints.items():
             torch.save(snapshot, directory / f"epoch-{epoch}.pt")
@@ -277,6 +287,7 @@ def run(args: argparse.Namespace) -> None:
                             model = pickle.load(f)
                     else:
                         source_dir.mkdir(parents=True, exist_ok=True)
+                        fit_start = time.monotonic()
                         model = HoldoutClassical(name, seed)
                         receipt = model.fit_validation(
                             frame.loc[tr],
@@ -284,6 +295,7 @@ def run(args: argparse.Namespace) -> None:
                             frame.loc[va],
                             fit_labels.loc[va].to_numpy(),
                         )
+                        receipt["elapsed_s"] = time.monotonic() - fit_start
                         with (source_dir / "model.pkl").open("wb") as f:
                             pickle.dump(model, f)
                         dump(source_dir / "receipt.json", receipt)
