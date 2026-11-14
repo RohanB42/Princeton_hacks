@@ -1,0 +1,291 @@
+{
+  "source_revision": "97f5b9f58d9e445a8ecb0218037af7465c3708c0",
+  "benchmark_sha256": "6ee90ce5837bbafb8dd69b467073c8eeb04f8ba3a2b8dd88cf57dc74cf18d776",
+  "selection": "highest released mean test Pearson, five nucleobase repeats",
+  "local_results_used_for_selection": false,
+  "datasets": [
+    {
+      "dataset": {
+        "key": "ASOptimizer",
+        "name": "Hwang_2024_1",
+        "benchmark_alias": "asoptimizer_cleaned",
+        "rows": 32602,
+        "modality": "ASO",
+        "collection": "Activity",
+        "data_file": "Hwang_2024_1_processed.csv.gz",
+        "metadata_file": "Hwang_2024_1_processed.json",
+        "caveats": []
+      },
+      "file": "ASOptimizer.toml",
+      "sha256": "4003701a6f943f5bd5543a46423f474dea2a7e5ebbda3702037c45a4a8b326bd",
+      "published": {
+        "model": {
+          "name": "CNN",
+          "depth": 2,
+          "hidden_dim": 64,
+          "kernel_size": 3,
+          "pooling_operation": "avg"
+        },
+        "featurizer": {
+          "name": "OneHotEncoder",
+          "encode_components": [
+            "base",
+            "sugar",
+            "phosphate"
+          ]
+        },
+        "alias": "asoptimizer_cleaned",
+        "reference_mean_pearson": 0.4791753367693962,
+        "reference_sample_sd": 0.038325385354440265,
+        "reference_values": [
+          0.4649420741922325,
+          0.4393398889371634,
+          0.5035027929901507,
+          0.5331087067023283,
+          0.4549832210251064
+        ]
+      }
+    },
+    {
+      "dataset": {
+        "key": "Huesken",
+        "name": "Ichihara_2007_1",
+        "benchmark_alias": "siRNA1",
+        "rows": 2431,
+        "modality": "siRNA",
+        "collection": "Activity",
+        "data_file": "Ichihara_2007_1_processed.csv.gz",
+        "metadata_file": "Ichihara_2007_1_processed.json",
+        "caveats": []
+      },
+      "file": "Huesken.toml",
+      "sha256": "59e79e4b83afda0c4ba3ac4b1b8fd7a9bb6da2d9ec06688ebedc99060b8138be",
+      "published": {
+        "model": {
+          "name": "CNN",
+          "depth": 1,
+          "hidden_dim": 64,
+          "kernel_size": 3,
+          "pooling_operation": "max"
+        },
+        "featurizer": {
+          "name": "OneHotEncoder",
+          "encode_components": [
+            "base",
+            "sugar",
+            "phosphate"
+          ]
+        },
+        "alias": "siRNA1",
+        "reference_mean_pearson": 0.6309139529356906,
+        "reference_sample_sd": 0.0303457495529185,
+        "reference_values": [
+          0.5845258415596246,
+          0.6535259355242744,
+          0.6156619946910096,
+          0.6468168047442787,
+          0.6540391881592659
+        ]
+      }
+    },
+    {
+      "dataset": {
+        "key": "Ichihara",
+        "name": "Ichihara_2007_2",
+        "benchmark_alias": "siRNA2",
+        "rows": 419,
+        "modality": "siRNA",
+        "collection": "Activity",
+        "data_file": "Ichihara_2007_2_processed.csv.gz",
+        "metadata_file": "Ichihara_2007_2_processed.json",
+        "caveats": []
+      },
+      "file": "Ichihara.toml",
+      "sha256": "4fc51021dd02d1b8727848e0a5819a84e869af939dc83effe8b06bc2b8cdc29b",
+      "published": {
+        "model": {
+          "name": "MLP",
+          "dropout": 0,
+          "hidden_dims": [
+            128
+          ]
+        },
+        "featurizer": {
+          "name": "OneHotEncoder",
+          "encode_components": [
+            "base"
+          ]
+        },
+        "alias": "siRNA2",
+        "reference_mean_pearson": 0.5704396692172451,
+        "reference_sample_sd": 0.11555674113045794,
+        "reference_values": [
+          0.692935075613083,
+          0.4070899325583544,
+          0.5473441198356473,
+          0.5347870160259351,
+          0.6700422020532057
+        ]
+      }
+    },
+    {
+      "dataset": {
+        "key": "OpenASO",
+        "name": "McQuisten_2007_1",
+        "benchmark_alias": "openASO",
+        "rows": 3913,
+        "modality": "ASO",
+        "collection": "Activity",
+        "data_file": "McQuisten_2007_1_processed.csv.gz",
+        "metadata_file": "McQuisten_2007_1_processed.json",
+        "caveats": []
+      },
+      "file": "OpenASO.toml",
+      "sha256": "b78d02e90afa492d3d6b85021c3657fcba372997596fb4b6d1f4f24b184b7b3b",
+      "published": {
+        "model": {
+          "name": "LinearModel",
+          "type": "ridge"
+        },
+        "featurizer": {
+          "name": "KMersCounts",
+          "k": [
+            1,
+            2
+          ],
+          "modification_abundance": false
+        },
+        "alias": "openASO",
+        "reference_mean_pearson": 0.29063317685951817,
+        "reference_sample_sd": 0.0784517797317069,
+        "reference_values": [
+          0.4008905240495515,
+          0.2214207591729407,
+          0.2901920615609997,
+          0.2118199197718411,
+          0.328842619742258
+        ]
+      }
+    },
+    {
+      "dataset": {
+        "key": "Sherwood",
+        "name": "Knott_2014_1",
+        "benchmark_alias": "sherwood",
+        "rows": 291551,
+        "modality": "shRNA",
+        "collection": "Activity",
+        "data_file": "Knott_2014_1_processed.csv.gz",
+        "metadata_file": "Knott_2014_1_processed.json",
+        "caveats": []
+      },
+      "file": "Sherwood.toml",
+      "sha256": "d5c925fa4a7a33a0cd3532289b319d338f03bc384021f582e099454e3d0adc86",
+      "published": {
+        "model": {
+          "name": "XGBoostModel",
+          "max_depth": 10,
+          "n_estimators": 500
+        },
+        "featurizer": {
+          "name": "OneHotEncoder",
+          "encode_components": [
+            "base",
+            "sugar",
+            "phosphate"
+          ]
+        },
+        "alias": "sherwood",
+        "reference_mean_pearson": 0.9008309027260569,
+        "reference_sample_sd": 0.030392911219988845,
+        "reference_values": [
+          0.935163511854306,
+          0.8791239151583067,
+          0.901212718644084,
+          0.9256341508840418,
+          0.8630202170895459
+        ]
+      }
+    },
+    {
+      "dataset": {
+        "key": "Shmushkovich",
+        "name": "Shmushkovich_2018_1",
+        "benchmark_alias": "siRNA3",
+        "rows": 356,
+        "modality": "siRNA",
+        "collection": "Activity",
+        "data_file": "Shmushkovich_2018_1_processed.csv.gz",
+        "metadata_file": "Shmushkovich_2018_1_processed.json",
+        "caveats": []
+      },
+      "file": "Shmushkovich.toml",
+      "sha256": "1661d727952c6db91ea327ae7dfaa02db994b78fd9308fcde78cfb0b8af49892",
+      "published": {
+        "model": {
+          "name": "RandomForestModel",
+          "max_depth": 10,
+          "n_estimators": 500
+        },
+        "featurizer": {
+          "name": "KMersCounts",
+          "k": [
+            1,
+            2
+          ],
+          "modification_abundance": false
+        },
+        "alias": "siRNA3",
+        "reference_mean_pearson": 0.42240512558112747,
+        "reference_sample_sd": 0.14381847340845016,
+        "reference_values": [
+          0.5931073226159645,
+          0.3153262242960581,
+          0.2415527063597267,
+          0.4453058890870346,
+          0.5167334855468535
+        ]
+      }
+    },
+    {
+      "dataset": {
+        "key": "siRNAmod",
+        "name": "Martinelli_2023_1",
+        "benchmark_alias": "siRNAmod",
+        "rows": 907,
+        "modality": "siRNA",
+        "collection": "Activity",
+        "data_file": "Martinelli_2023_1_processed.csv.gz",
+        "metadata_file": "Martinelli_2023_1_processed.json",
+        "caveats": []
+      },
+      "file": "siRNAmod.toml",
+      "sha256": "107edbd3810a41a2dfa668629901ffad228e80aeab896ab0cc6a9c6f935ee6a7",
+      "published": {
+        "model": {
+          "name": "RandomForestModel",
+          "max_depth": 20,
+          "n_estimators": 1000
+        },
+        "featurizer": {
+          "name": "OneHotEncoder",
+          "encode_components": [
+            "base",
+            "sugar",
+            "phosphate"
+          ]
+        },
+        "alias": "siRNAmod",
+        "reference_mean_pearson": 0.5285654459247755,
+        "reference_sample_sd": 0.08812167704952392,
+        "reference_values": [
+          0.5274654346005984,
+          0.6215293881616676,
+          0.5840931941780712,
+          0.3897822384691355,
+          0.5199569742144049
+        ]
+      }
+    }
+  ]
+}
