@@ -22,5 +22,8 @@ supersedes conflicting v5 claims. Roadmaps alone do not authorize new work.
   data/oligogym/ and general measured-data diagnostic pipelines. Preserve their raw
   bytes, metadata, license and manifest. This supersedes the earlier dataset exclusion
   and permits explicitly labeled diagnostic replays while Gate 1 remains open.
-  Never commit secrets, other datasets, PDFs, weights or generated run artifacts. Do not
+  The subsequent November 14 request also authorizes the ASO Atlas release and
+  lossless preparation under data/aso_atlas_2/; keep its separate endpoint contracts
+  and audit before model integration. Never commit secrets, other datasets, PDFs,
+  weights or generated run artifacts. Do not
   publish or select a project license without owner review of rights.
