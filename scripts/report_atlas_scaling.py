@@ -13,6 +13,22 @@ import pandas as pd
 COLORS = {"lora_chemistry": "#b35806", "frozen_chemistry": "#2166ac"}
 
 
+def paired_summary(difference: pd.Series) -> dict:
+    """Descriptive paired effects; repeated seeds are not independent target genes."""
+    if difference.isna().any():
+        raise ValueError("Incomplete paired comparison")
+    return {
+        "mean_paired_rmse_difference": float(difference.mean()),
+        "paired_record_sd": float(difference.std(ddof=1)),
+        "per_target_mean": {
+            str(k): float(v) for k, v in difference.groupby(level=0).mean().items()
+        },
+        "n_pairs": len(difference),
+        "n_target_identifiers": int(difference.index.get_level_values(0).nunique()),
+        "interpretation": "Descriptive development contrast; negative favors first arm",
+    }
+
+
 def source_curves(output: Path) -> None:
     """Render completed epochs only; missing fits stay visibly pending."""
     cfg = json.loads((output / "config.json").read_text())
@@ -173,6 +189,52 @@ def report(output: Path) -> None:
             )
     (output / "paired-comparisons.json").write_text(
         json.dumps(comparisons, indent=2) + "\n"
+    )
+    further = []
+    for (model, protocol), frame in table[table.source_budget > 0].groupby(
+        ["model", "protocol"]
+    ):
+        pivot = frame.pivot(
+            index=["target", "target_seed"],
+            columns="source_budget",
+            values="metric_rmse",
+        )
+        further.append(
+            {
+                "contrast": "5% minus 3% source label budget",
+                "model": model,
+                "protocol": protocol,
+                "caveat": "Inner fitting cohorts are not strictly nested",
+                **paired_summary(pivot[4781] - pivot[2869]),
+            }
+        )
+    for budget in [2869, 4781]:
+        for mode, neural_protocol, classical_protocol in [
+            ("all200_fixed3", "sourcebest_target3_all", "sourcebest_offset_all"),
+            (
+                "inner_validation_selected",
+                "sourcebest_targetselected_inner",
+                "sourcebest_offset_inner",
+            ),
+        ]:
+            frame = table[
+                (table.source_budget == budget)
+                & table.protocol.isin([neural_protocol, classical_protocol])
+            ]
+            pivot = frame.pivot(
+                index=["target", "target_seed"], columns="model", values="metric_rmse"
+            )
+            for comparator in ["frozen_chemistry", "ridge", "xgb"]:
+                further.append(
+                    {
+                        "contrast": f"LoRA minus {comparator}",
+                        "source_budget": budget,
+                        "protocol": mode,
+                        **paired_summary(pivot["lora_chemistry"] - pivot[comparator]),
+                    }
+                )
+    (output / "model-and-size-comparisons.json").write_text(
+        json.dumps(further, indent=2) + "\n"
     )
     for neural_protocol, offset_protocol, target_mode, title, filename in [
         (
