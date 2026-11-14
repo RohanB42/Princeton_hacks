@@ -1,8 +1,12 @@
 # Open questions
 
 - Historical alias `siRNA1` -> Huesken is verified in Analysis.ipynb; pinned downloader
-  keys are verified. TLR7/TLR8 registry descriptions disagree with their keys; the
-  assay/source mapping needs resolution before either endpoint is modeled.
+  keys are verified. **TLR7/TLR8 resolved 2026-11-14**: the registry `key` column is
+  swapped relative to the assay descriptions, which are correct. `Alharbi_2020_1` is
+  TLR8 potentiation (published as `immune_modulation_TLR7`) and `Alharbi_2020_2` is
+  TLR7 inhibition (published as `immune_modulation_TLR8`); established from label
+  scales, benchmark RMSE magnitudes and Alharbi et al. NAR 2020. See
+  `tlr-immunomodulation-predictors.md`. Worth reporting upstream.
 - What are the MOE assay species, route, dose, outcome direction, and patent provenance?
 - Default is separate siRNA and ASO tasks. Any future transfer study needs its own
   evidence; missing endpoints remain missing.

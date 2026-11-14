@@ -118,4 +118,97 @@ TLR readout is a prediction, not an observation.
 
 ## Results
 
-To be appended after the run.
+Run 2026-11-14 under the protocol frozen in commit `c771eb3` before any of these
+seeds: 2 endpoints x 2 arms x 30 seeds (300-329), no failures, under a minute.
+150 train / 42 test rows per seed. Dispersion is sample SD across seeds, not a
+confidence interval. The script's chemistry assertion passed on both endpoints:
+one sugar pattern (MMMMMDDDDDDDDDDMMMMM) and one backbone (`sp`, with the terminal
+`EMPTY`) across all 192 rows, so dropping sugar and phosphate loses nothing.
+
+![TLR immunomodulation predictors](figures/tlr-immunomodulation-predictors.png)
+
+### TLR8 potentiation (`Alharbi_2020_1`, published as `immune_modulation_TLR7`)
+
+Labels: mean 2.18, SD 1.00 (resiquimod = 1.0).
+
+| Arm | Mean Pearson r +- SD | Mean Spearman rho | Mean RMSE | Published | Gap | Gap in combined SE |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| GP, one-hot base | **0.6662 +- 0.1150** | 0.6571 | 0.742 | none | n/a | n/a |
+| RF, one-hot base | 0.6605 +- 0.0940 | 0.6287 | 0.775 | 0.6590 | **+0.0015** | +0.05 |
+
+### TLR7 inhibition (`Alharbi_2020_2`, published as `immune_modulation_TLR8`)
+
+Labels: mean 49.83, SD 23.08 (resiquimod = 100).
+
+| Arm | Mean Pearson r +- SD | Mean Spearman rho | Mean RMSE | Published | Gap | Gap in combined SE |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| GP, one-hot base | 0.5341 +- 0.0926 | 0.5162 | 19.97 | none | n/a | n/a |
+| RF, one-hot base | **0.5977 +- 0.0974** | 0.5686 | 18.94 | 0.5896 | **+0.0081** | +0.21 |
+
+### Reproduction
+
+**These are the closest reproductions in the project so far.** Both RF anchors land
+within 0.01 of their published means (+0.0015 at z = +0.05, and +0.0081 at z = +0.21),
+passing both parts of the revised Gate 1 criterion comfortably. For comparison:
+Huesken's anchors came in 0.021-0.027 low, MOE neurotox 0.007-0.032 high. Across
+four endpoints the discrepancies now straddle zero in both directions and none is
+large, which argues against a systematic environment or BLAS shift and for the
+reading in `gate1-resolution.md` that the five-fold published means are simply noisy
+draws.
+
+### Two different winners, which is the point
+
+The GP and the RF are **not** interchangeable across endpoints:
+
+| Endpoint | GP minus RF, paired by seed | GP better in | t-test p |
+| --- | ---: | ---: | ---: |
+| TLR8 potentiation | +0.0057 | 16/30 | 0.71 |
+| TLR7 inhibition | **-0.0636** | 4/30 | 2.9e-06 |
+
+On TLR8 potentiation the two are indistinguishable. On TLR7 inhibition the RF is
+clearly better, in 26 of 30 paired seeds. These tests were chosen after seeing the
+means, so treat the p-values as exploratory; the 26/30 seed count is the more robust
+statement. Taken with the MOE endpoint, where the GP won by +0.051 paired, there is
+no single best predictor family across the four endpoints. **Any product surface
+should pick the predictor per endpoint and say which one it used**, rather than
+claiming one model.
+
+### Our pre-run expectation about variance was wrong
+
+The protocol predicted a seed SD "at least as large as the MOE endpoint's 0.11-0.19"
+and "some seeds near or below zero". Actual seed SD is 0.09-0.12, and **not one seed
+of 120 produced a non-positive r**. 42 held-out rows turned out to be enough here,
+most likely because a mutant screen around four parent sequences on a k-mer cluster
+split leaves the test rows closer to training than the MOE patent set does. Recorded
+because it was stated in advance and it did not hold.
+
+### Uncertainty diagnostics, fourth and fifth endpoint
+
+| Endpoint | rho(SD, abs error) | rho(SD, nearest-train distance) | Coverage 1 SD | Coverage 1.96 SD |
+| --- | ---: | ---: | ---: | ---: |
+| TLR8 potentiation | +0.066 | +0.731 | 0.662 | 0.942 |
+| TLR7 inhibition | +0.009 | +0.705 | 0.698 | 0.957 |
+
+The same pattern as Huesken and MOE neurotox, now on a third chemistry and a fourth
+and fifth endpoint: **the GP latent SD is a novelty signal, not an error signal**
+(rho about 0.71-0.73 against distance to the labelled set, about 0.01-0.07 against
+absolute error). That is five endpoints agreeing, which strengthens the reading in
+`acquisition-comparison.md` that coverage of sequence space, rather than model
+uncertainty as such, is what helps acquisition there. It remains an inference from
+diagnostics; no acquisition run on these endpoints was performed.
+
+Interval coverage is close to nominal on both (0.66 and 0.70 against 0.68; 0.94 and
+0.96 against 0.95).
+
+### What can and cannot be said
+
+Can: on the official nucleobase split over 30 seeds, TLR8 potentiation is predicted
+at r = 0.666 (GP) and TLR7 inhibition at r = 0.598 (RF) from sequence alone; both
+published anchors reproduce within 0.01; the upstream key/assay mismatch is resolved
+and documented above.
+
+Cannot: any claim that a designed molecule is non-immunostimulatory, any
+target-generalization claim, any best-on-leaderboard claim (the published bests are
+0.727 and 0.6995), any pooling of the two assays or of these with efficacy, and any
+motif-level mechanistic claim. 192 rows and 4 targets is a small screen of mutants
+around a few parents; these numbers describe that screen.
