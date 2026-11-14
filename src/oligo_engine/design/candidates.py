@@ -243,3 +243,43 @@ def target_accessibility(
     offset = start - left
     window = range(offset + 1, offset + 1 + (end - start))
     return float(sum(1.0 - min(1.0, paired[i]) for i in window) / (end - start))
+
+
+def matches_chemistry(
+    sequence_helm: str,
+    sugars: tuple[str, ...],
+    phosphates: tuple[str, ...],
+    bases: tuple[str, ...],
+    max_length: int,
+) -> bool:
+    """True when a HELM string sits inside a declared chemistry and length budget.
+
+    Used both to select the training rows a deployment predictor may be fitted on
+    and to check candidates before scoring, so the two definitions cannot drift.
+    """
+    from oligogym.features import _extract_monomers
+
+    monomers = _extract_monomers(sequence_helm)
+    return (
+        set(monomers["sugar"]) <= set(sugars)
+        and set(monomers["phosphate"]) <= set(phosphates)
+        and set(monomers["base"]) <= set(bases)
+        and len(monomers["base"]) <= max_length
+    )
+
+
+# MOE_Neurotox_1 annotates every cytosine as 5-methylcytosine; ASOptimizer writes
+# plain C for the same PS/2'-MOE chemistry. The molecules are the same and the
+# conventions are not, so a candidate is rewritten into whichever convention the
+# receiving model was fitted on. This reconciles annotation, never chemistry: sugar,
+# backbone and length are untouched and are still checked separately.
+BASE_ANNOTATIONS = ("m5C", "plain")
+
+
+def annotate_bases(helm: str, annotation: str) -> str:
+    """Rewrite cytosine annotation in a HELM string without altering chemistry."""
+    if annotation not in BASE_ANNOTATIONS:
+        raise ValueError(f"Unknown annotation {annotation!r}; use {BASE_ANNOTATIONS}")
+    if annotation == "plain":
+        return helm.replace("([m5C])", "(C)")
+    return helm.replace("(C)", "([m5C])")

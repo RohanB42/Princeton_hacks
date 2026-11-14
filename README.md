@@ -35,6 +35,14 @@ column is swapped relative to the assay descriptions, so the published row label
 `immune_modulation_TLR7` is in fact the TLR8 assay. See
 [the endpoint study](docs/tlr-immunomodulation-predictors.md).
 
+**ASO efficacy, 2026-11-14.** ASOptimizer (`Hwang_2024_1`, 32,602 gapmers,
+percentage knockdown): the published RF anchor reproduces at 0.4326 +- 0.0594 against
+0.4094 (z +0.67). Within the PS/2'-MOE design space the surface designs in (5,586
+chemistry-matched rows, 5 targets), a GP reaches r 0.317 +- 0.061 over 30 seeds --
+a weak signal, about a tenth of the variance in knockdown, and the page labels it as
+such. The siRNA efficacy model (Huesken, r 0.616) is deliberately **not** applied to
+ASO candidates. See [the endpoint study](docs/aso-efficacy-predictor.md).
+
 **Gate 1 is closed** under a 30-seed noise-aware criterion: the frozen linear and RF
 configurations reproduce within noise, not exactly (gaps -0.021 and -0.027, both
 inside 2 combined SE). Upstream's published folds are unseeded, so exact
