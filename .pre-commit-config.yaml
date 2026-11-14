@@ -1,3 +1,5 @@
+# Released data/metadata must remain byte-for-byte identical to the manifest.
+exclude: ^data/oligogym/
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0

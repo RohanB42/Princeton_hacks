@@ -16,6 +16,10 @@ build/
 .vscode/
 data/**
 !data/README.md
+!data/oligogym/
+!data/oligogym/*.csv.gz
+!data/oligogym/*.json
+!data/oligogym/*.md
 artifacts/**
 !artifacts/README.md
 runs/
