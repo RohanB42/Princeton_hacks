@@ -13,7 +13,13 @@ def audit(output: Path) -> dict:
     source_manifest = json.loads(Path(cfg["manifest"]).read_text())
     frame = pd.read_parquet(
         Path(cfg["manifest"]).parent / "cohort.parquet",
-        columns=["source_row_id", "natural_rna", "compound_key", "USPTO ID"],
+        columns=[
+            "source_row_id",
+            "natural_rna",
+            "compound_key",
+            "USPTO ID",
+            "target_key",
+        ],
     ).set_index("source_row_id")
     source_allowed = set(source_manifest["source_train_ids"])
     excluded = set(source_manifest["source_validation_ids"])
@@ -32,15 +38,38 @@ def audit(output: Path) -> dict:
         assert (fit | val) <= source_allowed
         assert (fit | val).isdisjoint(excluded | reserved)
         assert set(part["fit_groups"]).isdisjoint(part["validation_groups"])
-        row = {"budget": part["budget"], "seed": part["seed"]}
+        row = {
+            "budget": part["budget"],
+            "seed": part["seed"],
+            "fit_patents": int(frame.loc[list(fit), "USPTO ID"].nunique()),
+            "validation_patents": int(frame.loc[list(val), "USPTO ID"].nunique()),
+            "fit_target_identifiers": int(frame.loc[list(fit), "target_key"].nunique()),
+            "validation_target_identifiers": int(
+                frame.loc[list(val), "target_key"].nunique()
+            ),
+            "fit_compound_identities": int(
+                frame.loc[list(fit), "compound_key"].nunique()
+            ),
+        }
         for key in ["natural_rna", "compound_key", "USPTO ID"]:
             row[f"cross_validation_{key}_identities"] = len(
                 set(frame.loc[list(fit), key]) & set(frame.loc[list(val), key])
             )
         source_audit.append(row)
+    nesting = []
     for seed in cfg["source_seeds"]:
         selected = [p for p in parts["source"] if p["seed"] == seed]
         assert set(selected[0]["selected_ids"]) < set(selected[1]["selected_ids"])
+        small, large = set(selected[0]["fit_ids"]), set(selected[1]["fit_ids"])
+        nesting.append(
+            {
+                "seed": seed,
+                "total_cohorts_nested": True,
+                "inner_fitting_cohorts_nested": small <= large,
+                "smaller_budget_fitting_ids_absent_from_larger_fit": len(small - large),
+                "retained_fitting_ids": len(small & large),
+            }
+        )
     for part in parts["target"]:
         fit, val, test = map(
             set, [part["fit_ids"], part["validation_ids"], part["test_ids"]]
@@ -108,6 +137,7 @@ def audit(output: Path) -> dict:
         "classical_receipts_checked": classical,
         "equal_source_checkpoint_prediction_pairs": equal_checkpoint_pairs,
         "source_internal_validation_identity_overlap": source_audit,
+        "source_cohort_nesting": nesting,
         "reserved_outcomes_read": False,
         "scope": "Metadata and completed receipts only; not numerical reproduction",
     }

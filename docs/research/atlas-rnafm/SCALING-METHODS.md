@@ -16,7 +16,9 @@ fraction denominator is95,638 eligible source-training records. Total source bud
 are2,869 and4,781, with nested uniform row samples for each source seed510–512.
 About20% of each selected cohort is assigned to internal validation by patent
 identifier, using a random group prefix closest to20% of rows. Validation membership can change between source budgets, so raw source-validation
-scores across3%/5% are not a common-test learning curve. The source-size comparison
+scores across3%/5% are not a common-test learning curve. Total sampled cohorts are
+nested, but inner fitting cohorts are not strictly nested; source-size comparisons
+therefore include changes in fitting-patent/target composition. The source-size comparison
 uses identical development-target test rows after matched target adaptation. Feature
 fitting, label normalization and gradient updates use only the remaining rows. Validation
 labels count against the source budget. The external14,614 source-validation rows

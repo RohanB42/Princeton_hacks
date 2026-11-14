@@ -200,7 +200,15 @@ def report(output: Path) -> None:
         "Error bars: paired-seed sample SD, not confidence intervals; "
         "three development targets"
     )
-    fig.tight_layout(rect=(0, 0, 1, 0.9))
+    fig.text(
+        0.5,
+        0.01,
+        "Budgets include validation; inner source fitting cohorts "
+        "are not strictly nested.",
+        ha="center",
+        fontsize=8,
+    )
+    fig.tight_layout(rect=(0, 0.05, 1, 0.9))
     fig.savefig(output / "target-scaling-comparison.png", dpi=180)
     plt.close(fig)
     # Each duration-selected target fit uses budget-internal validation.
