@@ -17,6 +17,15 @@ generalization claim, and any transfer to other endpoints. See
 [the four-policy comparison](docs/acquisition-comparison.md) and
 [figures](docs/figures/).
 
+**Second endpoint (safety), 2026-11-14.** On MOE acute neurotox (`MOE_Neurotox_1`,
+2,437 PS/2'-MOE gapmer ASOs, rounded 3h mouse FOB score), a one-hot GP that encodes
+sugar and phosphate reaches Pearson r 0.597 +- 0.112 and Spearman 0.580 over 30 seeds
+on the official `nucleobase` split. Both comparable published RF anchors reproduce
+within noise, and encoding the gapmer wing/core pattern beats nucleobases alone in 28
+of 30 paired seeds. This endpoint stays strictly separate from siRNA efficacy: no
+combined safety/efficacy score exists and none is claimed. See
+[the endpoint study](docs/neurotox-moe-predictor.md).
+
 **Gate 1 is closed** under a 30-seed noise-aware criterion: the frozen linear and RF
 configurations reproduce within noise, not exactly (gaps -0.021 and -0.027, both
 inside 2 combined SE). Upstream's published folds are unseeded, so exact
