@@ -15,8 +15,10 @@ patent, compound and base-equivalence exclusions are reused unchanged. The sourc
 fraction denominator is95,638 eligible source-training records. Total source budgets
 are2,869 and4,781, with nested uniform row samples for each source seed510–512.
 About20% of each selected cohort is assigned to internal validation by patent
-identifier, using a random group prefix closest to20% of rows. Feature fitting,
-label normalization and gradient updates use only the remaining rows. Validation
+identifier, using a random group prefix closest to20% of rows. Validation membership can change between source budgets, so raw source-validation
+scores across3%/5% are not a common-test learning curve. The source-size comparison
+uses identical development-target test rows after matched target adaptation. Feature
+fitting, label normalization and gradient updates use only the remaining rows. Validation
 labels count against the source budget. The external14,614 source-validation rows
 are unused in this follow-up.
 
@@ -118,16 +120,17 @@ checkpoint path is declared in `scripts/run_atlas_scaling.py`; weights stay igno
 
 ```sh
 export PYTHONPATH=src OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
-# Substitute the runtime path above for PYTHON in these commands.
-PYTHON scripts/run_atlas_scaling.py --phase prepare
-PYTHON scripts/run_atlas_scaling.py --phase profile
-PYTHON scripts/run_atlas_scaling.py --phase run
-MPLCONFIGDIR=artifacts/atlas-rnafm/scaling-v1/mpl PYTHON scripts/report_atlas_scaling.py
-PYTHON scripts/audit_atlas_scaling.py
+atlas_python=/private/tmp/oligoal-atlas-rnafm-20261114/.venv-atlas/bin/python
+"$atlas_python" scripts/run_atlas_scaling.py --phase prepare
+"$atlas_python" scripts/run_atlas_scaling.py --phase profile
+"$atlas_python" scripts/run_atlas_scaling.py --phase run
+MPLCONFIGDIR=artifacts/atlas-rnafm/scaling-v1/mpl "$atlas_python" scripts/report_atlas_scaling.py
+"$atlas_python" scripts/audit_atlas_scaling.py
 ```
 
 Live status and process IDs: SCALING-STATUS.md. Frozen config:
 `configs/atlas/scaling-v1.json`. Generated artifacts:
 `artifacts/atlas-rnafm/scaling-v1/`; all manifests, histories, checkpoint weights,
-predictions and generated figures remain ignored by Git. Code/doc commits stay on
-`codex/atlas-lora-scaling`; no merge or push is performed by this research task.
+predictions and generated figures remain ignored by Git. The user subsequently authorized publication of the intermediate work on
+`codex/atlas-lora-scaling`; the integrator pushes this branch without merging into
+main or interrupting training. See SCALING-INTERMEDIATE-2026-11-14.md.

@@ -3,17 +3,25 @@
 Updated November 14, 2026. Isolated branch `codex/atlas-lora-scaling`, base `9fd9f10`.
 Read SCALING-HANDOFF.md for authorization and scientific boundaries.
 
-State: instrumentation implemented and nine focused tests pass; all six source and
-nine target validation partitions frozen before fitting. First 3% LoRA source profile
-is running. No new target test outcomes have been scored.
+State: **full matched matrix running**, PID78172, tool session70225.
+Latest publication snapshot: 2026-11-14 20:44:57 UTC.
+Completed 136/240 planned fit/calibration records; failures 0;
+recorded elapsed 69.77 minutes. No target test metrics have been scored.
+Both source budgets for seeds 510 and 511 are complete; seed 512 remains.
+See [intermediate results](SCALING-INTERMEDIATE-2026-11-14.md) for the frozen publication snapshot.
+The continuously updated machine-readable status is `scaling-v1/suite.json`.
 
-Active command (from this worktree):
+Current command: `scripts/run_atlas_scaling.py --phase run`, with the runtime and
+environment below; stdout/stderr in `scaling-v1/run.log`. Source profile is complete
+and retained as the first planned fit. All three paired seeds remain scheduled.
+
+Initial profile command (completed, from this worktree):
 
 ```sh
 PYTHONPATH=src OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 /private/tmp/oligoal-atlas-rnafm-20261114/.venv-atlas/bin/python scripts/run_atlas_scaling.py --phase profile > artifacts/atlas-rnafm/scaling-v1/profile.log 2>&1
 ```
 
-Process PID77779; execution-tool session79735. One heavy process only. Frozen
+Completed profile PID77779; execution-tool session79735. One heavy process only. Frozen
 whole-study wall cap14,400 seconds; source seeds510–512 paired with target610–612.
 First profile is retained as the first planned source fit. Target duration begins
 only after the source profile and matched source3/sourcebest contrasts.
@@ -39,10 +47,11 @@ All feature fitting and gradients exclude validation rows.
 Checks: nine focused tests passed; changed-file Ruff lint and format pass. Tests cover
 best-state restoration, base integrity, validation-gradient exclusion, held-out label
 poison invariance, group/budget integrity and preservation of legacy fixed epochs.
-Core/full optional checks remain pending. No new dependencies or main files changed.
+Publication checks: 160 core and 28 focused optional tests passed (overlapping suites);
+repository-wide Ruff lint/format and completed-receipt audits passed. No new dependencies or main files changed.
 
-Next: collect source per-epoch validation profile, publish first curves/time estimate,
-then resume the matched frozen/LoRA/Ridge/XGBoost matrix within the declared cap.
+Next: complete the remaining paired seed and target-only controls, then score the
+fixed development-target test predictions after all fitting has ended.
 
 First measured epoch: 65.41 seconds, source train RMSE30.626 and patent-validation RMSE26.179. One epoch cannot diagnose undertraining/overfitting. A20-epoch3% LoRA source fit projects about22minutes;5% about36minutes if throughput scales linearly. Six maximum-duration LoRA source fits alone project roughly3hours; early stopping may reduce this. The four-hour cap is retained; exact incomplete counts will be reported if reached. First actual PNGs: `scaling-v1/source-loss-epochs.png` and `source-loss-time.png` (pending panels explicitly marked).
 
@@ -97,3 +106,27 @@ Log formatting caveat: this running invocation prints `validation 0` for the fix
 protocols that have no validation input. Their structured histories correctly omit
 validation metrics; zero is not a measured validation error. The script's display
 has been corrected to `None` for future invocations, without changing this run.
+
+5%/seed510 LoRA source profile completed:8 epochs in916.85seconds; validation-selected
+checkpoint epoch3. Base weights remain unchanged; adapters changed. Training and
+validation curves have been refreshed. Subsequent target protocols are running,
+with no test scoring yet. Source-validation membership differs by source budget;
+3% versus5% validation values must not be read as a shared-test learning curve.
+The source-size endpoint uses identical development-target test rows.
+
+Both source budgets for seed510/target610 are complete:68/240 records, zero failures, about34minutes elapsed. All source/target receipts pass the metadata audit. Identical epoch3/selected source states reproduce identical target predictions in 3 matched pairs. Source seed511 has started. Target test metrics remain deferred.
+
+Provenance strengthened: exact profile-script and helper bytes have been archived
+under `scaling-v1/provenance/` and verified against the SHA-256 values recorded
+before that profile. The full-run script is also archived and matches its recorded
+invocation hash. The training-model hash is unchanged across both invocations.
+Thus the initial dirty development invocation retains exact source bytes as well
+as hashes; all archived files remain ignored artifacts, not committed run outputs.
+
+Three of six complete source conditions:102/240 fit/calibration records at46.5minutes, zero failures. All completed receipt audits still pass. The5%/seed511 source condition is next; target test scoring remains deferred.
+
+5%/seed511 LoRA source completed9 epochs in978.34seconds, selecting epoch4.
+Its internal validation RMSE improved from32.102 at epoch3 to28.987 at epoch4;
+later epochs reduced training error but did not beat that validation checkpoint.
+Target-transfer comparisons are now running. This differs from the earlier source
+fits and reinforces reporting all paired seeds rather than generalizing one trace.
