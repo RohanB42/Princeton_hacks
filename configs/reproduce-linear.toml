@@ -1,0 +1,25 @@
+# Frozen before the local rerun. Reproduce this published linear configuration,
+# not the winning CNN. Analysis.ipynb maps historical siRNA1 -> Huesken.
+upstream_revision = "97f5b9f58d9e445a8ecb0218037af7465c3708c0"
+loader_key = "Huesken"
+benchmark_alias = "siRNA1"
+seeds = [0, 1, 2, 3, 4]
+reference_mean_pearson = 0.6158645398542795
+tolerance = 0.03
+
+[split]
+strategy = "nucleobase"
+test_size = 0.2
+n_clusters = 8
+kmer = true
+kmer_max = 3
+strand = "RNA1"
+
+[featurizer]
+name = "KMersCounts"
+k = [1, 2, 3]
+modification_abundance = true
+
+[model]
+name = "LinearModel"
+type = "standard"
