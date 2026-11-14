@@ -36,3 +36,8 @@ transcriptome_indexes/
 *.bam
 *.parquet
 *.pdf
+
+# Optional local research environments and embedding arrays
+.venv-*/
+*.npy
+*.npz

@@ -1,0 +1,50 @@
+# Frozen from the released benchmark before local best-model reruns.
+upstream_revision = "97f5b9f58d9e445a8ecb0218037af7465c3708c0"
+loader_key = "ASOptimizer"
+benchmark_alias = "asoptimizer_cleaned"
+seeds = [0, 1, 2, 3, 4]
+reference_mean_pearson = 0.4791753367693962
+tolerance = 0.03
+execution_mode = "benchmark_helpers"
+
+[split]
+strategy = "nucleobase"
+test_size = 0.2
+n_clusters = 8
+kmer = true
+kmer_max = 3
+strand = "RNA1"
+
+[featurizer]
+name = "OneHotEncoder"
+encode_components = ["base", "sugar", "phosphate"]
+
+[model]
+name = "CNN"
+depth = 2
+hidden_dim = 64
+kernel_size = 3
+pooling_operation = "avg"
+
+[performance]
+cache_native_monomers = true
+max_entries = 262144
+
+[training]
+val_split = true
+max_epochs = 100
+early_stopping = true
+early_stopping_kwargs = { patience = 5 }
+batch_size = 32
+learning_rate = 0.001
+weight_decay = 0.01
+verbose = false
+
+[trainer]
+accelerator = "cpu"
+devices = 1
+deterministic = true
+enable_checkpointing = false
+logger = false
+enable_progress_bar = false
+enable_model_summary = false

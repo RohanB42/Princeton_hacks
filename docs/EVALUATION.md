@@ -35,6 +35,11 @@ Verified source behavior:
    phosphate, depth 1, hidden_dim 64, kernel_size 3, max pooling (five rows).
    This is an upstream reference summary, **not our reproduced score**. Do not
    choose our models or policies using held-out labels to chase this number.
+7. `benchmarks/train_model.py:prepare_model` filters configured model arguments by
+   the wrapper constructor's explicit parameter names. For RandomForestModel this
+   drops `max_depth`, even though it appears in the benchmark CSV. Record requested
+   and effective estimator parameters. See gate1-reproducibility-study.md for the
+   corrected helper execution and declared RNG protocol.
 
 The Python 3.11 upstream environment installs with Poetry; model imports require
 three additional packages. A frozen published linear configuration has been rerun
@@ -44,6 +49,18 @@ tolerance (0.559096 vs 0.591037). Gate 1 remains open. See upstream-verification
 Investigate historical seed/environment identity. Approximate
 agreement within 0.03 alone cannot establish an exact historical reproduction.
 Do not reinterpret a different model's score as reproduction of the winning CNN.
+The November 14 native-helper RF rerun gives 0.559769, exactly repeated in a second
+process, versus 0.591037 published reference. The gap remains 0.031268. The earlier
+RF attempt's direct depth setting differed from the executable benchmark factory;
+it must not be described as a faithful effective-model reproduction.
+
+Expanded user-confirmed Gate 1 scope: reproduce the published best nucleobase model
+on all seven efficacy datasets. Frozen configs live in `configs/gate1-efficacy/`.
+All 35 full-data fits have executed; 4/7 meet the unchanged 0.03 numerical tolerance.
+The Huesken CNN is now rerun at mean 0.609600 versus reference 0.630914. Ichihara,
+OpenASO and ASOptimizer remain outside tolerance. See gate1-efficacy-reproduction.md
+for source checks, runtime deviations, per-dataset results and reproducible commands.
+Execution completion does not imply complete numerical or historical reproduction.
 
 ## Sequential experiment protocol
 

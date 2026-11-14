@@ -1,7 +1,11 @@
 # Dependency-ordered implementation tasks
 
-Local issue/worktree plan; no remote issues, branches or contributor assignments
-have been created. Integrator currently owns shared contracts and this first slice.
+Local issue/worktree plan; no remote issues or worktree branches have been created.
+Integrator owns shared contracts/configs and existing source. On November 14 the
+user explicitly requested a subagent for the Huesken CNN learning-curve pilot.
+`huesken_active_learning` is assigned the seven new adapter/policy/CLI/report/test
+files listed in docs/huesken-learning-protocol.md and its task handoff. It shares
+the workspace with disjoint file ownership; all earlier pending work is preserved.
 
 Current status: I0 is implemented and locally checked. I1 source/install/alias checks
 and the frozen five-seed linear rerun are implemented; numerical reproduction is
@@ -37,6 +41,13 @@ to the integrator; no concurrent lockfile/config/interface edits. Each experimen
 issue closes with tested code, reproducible config, artifacts and interpretation.
 Infrastructure issues may close with an explicit verified blocker rather than a
 fabricated result; Gate 1 itself remains open until reproduction is justified.
+
+Active scoped assignment: implement and execute configs/huesken-learning.toml
+under docs/huesken-learning-protocol.md. This advances I2–I5 on the numerically
+reproduced Huesken CNN, with explicit diagnostic status while the expanded
+seven-dataset/historical Gate 1 remains unresolved. The integrator owns the frozen
+protocol/config and reviews any shared-file change. No label-efficiency result is
+claimed before the paired five-seed runs and reporting finish.
 
 Cut lines: debug Gate 1 before novel modeling; cut generation/RL before acquisition;
 cut UI to static figures if it threatens evaluation; freeze before submission.

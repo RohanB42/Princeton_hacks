@@ -43,12 +43,13 @@ a weak signal, about a tenth of the variance in knockdown, and the page labels i
 such. The siRNA efficacy model (Huesken, r 0.616) is deliberately **not** applied to
 ASO candidates. See [the endpoint study](docs/aso-efficacy-predictor.md).
 
-**Gate 1 is closed** under a 30-seed noise-aware criterion: the frozen linear and RF
-configurations reproduce within noise, not exactly (gaps -0.021 and -0.027, both
-inside 2 combined SE). Upstream's published folds are unseeded, so exact
-reproduction is unrecoverable and is not claimed. See
-[the Gate 1 resolution](docs/gate1-resolution.md), whose reading supersedes the
-pass/fail verdict in [upstream-verification.md](docs/upstream-verification.md).
+**Initial Huesken baseline reassessment:** the separate 30-seed linear/RF study
+reports agreement under its noise-aware criterion (gaps -0.021 and -0.027).
+Its criterion was revised after the original five-seed results. This does not
+close the expanded seven-dataset reproduction requirement described below.
+Exact historical folds and runtime identity remain unavailable. See
+[the reassessment](docs/gate1-resolution.md) and
+[original discrepancies](docs/upstream-verification.md).
 
 **Collection status:** all 12 released datasets are included, with a shared measured-data
 diagnostic runner, source integrity checks, and random/uncertainty replay. All 337,593
@@ -61,12 +62,20 @@ lower area on 7/12; these are separate tasks, not a combined score.
 See [full protocol and results](docs/full-experiment-protocol.md) and
 [collection commands and limits](docs/dataset-pipelines.md).
 
-These 180 campaigns used the hashed-HELM forest on local diagnostic splits (r about
-0.25 on Huesken) and are **not** comparable to the baseline-grade result above or to
-the published leaderboard. The headline study supersedes them as evidence; they
-stand as engineering coverage. See
-[verification and discrepancies](docs/upstream-verification.md) for the original
-5-seed reproduction misses, which are superseded by `docs/gate1-resolution.md`.
+These 180 campaigns used the hashed-HELM forest on local diagnostic splits and
+remain engineering coverage, separate from the official-split studies above.
+
+The expanded [published-best efficacy study](docs/gate1-efficacy-reproduction.md)
+completed **35 full-data fits across all seven efficacy datasets**. Four meet
+the original 0.03 Pearson tolerance: Huesken, Shmushkovich, siRNAmod and Sherwood.
+Huesken's winning CNN reaches **0.6096 versus 0.6309** published. Ichihara, OpenASO
+and ASOptimizer remain outside tolerance. Full seven-dataset numerical and exact
+historical reproduction are therefore unresolved.
+
+The [native-helper study](docs/gate1-reproducibility-study.md) also identifies an
+RF argument-filter difference: the upstream factory drops max_depth. Preserve
+requested versus effective parameters when interpreting the separate 30-seed
+linear/RF reassessment. Approximate numerical agreement is not exact reproduction.
 
 ## Run the tested vertical slice
 
@@ -115,8 +124,8 @@ and run artifacts. `data/`, `acquisition/`, `evaluation/`, `models/`, and `repor
 implement synthetic and measured diagnostic replay. `collection.py` validates and
 runs individual datasets or the complete collection. `audit_upstream.py` verifies
 source identity; `reproduce.py` supports dataset-specific upstream baseline reruns.
-`design/`, `features/`, and
-`app/` remain future work. Runtime package names stay `oligo-design-engine` and
+`features/` provides predictor representations; `design/` and `app/` now contain
+a separate hypothesis-ranking demonstration. See [the app guide](app/README.md). Runtime package names stay `oligo-design-engine` and
 `oligo_engine`. TOML fixture/collection/reproduction configs are executable; YAML examples are
 planning templates.
 
@@ -140,3 +149,27 @@ equivalence is claimed. Generated molecules would remain unvalidated hypotheses.
 Project license and dataset/weight rights still need owner review before publication.
 Released datasets are explicitly authorized for this repository with source notices;
 generated artifacts, other datasets, PDFs and weights remain ignored.
+
+### Model-informed Huesken active learning
+
+The four-policy GP development runner compares random, diversity, model uncertainty
+and a fixed hybrid with initial-label-only kernel selection. See
+[the protocol and run commands](docs/active-learning-development.md). It writes
+paired reports and learning curves from measured replay; it does not establish
+label savings merely by running. The completed CNN diversity pilot remains separate.
+
+### RNA-FM representation and adaptation studies
+
+[Verified frozen embeddings](docs/rnafm-provenance.md), matched
+[prediction/geometry studies](docs/rnafm-study.md), and a bounded
+[LoRA proof](docs/rnafm-lora.md) are implemented. Frozen strand-mean embeddings
+underperformed one-hot Ridge and did not consistently improve diversity acquisition.
+The [multi-seed LoRA comparison](docs/rnafm-lora-comparison.md) is implemented;
+its full experiment is still running separately. These studies do not establish
+therapeutic benefit or a general foundation-model advantage. Research runtimes
+are documented separately and are not included in the core dependency lock.
+
+The five-seed GP development study in active-learning-development.md uses a
+half-uncertainty/half-coverage hybrid and initial-label-only kernel selection.
+It differs from acquisition-comparison.md's uncertainty-prefiltered diversity
+policy and predictor protocol. Their outcomes must not be pooled.
