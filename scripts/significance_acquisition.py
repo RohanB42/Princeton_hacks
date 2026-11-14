@@ -126,21 +126,70 @@ def analyze(runs):
     return out
 
 
+def confirmatory(result):
+    """Primary: uncertainty AULC vs random, uncorrected. Secondary: Holm together."""
+    primary = next(
+        e for e in result["primary_aulc_vs_random"] if e["arm"] == "uncertainty"
+    )
+    secondary = [
+        {"test": f"AULC {e['arm']} minus random", **e}
+        for e in result["primary_aulc_vs_random"]
+        if e["arm"] != "uncertainty"
+    ] + [{"test": f"labels saved {e['arm']}", **e} for e in result["labels"]]
+    for e in secondary:  # drop Holm values computed within the exploratory families
+        for key in list(e):
+            if key.endswith("_holm"):
+                del e[key]
+    for key in ("t_p", "wilcoxon_exact_p"):
+        holm(secondary, key)
+    return {
+        "primary_uncertainty_aulc_minus_random": primary,
+        "secondary_holm_family_size": len(secondary),
+        "secondary": secondary,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--suite", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--predictors", nargs="+", default=["gp", "rf"])
+    parser.add_argument(
+        "--confirmatory",
+        action="store_true",
+        help="Frozen protocol: uncertainty-vs-random AULC is the one primary test "
+        "(uncorrected); secondaries are Holm-corrected together",
+    )
     args = parser.parse_args()
     if args.output.exists():
         parser.error("Output exists; preserve previous reports")
     report = {}
-    for predictor in ("gp", "rf"):
+    for predictor in args.predictors:
         runs, failed = load_runs(args.suite, predictor)
         if failed:
             raise ValueError(f"Failed runs present: {failed}")
         report[predictor] = analyze(runs)
+        if args.confirmatory:
+            report[predictor]["confirmatory"] = confirmatory(report[predictor])
     args.output.write_text(json.dumps(report, indent=2) + "\n")
     for predictor, r in report.items():
+        if "confirmatory" in r:
+            c = r["confirmatory"]
+            e = c["primary_uncertainty_aulc_minus_random"]
+            print(
+                f"PRIMARY {predictor}: uncertainty AULC minus random "
+                f"{e['mean_diff']:+.4f} CI {e['ci95_bootstrap']} "
+                f"dz {e['cohens_dz']:.2f} "
+                f"t_p {e['t_p']:.4g} wilcoxon_p {e['wilcoxon_exact_p']:.4g} "
+                f"positive {e['n_positive']}/{e['n']}"
+            )
+            for x in c["secondary"]:
+                print(
+                    f"  secondary {x['test']}: mean {x['mean_diff']:+.4f} "
+                    f"t_p {x['t_p']:.4g} (holm {x['t_p_holm']:.4g}) "
+                    f"wilcoxon {x['wilcoxon_exact_p']:.4g} "
+                    f"(holm {x['wilcoxon_exact_p_holm']:.4g})"
+                )
         print(f"== {predictor} primary: AULC minus random (paired, Holm over 3)")
         for e in r["primary_aulc_vs_random"]:
             low, high = e["ci95_bootstrap"]

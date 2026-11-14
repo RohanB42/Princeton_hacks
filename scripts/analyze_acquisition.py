@@ -192,12 +192,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--suite", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--predictors", nargs="+", default=["gp", "rf"])
     args = parser.parse_args()
     if args.output.exists() and any(args.output.iterdir()):
         parser.error("Output exists; preserve previous reports")
     args.output.mkdir(parents=True, exist_ok=True)
     report, rows = {}, []
-    for predictor in ("gp", "rf"):
+    for predictor in args.predictors:
         runs, failed = load_runs(args.suite, predictor)
         summary = summarize(runs)
         summary["failed_runs"] = failed

@@ -160,3 +160,57 @@ GP predictor, primary statistic (normalized AULC minus random, Holm over 3 arms)
   as such.
 - Estimated cost: the 80 runs above took about 15 minutes with 5 workers; 160 GP runs
   should take roughly 25-40 minutes.
+
+## Confirmatory result (seeds 110-149, GP predictor, nucleobase split)
+
+Run 2026-11-14 under the protocol frozen in commit `6a715bc` before any of these runs:
+160 runs (4 arms x 40 fresh seeds), no failures, about 42 minutes. All-data reference
+r = 0.620 +- 0.027 on these seeds. Analysis: `significance_acquisition.py
+--confirmatory`.
+
+![GP predictor, confirmatory seeds](figures/acquisition-huesken-gp-confirmatory.png)
+
+**Primary hypothesis (pre-declared, one test, uncorrected, alpha 0.05):** normalized
+AULC of uncertainty minus random is positive.
+
+| Quantity | Value |
+| --- | --- |
+| Mean paired difference | +0.0095 |
+| Bootstrap 95% CI | [+0.0043, +0.0146] |
+| Cohen's dz | 0.57 |
+| Paired t-test p | 0.00095 |
+| Exact Wilcoxon p | 0.0019 |
+| Seeds above random | 28 of 40 |
+
+**The primary hypothesis is confirmed on fresh seeds.** The effect is about 40% smaller
+than the exploratory +0.0157, as expected from picking the winning arm after the fact.
+In practical terms it is roughly one correlation point averaged over the learning curve.
+
+Secondary tests (Holm-corrected together, family of 5):
+
+| Test | Mean difference | p (Holm) |
+| --- | ---: | ---: |
+| AULC, uncertainty + diversity minus random | +0.0112 | 0.0005 (0.0026) |
+| AULC, diversity minus random | +0.0068 | 0.025 (0.10) |
+| Labels saved, uncertainty (to reach own reference - 0.03) | +72.5 [-6, +151] | 0.079 (0.24) |
+| Labels saved, uncertainty + diversity | +66 [-9, +140] | 0.091 (0.24) |
+| Labels saved, diversity | +46 [-26, +119] | 0.23 (0.24) |
+
+- **Accuracy at matched label budgets: supported.** Uncertainty and the hybrid beat
+  random; diversity alone does not survive correction.
+- **Label efficiency: not supported.** Uncertainty saves a mean of about 72 labels
+  (median to reach the threshold 650 versus 700 for random), but the interval spans
+  zero and p is about 0.08. This claim should not be made as significant.
+- **Fixed budgets:** with Holm over 18 tests no single budget is significant; the
+  smallest raw p is 0.0047 (uncertainty at 750 labels). The gap at 1,000 labels is
+  +0.004 (random 0.604, uncertainty 0.608).
+- **Arms against each other:** not distinguishable (uncertainty minus diversity
+  +0.0026, p 0.32; uncertainty minus hybrid -0.0017, p 0.53). Uncertainty is not shown
+  to beat diversity or the hybrid; the three non-random arms are interchangeable here.
+
+What can be claimed: on Huesken with the one-hot GP and the official nucleobase split,
+uncertainty-driven acquisition modestly but significantly improves held-out accuracy at
+matched label counts (pre-declared test, 40 fresh seeds). What cannot: a significant
+label saving, superiority over diversity, any target-gene claim, or transfer to other
+endpoints. The Random Forest comparison and the "coverage is the active ingredient"
+reading remain exploratory; neither was replicated on fresh seeds.
