@@ -1,6 +1,9 @@
-# Future evaluation contract
+# Evaluation contract
 
-1. Pin OligoGym and verify dataset handles, benchmark rows, and `nucleobase_split` configuration before claiming reproduction. Source documents say KMeans eight clusters, `kmer=True`, `kmer_max=3`, `strand="RNA1"`; verify against that revision. Gate 1 is a matching published PCC within about 0.03, not yet attempted.
+The detailed current protocol is [EVALUATION.md](EVALUATION.md). This summary
+continues to apply where it does not conflict with that November 13 revision.
+
+1. Pin OligoGym and verify dataset handles, benchmark rows, and `nucleobase_split` configuration before claiming reproduction. The supplied revision is verified; whole KMeans clusters are withheld. The kmer branch does not honor the strand argument. Numerical agreement within about 0.03 must be qualified by source/config/environment comparability. See the recorded baseline rerun status; exact historical reproduction is unresolved.
 2. Lead published comparisons with nucleobase split. Report target split separately for sufficiently diverse Huesken and MOE datasets; no published target-split baseline is supplied. Tiny TLR7/8 sets remain auxiliary. Random split is a labeled diagnostic only. Random *acquisition* is a required comparator under the same split.
 3. Compare active acquisition, random acquisition, and an all-training-pool-label model on identical fixed test rows, comparable model settings, matched cumulative label budgets, and at least five seeds. A proposed seed of about 50 and batch of 50 must be adapted to pool size, especially 192-row sets.
 4. Keep test labels out of fitting, acquisition, preprocessing fitting, tuning, and stopping. Use validation rows if needed. The offline oracle reveals measured labels only for acquired training-pool rows. Persist split membership and stable sample IDs; check duplicates and sequence-family leakage. Specify whether splitting or preprocessing is fit and on which rows before any experiment.
