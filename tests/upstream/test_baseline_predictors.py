@@ -10,7 +10,13 @@ import pytest
 from oligo_engine.audit_upstream import PINNED_REVISION
 from oligo_engine.contracts import Prediction
 from oligo_engine.data.catalog import DEFAULT_DATA_ROOT, Catalog
-from oligo_engine.features.upstream import OneHotBaseFeaturizer
+from oligo_engine.features.upstream import (
+    MODIFIED_BASE_ALPHABET,
+    MOE_NEUROTOX_MAX_SEQUENCE_LENGTH,
+    PHOSPHATE_ALPHABET,
+    SUGAR_ALPHABET,
+    OneHotBaseFeaturizer,
+)
 from oligo_engine.models.baseline import (
     GP_LATENT_SD,
     RF_TREE_SD,
@@ -124,3 +130,84 @@ def test_labels_drive_fit_and_nothing_else_does(rows):
     third = OneHotGaussianProcess(seed=0)
     third.fit(renamed, labels)
     assert base.predict(test) == third.predict(test)  # IDs/targets are ignored
+
+
+MOE_ROWS = 40
+
+
+@pytest.fixture(scope="module")
+def moe_rows():
+    """PS/2'-MOE gapmer ASOs: modified bases plus a varying sugar/phosphate pattern."""
+    return tuple(Catalog().load("MOE_Neurotox_1").dataset.observations[:MOE_ROWS])
+
+
+def _monomer_counts(observations):
+    from oligogym.features import _extract_monomers
+
+    return np.array([len(_extract_monomers(r.sequence)["base"]) for r in observations])
+
+
+def test_chemistry_featurizer_encodes_every_component_once_per_monomer(moe_rows):
+    chem = OneHotBaseFeaturizer(
+        MOE_NEUROTOX_MAX_SEQUENCE_LENGTH,
+        component_alphabets={
+            "base": MODIFIED_BASE_ALPHABET,
+            "sugar": SUGAR_ALPHABET,
+            "phosphate": PHOSPHATE_ALPHABET,
+        },
+    )
+    width = len(MODIFIED_BASE_ALPHABET) + len(SUGAR_ALPHABET) + len(PHOSPHATE_ALPHABET)
+    batch = chem.transform(moe_rows)
+    assert batch.shape == (MOE_ROWS, MOE_NEUROTOX_MAX_SEQUENCE_LENGTH * width)
+    assert chem.n_features == batch.shape[1]
+    # Three components, each one-hot at every occupied position; shorter ASOs pad
+    # with zeros rather than borrowing a symbol.
+    assert np.array_equal(batch.sum(axis=1), 3 * _monomer_counts(moe_rows))
+    assert np.array_equal(chem.transform(moe_rows[:1])[0], batch[0])
+    assert chem.encode_components == ("phosphate", "sugar", "base")
+
+
+def test_modified_bases_and_terminal_phosphate_are_declared_not_inferred(moe_rows):
+    # Plain cytosine is not what these ASOs carry; the default alphabet must refuse
+    # them rather than encode m5C as all-zeros the way upstream would.
+    with pytest.raises(ValueError, match="unsupported base"):
+        OneHotBaseFeaturizer(MOE_NEUROTOX_MAX_SEQUENCE_LENGTH).transform(moe_rows[:1])
+    # The 3' terminus carries no phosphate; "EMPTY" is a symbol we declare on purpose.
+    with pytest.raises(ValueError, match="unsupported phosphate"):
+        OneHotBaseFeaturizer(
+            MOE_NEUROTOX_MAX_SEQUENCE_LENGTH,
+            component_alphabets={
+                "base": MODIFIED_BASE_ALPHABET,
+                "phosphate": ("p", "sp"),
+            },
+        ).transform(moe_rows[:1])
+    with pytest.raises(ValueError, match="components"):
+        OneHotBaseFeaturizer(19, component_alphabets={"linker": ("x",)})
+
+
+def test_chemistry_encoding_changes_predictions_but_not_the_contract(moe_rows):
+    labels = tuple(float(i % 8) for i in range(len(moe_rows) - 5))
+    train, test = moe_rows[: len(labels)], moe_rows[len(labels) :]
+    base = OneHotGaussianProcess(
+        seed=0,
+        featurizer=OneHotBaseFeaturizer(
+            MOE_NEUROTOX_MAX_SEQUENCE_LENGTH, MODIFIED_BASE_ALPHABET
+        ),
+    )
+    chem = OneHotGaussianProcess(
+        seed=0,
+        featurizer=OneHotBaseFeaturizer(
+            MOE_NEUROTOX_MAX_SEQUENCE_LENGTH,
+            component_alphabets={
+                "base": MODIFIED_BASE_ALPHABET,
+                "sugar": SUGAR_ALPHABET,
+                "phosphate": PHOSPHATE_ALPHABET,
+            },
+        ),
+    )
+    base.fit(train, labels)
+    chem.fit(train, labels)
+    assert base.predict(test) != chem.predict(test)
+    assert {p.uncertainty_type for p in chem.predict(test)} == {GP_LATENT_SD}
+    assert chem.config["n_features"] == 19 * 12
+    assert chem.config["component_alphabets"]["sugar"] == list(SUGAR_ALPHABET)
