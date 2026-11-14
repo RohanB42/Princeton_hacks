@@ -1,1 +1,1 @@
-"""Future dataset identity, measured-label, and provenance boundary."""
+"""Pinned dataset catalog, split validation and restricted measured-label access."""
