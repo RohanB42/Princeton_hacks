@@ -96,6 +96,8 @@ combined safety/efficacy score: this endpoint stays separate from Huesken effica
 per `AGENTS.md`. A predicted FOB score is not an observation, and nothing here says
 a designed molecule is safe.
 
+> **Anchor configuration correction (2026-11-14).** Upstream's benchmark filtered `max_depth` out of its model arguments, so the published RF rows ran at unlimited depth whatever their label. Re-running these anchors both ways changes the result by at most 0.0012 and every anchor still reproduces. See [rf-anchor-recheck.md](rf-anchor-recheck.md).
+
 ## Results
 
 Run 2026-11-14: 30 seeds (200-229) x 4 arms, no failures, about 7 minutes. 1,852

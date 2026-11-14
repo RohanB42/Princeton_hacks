@@ -116,6 +116,8 @@ two assays. No claim about CpG or other motif mechanisms: this is a sequence-to-
 readout regression, and any motif reading would need its own analysis. A predicted
 TLR readout is a prediction, not an observation.
 
+> **Anchor configuration correction (2026-11-14).** Upstream's benchmark filtered `max_depth` out of its model arguments, so the published RF rows ran at unlimited depth whatever their label. Re-running these anchors both ways changes the result by at most 0.0012 and every anchor still reproduces. See [rf-anchor-recheck.md](rf-anchor-recheck.md).
+
 ## Results
 
 Run 2026-11-14 under the protocol frozen in commit `c771eb3` before any of these

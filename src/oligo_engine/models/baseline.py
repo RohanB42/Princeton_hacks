@@ -71,7 +71,7 @@ class OneHotRandomForest:
         self,
         seed: int,
         n_estimators: int = 100,
-        max_depth: int = 20,
+        max_depth: int | None = 20,
         n_jobs: int = 2,
         featurizer: OneHotBaseFeaturizer | None = None,
     ):
