@@ -2,10 +2,29 @@
 
 Can sequential experiment selection improve siRNA efficacy prediction using fewer
 measured labels than random acquisition? This HackPrinceton project is building an
-open, auditable retrospective benchmark. Current diagnostic comparisons have mixed
-results; a consistent active-learning advantage has not been established.
+open, auditable retrospective benchmark.
 
-**Current status:** all 12 released datasets are included, with a shared measured-data
+**Headline result (2026-11-14).** On Huesken (`Ichihara_2007_1`) with a one-hot
+Gaussian-process predictor and the official OligoGym `nucleobase` split,
+uncertainty-driven acquisition beats random acquisition at matched label budgets:
+normalized AULC +0.0095 [95% CI +0.0043, +0.0146], dz 0.57, paired t-test
+p = 0.00095, 28 of 40 seeds above random. The hypothesis and the analysis were
+frozen in commit `6a715bc` **before** these 40 seeds (110-149) were run; an earlier
+exploratory set (seeds 100-109) is reported separately and is not pooled with it.
+What is **not** supported: a significant label saving (mean 72 labels, p about
+0.08), superiority of uncertainty over diversity or the hybrid, any target-gene
+generalization claim, and any transfer to other endpoints. See
+[the four-policy comparison](docs/acquisition-comparison.md) and
+[figures](docs/figures/).
+
+**Gate 1 is closed** under a 30-seed noise-aware criterion: the frozen linear and RF
+configurations reproduce within noise, not exactly (gaps -0.021 and -0.027, both
+inside 2 combined SE). Upstream's published folds are unseeded, so exact
+reproduction is unrecoverable and is not claimed. See
+[the Gate 1 resolution](docs/gate1-resolution.md), whose reading supersedes the
+pass/fail verdict in [upstream-verification.md](docs/upstream-verification.md).
+
+**Collection status:** all 12 released datasets are included, with a shared measured-data
 diagnostic runner, source integrity checks, and random/uncertainty replay. All 337,593
 source rows have been validated. Full-data five-seed experiments now comprise
 **180 campaigns**: both policies on all 12 exact-sequence-group datasets, plus both
@@ -16,13 +35,12 @@ lower area on 7/12; these are separate tasks, not a combined score.
 See [full protocol and results](docs/full-experiment-protocol.md) and
 [collection commands and limits](docs/dataset-pipelines.md).
 
-Historical **Gate 1 remains open:** the
-published linear configuration reruns at Pearson **0.5848 ± 0.0243 sample SD**, versus
-upstream mean **0.6159**. Its 0.0310 gap exceeds the frozen 0.03 tolerance. This is
-not reproduction of the winning CNN (upstream mean 0.6309), and it is not an
-active-learning comparison. A published Random Forest cross-check also misses the
-frozen tolerance (0.5591 versus 0.5910 reference). See
-[verification and discrepancies](docs/upstream-verification.md).
+These 180 campaigns used the hashed-HELM forest on local diagnostic splits (r about
+0.25 on Huesken) and are **not** comparable to the baseline-grade result above or to
+the published leaderboard. The headline study supersedes them as evidence; they
+stand as engineering coverage. See
+[verification and discrepancies](docs/upstream-verification.md) for the original
+5-seed reproduction misses, which are superseded by `docs/gate1-resolution.md`.
 
 ## Run the tested vertical slice
 
