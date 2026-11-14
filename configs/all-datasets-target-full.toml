@@ -1,0 +1,31 @@
+# Frozen before the full target-holdout run. Unsupported datasets stay in the ledger.
+# Primary comparison: paired normalized Pearson AULC, uncertainty minus random.
+dataset = ["Huesken", "TLR7", "TLR8", "Ichihara", "Shmushkovich", "Cytotox LNA", "siRNAmod", "Neurotox LNA", "Neurotox MOE", "OpenASO", "ASOptimizer", "Sherwood"]
+purpose = "diagnostic"
+seeds = [0, 1, 2, 3, 4]
+policies = ["random", "uncertainty"]
+cache_features = true
+reuse_full_reference = true
+
+[split]
+strategy = "target"
+test_size = 0.2
+
+[budget]
+initial_labels = 50
+batch_size = 50
+max_labels = 500
+
+[model]
+n_estimators = 100
+max_depth = 20
+n_features = 512
+n_jobs = 4
+prediction_batch_size = 8192
+
+[analysis]
+primary = "paired_normalized_pearson_aulc_difference"
+band_method = "sample_standard_deviation"
+full_reference_absolute_r_tolerance = 0.03
+label_fraction_criterion = 0.5
+reference_must_be_positive = true
