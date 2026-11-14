@@ -127,6 +127,9 @@ def report(output: Path) -> None:
         .agg(
             rmse=("metric_rmse", "mean"),
             pearson=("metric_pearson", "mean"),
+            pearson_defined=("metric_pearson", "count"),
+            spearman=("metric_spearman", "mean"),
+            mae=("metric_mae", "mean"),
             records=("target", "count"),
         )
         .reset_index()

@@ -50,7 +50,7 @@ def audit(output: Path) -> dict:
         assert fit | val == set(part["acquired_ids"])
         assert set(part["fit_groups"]).isdisjoint(part["validation_groups"])
         assert source_allowed.isdisjoint(fit | val | test)
-    neural, classical = 0, 0
+    neural, classical, equal_checkpoint_pairs = 0, 0, 0
     for path in output.glob("*/receipt.json"):
         receipt = json.loads(path.read_text())
         fit, val = set(receipt["ids"]), set(receipt.get("validation_ids", []))
@@ -86,12 +86,27 @@ def audit(output: Path) -> dict:
                 assert receipt["total_fit_validation_labels"] == len(fit | val)
         else:
             classical += 1
+    for source_path in output.glob("source-*/receipt.json"):
+        receipt = json.loads(source_path.read_text())
+        if receipt.get("selected_epoch") != 3:
+            continue
+        _, budget, seed, name = source_path.parent.name.split("-", 3)
+        for target in cfg["targets"]:
+            prefix = f"target-{budget}-{seed}-{name}-{target}-"
+            first = output / (prefix + "source3_target3_all") / "predictions.json"
+            second = output / (prefix + "sourcebest_target3_all") / "predictions.json"
+            if first.exists() and second.exists():
+                a, b = json.loads(first.read_text()), json.loads(second.read_text())
+                assert a["test_ids"] == b["test_ids"]
+                assert a["predictions"] == b["predictions"]
+                equal_checkpoint_pairs += 1
     result = {
         "status": "passed_for_completed_receipts",
         "source_partitions": len(parts["source"]),
         "target_partitions": len(parts["target"]),
         "neural_receipts_checked": neural,
         "classical_receipts_checked": classical,
+        "equal_source_checkpoint_prediction_pairs": equal_checkpoint_pairs,
         "source_internal_validation_identity_overlap": source_audit,
         "reserved_outcomes_read": False,
         "scope": "Metadata and completed receipts only; not numerical reproduction",
