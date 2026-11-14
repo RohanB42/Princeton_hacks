@@ -72,19 +72,19 @@ def load():
 
 def matched_indices(observations) -> list[int]:
     """Rows inside the ps_moe_gapmer design space of the surface."""
-    from oligogym.features import _extract_monomers
+    from oligo_engine.design.candidates import matches_chemistry
 
-    keep = []
-    for index, row in enumerate(observations):
-        monomers = _extract_monomers(row.sequence)
-        if (
-            set(monomers["sugar"]) <= set(MATCHED_SUGARS)
-            and set(monomers["phosphate"]) <= set(MATCHED_PHOSPHATES)
-            and set(monomers["base"]) <= set(MATCHED_BASES)
-            and len(monomers["base"]) <= MATCHED_MAX_LENGTH
-        ):
-            keep.append(index)
-    return keep
+    return [
+        index
+        for index, row in enumerate(observations)
+        if matches_chemistry(
+            row.sequence,
+            MATCHED_SUGARS,
+            MATCHED_PHOSPHATES,
+            MATCHED_BASES,
+            MATCHED_MAX_LENGTH,
+        )
+    ]
 
 
 def split(data, seed):

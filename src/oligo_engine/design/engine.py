@@ -36,10 +36,44 @@ ENDPOINT_SPECS = {
         "model": "gp",
         "encoding": "chem",
         "max_sequence_length": 19,
+        "base_annotation": "m5C",
         "direction": "higher_is_worse",
         "held_out_r": 0.597,
         "held_out_note": "GP, base+sugar+phosphate, 30 seeds, nucleobase split",
         "document": "docs/neurotox-moe-predictor.md",
+    },
+    "efficacy_aso": {
+        "dataset": "Hwang_2024_1",
+        "title": "Target knockdown",
+        "detail": "percentage inhibition of target mRNA vs untreated control",
+        "units": "% inhibition (higher is more knockdown)",
+        "chemistry": "ps_moe_gapmer",
+        "model": "gp",
+        "encoding": "explicit",
+        "alphabets": {
+            "base": ("A", "C", "G", "T", "U"),
+            "sugar": ("d", "moe"),
+            "phosphate": ("p", "sp", "EMPTY"),
+        },
+        "max_sequence_length": 20,
+        # ASOptimizer writes plain cytosine for this same chemistry.
+        "base_annotation": "plain",
+        # Fitted only on the rows whose chemistry matches this design space.
+        "subset": {
+            "sugars": ("d", "moe"),
+            "phosphates": ("p", "sp", "EMPTY"),
+            "bases": ("A", "C", "G", "T", "U"),
+            "max_length": 20,
+        },
+        "direction": "higher_is_better",
+        "held_out_r": 0.317,
+        "held_out_note": "GP, base+sugar+phosphate, 30 seeds, nucleobase split",
+        "document": "docs/aso-efficacy-predictor.md",
+        "caveats": [
+            "Fitted on 5 targets (DGAT2 dominant), so a new gene is extrapolation.",
+            "Training lengths are 16, 17, 18 and 20; a 19-mer interpolates.",
+            "Patent-sourced labels; expect selection effects.",
+        ],
     },
     "tlr7_inhibition": {
         "dataset": "Alharbi_2020_2",
@@ -73,11 +107,10 @@ ENDPOINT_SPECS = {
     },
 }
 MISSING_ENDPOINTS = {
-    "efficacy": (
-        "Target knockdown is not modelled. The project's efficacy predictor is "
-        "fitted on Huesken siRNA, a different modality that must not be applied to "
-        "ASO candidates, and no ASO efficacy endpoint has been trained yet. "
-        "Candidates below are ranked on safety and sequence flags only."
+    "efficacy_sirna": (
+        "siRNA potency is modelled (Huesken, r 0.616) but deliberately not shown: "
+        "it is a different modality and must not be applied to ASO candidates. ASO "
+        "knockdown is modelled separately, on ASOptimizer."
     )
 }
 
@@ -112,7 +145,17 @@ class EndpointModel:
                 f"{self.key} was fitted on {self.spec['chemistry']}; refusing to "
                 f"score {len(off)} candidate(s) in another chemistry"
             )
+        annotation = self.spec.get("base_annotation")
         observations = tuple(c.observation() for c in candidates)
+        if annotation:
+            from dataclasses import replace
+
+            from oligo_engine.design.candidates import annotate_bases
+
+            observations = tuple(
+                replace(o, sequence=annotate_bases(o.sequence, annotation))
+                for o in observations
+            )
         features = self.featurizer.transform(observations)
         predictions = self.model.predict(observations)
         from sklearn.metrics import pairwise_distances
@@ -175,7 +218,34 @@ class DesignEngine:
         labels = _labels(spec["dataset"])
         if len(labels) != len(observations):
             raise ValueError(f"{key}: label and observation counts differ")
-        if spec["encoding"] == "chem":
+        subset = spec.get("subset")
+        if subset:
+            from oligo_engine.design.candidates import matches_chemistry
+
+            keep = [
+                index
+                for index, row in enumerate(observations)
+                if matches_chemistry(
+                    row.sequence,
+                    subset["sugars"],
+                    subset["phosphates"],
+                    subset["bases"],
+                    subset["max_length"],
+                )
+            ]
+            if not keep:
+                raise ValueError(f"{key}: no training rows match its chemistry")
+            observations = tuple(observations[i] for i in keep)
+            labels = [labels[i] for i in keep]
+        if spec["encoding"] == "explicit":
+            featurizer = OneHotBaseFeaturizer(
+                spec["max_sequence_length"],
+                component_alphabets={
+                    component: tuple(symbols)
+                    for component, symbols in spec["alphabets"].items()
+                },
+            )
+        elif spec["encoding"] == "chem":
             featurizer = OneHotBaseFeaturizer(
                 spec["max_sequence_length"],
                 component_alphabets={

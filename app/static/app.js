@@ -4,6 +4,7 @@ const $ = (id) => document.getElementById(id);
 const state = { payload: null, selected: null, viewer: null };
 
 const ENDPOINT_LABELS = {
+  efficacy_aso: "Knockdown",
   neurotox_moe: "Neurotox",
   tlr7_inhibition: "TLR7",
   tlr8_potentiation: "TLR8",
@@ -107,6 +108,11 @@ function renderHonesty(payload) {
       <p>${agreement.note} Longest G-run ρ ${fmt(agreement.longest_g_run)}.</p></div>`);
   }
   grid.innerHTML = cards.join("");
+}
+
+function endpointCaveats(spec) {
+  if (!spec.caveats || !spec.caveats.length) return "";
+  return `<ul class="caveats">${spec.caveats.map((c) => `<li>${c}</li>`).join("")}</ul>`;
 }
 
 function sequenceHtml(row, design) {

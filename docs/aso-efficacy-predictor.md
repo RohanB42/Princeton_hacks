@@ -84,4 +84,65 @@ prediction, not a measurement, and this endpoint is patent-sourced.
 
 ## Results
 
-To be appended after the run.
+Run 2026-11-14 under the protocol frozen in commit `aa98d9e` before any of these
+seeds. Matched scope: 30 seeds (400-429), 4,041 train / 1,545 test, about 21 s per
+seed for the GP. Full scope: 10 seeds (400-409), about 32 s per seed. No failures.
+Dispersion is sample SD across seeds.
+
+### Full scope: the published anchor reproduces
+
+| Arm | Rows | Mean Pearson r +- SD | Published | Gap | Gap in combined SE |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| RF, base+sugar+phosphate, depth 20, 100 trees | 32,602 | 0.4326 +- 0.0594 | 0.4094 | **+0.0232** | +0.67 |
+
+Both parts of the revised Gate 1 criterion pass. That is the **fifth endpoint whose
+published anchor reproduces**, after Huesken, MOE neurotox and both TLR assays, and
+the discrepancies across all five now straddle zero: -0.027, -0.021, +0.007, +0.032,
++0.0015, +0.0081, +0.0232.
+
+### Matched scope: the model the surface uses
+
+| Arm | Mean Pearson r +- SD | Mean Spearman rho | Mean RMSE | Range over seeds |
+| --- | ---: | ---: | ---: | ---: |
+| **GP, base+sugar+phosphate** | **0.3170 +- 0.0614** | 0.3279 | 25.13 | 0.172 - 0.428 |
+| RF, base+sugar+phosphate | 0.2886 +- 0.0686 | 0.2948 | 25.34 | - |
+
+The GP wins the paired comparison (+0.0283, better in 22 of 30 seeds, p = 0.0006,
+exploratory) and is the arm the surface uses. Label SD is 26.4 percentage points and
+the model's RMSE is 25.1, so **this predictor explains about a tenth of the variance
+in knockdown**. It is a weak signal and the surface says so next to every number.
+
+**The pre-stated expectation held.** The protocol predicted the matched subset would
+land near or below the full-dataset RF anchor and well under the siRNA efficacy
+numbers. It did: 0.317 against 0.409 published / 0.433 measured on the full set, and
+against 0.616 for the Huesken siRNA GP. Narrowing to one chemistry costs accuracy,
+because 5,586 rows over five targets carry much less signal than 32,602 over
+eighteen. We take that trade deliberately: a weaker number inside the chemistry we
+design in is worth more than a stronger number obtained by scoring 2'-MOE candidates
+with a model fitted largely on cEt and LNA molecules.
+
+### Leakage check passed on every seed
+
+2,638 of 5,586 rows repeat a sequence. **Zero sequences appeared on both sides of the
+split on any of the 30 seeds**, because identical sequences share a k-mer vector and
+therefore a cluster. The run asserts this and would have failed rather than report a
+leaked number.
+
+### Uncertainty, sixth endpoint
+
+GP latent SD against distance to the nearest labelled row: rho **+0.674**. Against
+absolute error: **-0.028**. The same finding as every other endpoint in this project,
+now across four chemistries and both modalities: the GP's uncertainty is a novelty
+signal, not an error signal. It is useful for telling a user that a candidate is
+unlike anything measured, and it is not a confidence interval on being right.
+
+### What can and cannot be said
+
+Can: ASO knockdown is predictable from sequence and chemistry at r = 0.317 over 30
+seeds within the PS/2'-MOE design space, and at r = 0.433 across the full
+heterogeneous dataset, where the published anchor reproduces within noise.
+
+Cannot: that any designed candidate knocks down its target; anything about genes
+outside the five in the matched subset, which is most genes a user will type; any
+combined potency/safety score. The endpoint is patent-sourced, so the labels record
+what was worth patenting.

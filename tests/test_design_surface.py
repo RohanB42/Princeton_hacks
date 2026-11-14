@@ -123,3 +123,19 @@ def test_pasted_sequences_are_accepted_as_fasta_or_raw():
         from_sequence("ACGT")
     with pytest.raises(TranscriptError):
         from_sequence("ACGT!?" * 20)
+
+
+def test_base_annotation_is_reconciled_without_touching_chemistry():
+    from oligo_engine.design.candidates import annotate_bases
+
+    helm = build_helm("ACGTACGTACGTACGTACG", "ps_moe_gapmer")
+    assert "[m5C]" in helm  # the neurotox convention
+    plain = annotate_bases(helm, "plain")
+    assert "[m5C]" not in plain and "(C)" in plain  # the ASOptimizer convention
+    # Only the cytosine annotation changes: sugars, linkages and length do not.
+    assert plain.count("[moe]") == helm.count("[moe]")
+    assert plain.count("[sp]") == helm.count("[sp]")
+    assert plain.count(".") == helm.count(".")
+    assert annotate_bases(plain, "m5C") == helm  # round trip
+    with pytest.raises(ValueError):
+        annotate_bases(helm, "lna")

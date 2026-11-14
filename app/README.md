@@ -32,10 +32,14 @@ the pinned upstream environment, because the featurizers and models do.
 
 ## What it deliberately does not do
 
-- **No efficacy prediction.** The project's efficacy model is fitted on Huesken
-  siRNA, a different modality that must not be applied to ASO candidates, and no ASO
-  efficacy endpoint has been trained. The page says so rather than letting a safety
-  ranking read as a potency ranking.
+- **No combined potency/safety score.** ASO knockdown *is* predicted, by a GP fitted
+  on the chemistry-matched subset of ASOptimizer, but it is a weak model (held-out
+  r 0.317) fitted on five targets, and the page marks it "weak model" and lists its
+  caveats beside every number. Potency and safety are separate columns with separate
+  sorts, because on a real transcript they pull against each other: sorting MAPT by
+  predicted knockdown returns candidates with high predicted neurotoxicity.
+- **The siRNA efficacy model is withheld.** Huesken (r 0.616) is a different
+  modality and is never applied to ASO candidates.
 - **No combined score.** Endpoints stay in their own units.
 - **No structure prediction.** The 3D view is an idealized A-form helix drawn from
   the sequence, so it shows length, register and gapmer architecture and nothing

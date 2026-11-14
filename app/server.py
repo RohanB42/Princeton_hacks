@@ -24,7 +24,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 from oligo_engine.design import candidates as design
-from oligo_engine.design.engine import DesignEngine
+from oligo_engine.design.engine import ENDPOINT_SPECS, DesignEngine
 from oligo_engine.design.structure import duplex_pdb
 from oligo_engine.design.transcripts import TranscriptError, fetch, from_sequence
 
@@ -148,6 +148,10 @@ def _panel(params: dict, sequence: str | None = None) -> dict:
             return row["start"]
         if sort == "accessibility":
             return -(row.get("target_accessibility") or 0)
+        if sort == "potency":
+            # Higher predicted knockdown first; candidates without the endpoint last.
+            potency = predictions.get("efficacy_aso")
+            return -potency["value"] if potency else float("inf")
         if primary and primary in predictions:
             spec = ENGINE.model(primary).spec
             value = predictions[primary]["value"]
@@ -331,15 +335,12 @@ class Handler(SimpleHTTPRequestHandler):
 
 
 def warm() -> None:
-    for key in ENDPOINT_KEYS:
+    for key in ENDPOINT_SPECS:
         try:
             ENGINE.model(key)
             print(f"  fitted {key}", flush=True)
         except Exception as error:  # a missing endpoint must not stop the server
             print(f"  WARNING {key} unavailable: {error}", flush=True)
-
-
-ENDPOINT_KEYS = ("neurotox_moe", "tlr7_inhibition", "tlr8_potentiation")
 
 
 def main() -> None:
