@@ -112,3 +112,51 @@ confidence interval. Per-seed paired differences are in the generated `summary.j
 - Limits: seeds 100-109 only; one dataset; fixed predictors; all curves converge
   toward the reference as labels grow; runs carry `purpose="diagnostic"` because the
   runner's research guard has not been updated for the closed Gate 1.
+
+## Post-hoc significance analysis (exploratory)
+
+`scripts/significance_acquisition.py`. Added after the results above had been seen,
+so it is exploratory: "does uncertainty beat random?" was chosen after inspecting
+these ten seeds and cannot be confirmed on them. Paired by seed against random; paired
+t-test, exact Wilcoxon signed-rank and a percentile-bootstrap CI (10,000 resamples;
+at n = 10 it is probably too narrow, a t interval would be wider); Holm correction
+within each stated family. These describe these seeds on this dataset, not other
+endpoints.
+
+GP predictor, primary statistic (normalized AULC minus random, Holm over 3 arms):
+
+| Arm | Mean diff [bootstrap 95% CI] | dz | t-test p (Holm) | Wilcoxon p (Holm) |
+| --- | ---: | ---: | ---: | ---: |
+| Uncertainty | +0.0157 [+0.0046, +0.0264] | 0.84 | 0.026 (0.078) | 0.027 (0.059) |
+| Diversity | +0.0130 [+0.0004, +0.0250] | 0.62 | 0.083 (0.083) | 0.131 (0.131) |
+| Uncertainty + diversity | +0.0137 [+0.0042, +0.0241] | 0.80 | 0.032 (0.078) | 0.020 (0.059) |
+
+- **Not significant after correction.** Uncorrected, uncertainty and the hybrid sit at
+  p of roughly 0.02-0.03; after Holm they are 0.06-0.08. The data are suggestive of a
+  modest gain, not a demonstrated one.
+- Label efficiency (labels saved vs random to reach each seed's own reference - 0.03;
+  positive means fewer labels; not reached coded 1,050): uncertainty +200 [+5, +375]
+  (t p 0.079, Wilcoxon 0.064, Holm 0.24 / 0.19); diversity +125 (p 0.106); hybrid
+  +155 (p 0.117). None significant.
+- Fixed budgets (r minus random at 100-1,000 labels, Holm over 12 tests per predictor):
+  the smallest uncorrected p is 0.022 (uncertainty at 500 labels), Holm 0.40. No
+  budget is significant.
+- Arms against each other: uncertainty minus diversity +0.0028 (p 0.49); uncertainty
+  minus hybrid +0.0021 (p 0.44). The three GP arms are not distinguishable.
+- RF predictor: uncertainty +0.0015 (p 0.77), hybrid +0.0049 (p 0.32), diversity
+  +0.0135 (p 0.070, Holm 0.21); label efficiency and fixed budgets also null after
+  correction (diversity at 100 labels p 0.036, Holm 0.61).
+
+## Proposed confirmatory run (NOT yet run; frozen only when approved)
+
+- Fresh seeds 110-149 (40), never inspected; GP predictor, same four arms, budgets,
+  split and analysis as above. The seeds 100-109 results stay labeled exploratory.
+- One primary hypothesis fixed in advance: uncertainty minus random normalized AULC
+  is positive, two-sided paired t-test at alpha 0.05 (Wilcoxon as a robustness check).
+  Diversity and hybrid minus random, and labels-to-reference - 0.03, are secondary with
+  Holm correction. No other tests are primary.
+- Power: the exploratory dz of 0.84 is inflated by selection. At a true dz of 0.5, 40
+  seeds give about 88% power; at 0.4, about 72%. A null at 40 seeds would be reported
+  as such.
+- Estimated cost: the 80 runs above took about 15 minutes with 5 workers; 160 GP runs
+  should take roughly 25-40 minutes.
