@@ -82,6 +82,8 @@ generalization. No combined potency/safety score: the surface shows the endpoint
 side by side in their own units and ranks on one at a time. Predicted inhibition is a
 prediction, not a measurement, and this endpoint is patent-sourced.
 
+> **Anchor configuration correction (2026-11-14).** Upstream's benchmark filtered `max_depth` out of its model arguments, so the published RF rows ran at unlimited depth whatever their label. Re-running these anchors both ways changes the result by at most 0.0012 and every anchor still reproduces. See [rf-anchor-recheck.md](rf-anchor-recheck.md).
+
 ## Results
 
 Run 2026-11-14 under the protocol frozen in commit `aa98d9e` before any of these
