@@ -14,3 +14,17 @@ Run `make data-check` to verify every source file and validate every row. Run
 See [dataset pipelines](../docs/dataset-pipelines.md) for full-data configuration,
 split limitations and diagnostic status. Other downloaded data/transcriptomes remain
 ignored. Generated metrics and run artifacts belong under ignored `artifacts/`.
+
+## ASO Atlas 2.0
+
+[`aso_atlas_2/`](aso_atlas_2/README.md) contains the separately authorized ASO Atlas
+release, four lossless prepared endpoint tables, seven supplied fold files, source
+attribution, and checksums. Its **283,521 assay rows** are not the same unit as the
+upstream **295,007 assay readouts** (hepatic rows can contain multiple biomarkers).
+The endpoint tables are in-vitro inhibition, dose response, hepatotoxicity, and
+neurotoxicity. They are not pooled with OligoGym or automatically registered with
+the existing training/acquisition runner.
+
+See the [preparation audit](../docs/aso-atlas-data-cleaning-2026-11-14.md) before
+designing experiments. Run `.venv/bin/python -m pytest tests/test_aso_atlas_integrity.py`
+to verify the committed data/fold checksums without installing a Parquet runtime.

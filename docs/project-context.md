@@ -31,3 +31,37 @@ not scientific generalization. Full-data five-seed matrices now total 180 campai
 with mixed acquisition effects; the benchmark reproduction gate remains open. No app
 or design agent is implemented. See dataset-pipelines.md for current commands/limits.
 See [upstream verification](upstream-verification.md) for actual checks and blockers.
+The new [Gate 1 study](gate1-reproducibility-study.md) corrects an RF argument-filter
+mismatch and establishes exact local repeatability of the native-helper protocol.
+Its mean r=0.559769 still misses the published 0.591037 reference by 0.031268;
+historical reproduction is unresolved. The acquisition pipeline is unchanged.
+The subsequent user-confirmed scope is published best models on all seven efficacy
+datasets, evaluated on the official nucleobase split. All 35 full-data fits complete;
+four of seven meet the unchanged 0.03 tolerance, including the Huesken CNN
+(0.609600 vs 0.630914). Ichihara, OpenASO and ASOptimizer remain discrepant. See
+[efficacy reproduction](gate1-efficacy-reproduction.md). No full numerical or exact
+historical reproduction is claimed.
+
+The user now explicitly authorizes a delegated Huesken CNN random/diversity
+label-efficiency pilot. See huesken-learning-protocol.md and
+configs/huesken-learning.toml for settings frozen before outcomes. A subagent owns
+only new implementation/test files; the integrator owns shared metadata/contracts.
+This advances the core sequential efficacy benchmark with scoped diagnostic
+provenance. Expanded Gate 1 is not silently closed; no new acquisition finding is
+claimed while the study is in progress.
+
+Subsequent status: the five-seed CNN pilot completed with no consistent diversity
+advantage (paired AULC -0.0150 +/-0.0398 sample SD). The user has now authorized
+development of the four-policy GP study in active-learning-development.md. Its
+initial-only kernel selection, hybrid acquisition, explicit budget schedule and
+paired reporting are implemented; the smoke check passed. The five-seed development
+matrix completed: hybrid minus random AULC +0.00535 +/-0.02079 SD; mean
+first-threshold label savings22.7% +/-28.0 percentage points across five seeds.
+These variable development results require further evaluation. The incoming two-baseline
+30-seed Gate 1 reassessment does not resolve the expanded seven-dataset requirement.
+
+RNA-FM branch integrated: verified frozen embeddings, random-encoder control,
+five-seed Ridge prediction and fixed-predictor geometry studies. Frozen features
+underperformed one-hot; geometry showed no consistent advantage. A bounded real
+LoRA proof completed; the multi-seed LoRA/classical comparison is still running
+in its isolated checkout. See rnafm-study.md and rnafm-lora-comparison.md.

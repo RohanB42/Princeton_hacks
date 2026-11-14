@@ -1,0 +1,50 @@
+# Frozen by the integrator before CNN learning-curve experiments, 2026-11-14.
+# User-authorized Huesken pilot; seven-dataset/historical Gate 1 stays unresolved.
+dataset = "Huesken"
+purpose = "diagnostic"
+seeds = [0, 1, 2, 3, 4]
+policies = ["random", "diversity"]
+
+[upstream]
+revision = "97f5b9f58d9e445a8ecb0218037af7465c3708c0"
+baseline_config = "configs/gate1-efficacy/Huesken.toml"
+baseline_config_sha256 = "59e79e4b83afda0c4ba3ac4b1b8fd7a9bb6da2d9ec06688ebedc99060b8138be"
+
+[split]
+strategy = "nucleobase"
+test_size = 0.2
+n_clusters = 8
+kmer = true
+kmer_max = 3
+strand = "RNA1"
+seed_mode = "numpy_global_before_each_split"
+
+[budget]
+initial_labels = 50
+batch_size = 50
+max_labels = 500
+
+[diversity]
+featurizer = "KMersCounts"
+k = [1, 2, 3]
+modification_abundance = false
+strands = "all"
+normalization = "per_row_l2"
+distance = "euclidean"
+selection = "greedy_maximum_minimum_distance_to_labeled_and_batch"
+tie_break = "sample_id_lexicographic"
+representation_fit_scope = "eligible_training_pool_sequences_only"
+
+[analysis]
+primary = "paired_normalized_pearson_aulc_diversity_minus_random"
+band_method = "sample_standard_deviation"
+full_reference_absolute_r_tolerance = 0.03
+reference_must_be_positive = true
+label_fraction_criterion = 0.5
+threshold_is_reporting_only = true
+
+[execution]
+fit_order = "sample_id_lexicographic"
+refit_full_reference = true
+reuse_matching_full_reference_between_policies = true
+test_scoring = "deferred_until_campaign_acquisition_complete"

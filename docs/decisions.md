@@ -1,5 +1,13 @@
 # Decisions and status
 
+- November 14 ASO Atlas integration: the user explicitly authorizes its released
+  data and lossless prepared tables under `data/aso_atlas_2/`. Import only commit
+  `f0b69b34367e1e6b578688231ec0b0236f7a2236` from the data branch; its parent RL
+  implementation is outside this integration. Preserve source files, attribution,
+  endpoint distinctions and provided fold definitions. This is data preparation,
+  not a new training result or automatic admission to the OligoGym runner. Define
+  assay/dose/chemistry contracts and audit split overlap before experiments.
+
 - Existing `main` repository and GitHub remote are preserved. Working project and import names are `oligo-design-engine` and `oligo_engine`.
 - Python 3.11 and Poetry 2.1.4 remain selected. Current core checks run locally on
   Python 3.11.13, Ruff 0.12.12 and pytest 8.4.2. Existing project lock is preserved;
@@ -47,3 +55,36 @@
   Retain all data and existing diagnostic results; safety and immunomodulation are
   auxiliary. Baseline reproduction is the immediate next task. Concentration-aware
   experimental design is a proposed extension, not implemented functionality.
+- Gate 1 study finds that upstream prepare_model filters RF max_depth out, whereas
+  the earlier local rerun applied it. Preserve the earlier result as a non-equivalent
+  effective-model attempt. A controlled five-seed correction gives r=0.560466;
+  native helpers give r=0.559769, exactly repeated across another five fits. Both
+  remain outside the unchanged 0.03 tolerance against r=0.591037. Historical split
+  manifests, effective settings and environment remain unresolved. See
+  gate1-reproducibility-study.md; no acquisition settings or gate were changed.
+  Final local checks now pass 77 tests, lint, formatting and whitespace validation.
+- The user subsequently confirms Gate 1 scope as published best models on all
+  efficacy datasets. Freeze all seven winning nucleobase configurations from the
+  released CSV before local execution; no local model selection or row caps.
+  All 35 fits complete with native helpers and explicitly declared neural runtime
+  settings. Huesken, Shmushkovich, siRNAmod and Sherwood meet the fixed 0.03
+  tolerance; Ichihara, OpenASO and ASOptimizer do not. The headline Huesken CNN
+  now reaches r=0.609600 vs 0.630914 reference. Full numerical reproduction remains
+  unresolved. Exact source/config and per-run provenance are preserved locally.
+  Final checks pass 88 tests, lint, formatting, whitespace and source/hash audits.
+- The user explicitly requests a subagent to implement and execute the next Huesken
+  learning-curve experiment after assessing its fit with the broader spec. Frozen
+  protocol/config: huesken-learning-protocol.md / configs/huesken-learning.toml.
+  Compare random with label-blind native k-mer diversity using the validated CNN,
+  official nucleobase holdouts, five paired seeds and 50–500 labels. Refit study
+  full-pool references under the existing canonical fit order. Keep diagnostic
+  status and global Gate 1 caveats; no premature acquisition-benefit claim.
+
+- User authorization to proceed with active-learning development implements the
+  separate four-policy Huesken GP study documented in active-learning-development.md.
+  Initial50-only internal kernel selection counts all labels; frozen primary contrast
+  is hybrid minus random over50–1000 labels. Development seeds200–204 precede a
+  separately frozen evaluation declaration. Diagnostic purpose remains explicit;
+  the earlier CNN pilot and historical attempts are preserved. The incoming
+  gate1-resolution.md closes only its own two-baseline reassessment, not the user's
+  expanded seven-dataset published-best-model reproduction requirement.
