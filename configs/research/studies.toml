@@ -1,0 +1,49 @@
+schema_version = 1
+
+[[studies]]
+id = "atlas-lora-scaling-v1"
+track = "prediction-and-transfer"
+status = "completed_development"
+question = "Do 3%/5% source labels and selected training duration improve ASO transfer?"
+evidence = "codex/atlas-lora-scaling@f197d79: docs/research/atlas-rnafm/SCALING-RESULTS.md; 240 fits/calibrations, 216 scores; no LoRA advantage. Not merged into main."
+next_step = "Review final paired results; retain classical controls. Freeze group partitions before any future scaling experiment."
+
+[[studies]]
+id = "nested-budget-infrastructure"
+track = "shared-evaluation"
+status = "infrastructure_only"
+question = "Can budget studies share fixed validation groups and append-only fitting IDs?"
+evidence = "src/oligo_engine/research/budgets.py; synthetic invariant tests only."
+next_step = "Export label-free eligible metadata and declared evaluation exclusions from a verified dataset adapter."
+
+[[studies]]
+id = "atlas-transfer-v2"
+track = "prediction-and-transfer"
+status = "planned"
+question = "Can transfer-aware selection or regularization improve over matched classical controls?"
+evidence = "No v2 training runs. v1 remains the preserved negative development result."
+next_step = "Declare matched target gradient/validation rows, bounded learning-rate/regularization contrasts, and training-only transfer validation before running."
+
+[[studies]]
+id = "atlas-batch-acquisition-v2"
+track = "experimental-selection"
+status = "planned"
+question = "Which batches improve prediction or measured hit discovery at equal assay budgets?"
+evidence = "Earlier Atlas geometry study did not establish label savings; no v2 runs."
+next_step = "Fix a classical predictor and recorded compound-assay pool; compare random, diversity, uncertainty and batch-information policies with identical initial IDs."
+
+[[studies]]
+id = "aso-surrogate-robustness-v1"
+track = "robustness-and-augmentation"
+status = "planned"
+question = "Does constrained augmentation improve independently measured robustness beyond regularization?"
+evidence = "No real-only/augmented/regularization factorial result yet."
+next_step = "Define compatible chemistry counterfactuals, teacher/evaluator separation and equal real-label budgets; start with held-out prediction and simple search."
+
+[[studies]]
+id = "aso-design-optimizer-v1"
+track = "molecular-design"
+status = "planned"
+question = "Does PPO improve valid candidate selection beyond simpler search under imperfect rewards?"
+evidence = "ASO environment handoff and separate mock reward/siRNA pilot branches; integrated ASO result not established."
+next_step = "Verify portable endpoint bundles and one shared constrained scorer, then compare enumeration/random/greedy/genetic/PPO at matched costs."
