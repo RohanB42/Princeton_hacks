@@ -1,0 +1,11 @@
+# ASO Atlas 2.0 local release
+
+Source: https://huggingface.co/datasets/barneyhill/aso-atlas-2, `neurips-rebuttal` snapshot, linked from https://github.com/barneyhill/aso-atlas-2 . Source code HEAD inspected for this import: `bb90c946013f183379da04678340e193088e5f99`. The data release is identified by its tag and by the SHA-256 of each downloaded file in `cleaned/audit.json`. The upstream manifest is copied unchanged from that source code checkout; counts were verified against the downloaded release.
+
+License: CC BY 4.0. Copyright 2026 Barney Hill, Nicola Whiffin, Stephan J. Sanders, Carlo Rinaldi. See `release/LICENSE_SOURCE.txt` and the source dataset card. We made derived preparation columns; the original release files are retained byte-for-byte in `release/`.
+
+`release/` contains four endpoint Parquet files, the source dataset card, license, release manifest and the seven provided fold files. `cleaned/` contains one derived Parquet per endpoint plus `audit.json`. No source rows or original columns were removed or rewritten. Derived columns are documented in the [preparation audit](../../docs/aso-atlas-data-cleaning-2026-11-14.md). From the repository root, rebuild with `python scripts/clean_aso_atlas.py` in an environment with pandas and pyarrow. The script checks row counts, upstream eligibility, source-column equality after write/read and stable row IDs, and records checksums. It does not independently authenticate upstream downloads. The committed integrity tests compare files against the stored checksums.
+
+The integration replay used Python 3.13.9, pandas 2.3.3, PyArrow 21.0.0 and NumPy 2.3.5 in a separate local preparation environment. This is not the Python 3.11 modeling runtime or a newly locked project dependency group. The original files and their recorded checksums are preserved; Parquet serialization hashes may differ across dependency versions.
+
+These are patent-reported experimental measurements extracted by the upstream authors; they are not new wet-lab results or validated clinical outcomes. The `analysis_eligible` flag is a conservative convenience filter, not a statement of biological validity or a final model-training cohort. Review assay context and chemistry before fitting.

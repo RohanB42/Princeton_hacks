@@ -1,0 +1,166 @@
+{
+  "source_repository": "https://github.com/barneyhill/aso-atlas-2",
+  "source_code_revision": "bb90c946013f183379da04678340e193088e5f99",
+  "release_tag": "neurips-rebuttal",
+  "license": "CC BY 4.0",
+  "rules_version": 1,
+  "endpoints": {
+    "in_vitro_inhibition": {
+      "source_file": "in_vitro_inhibition.parquet",
+      "source_sha256": "447426f598d3c1763efd0eb31786cc8fdf3daecbcf594c5aa96a95964c367e7f",
+      "cleaned_sha256": "77b5334b21a4fb86f99821852e7e83a50488649f887cad52b3d7c29ff8941285",
+      "rows_source": 174459,
+      "rows_cleaned": 174459,
+      "upstream_model_eligible": 173286,
+      "analysis_eligible": 143646,
+      "unresolved_helm": 1173,
+      "uncertain_chemistry_marker": 0,
+      "resolved_without_expected_helm_frame": 0,
+      "missing_patent": 0,
+      "missing_target_name": 44,
+      "missing_or_nonfinite_endpoint": 0,
+      "invalid_or_missing_dose": 30347,
+      "unique_exact_helm": 161434,
+      "exact_repeated_helm_rows": 21324,
+      "out_of_0_100_inhibition_preserved": 8024,
+      "missing_cell_line": 11561
+    },
+    "dose_response": {
+      "source_file": "dose_response.parquet",
+      "source_sha256": "0492e31f172951d0210e2aaa510dcdd7574075568fc248f46b81c4a0aa40d002",
+      "cleaned_sha256": "37e19aacc1aece7b96723645860203d61315a7ad6980b0091518765c0671d5b4",
+      "rows_source": 99821,
+      "rows_cleaned": 99821,
+      "upstream_model_eligible": 97236,
+      "analysis_eligible": 97236,
+      "unresolved_helm": 2585,
+      "uncertain_chemistry_marker": 0,
+      "resolved_without_expected_helm_frame": 0,
+      "missing_patent": 0,
+      "missing_target_name": 85,
+      "missing_or_nonfinite_endpoint": 0,
+      "invalid_or_missing_dose": 0,
+      "unique_exact_helm": 16375,
+      "exact_repeated_helm_rows": 99416,
+      "out_of_0_100_inhibition_preserved": 3610,
+      "missing_cell_line": 1814
+    },
+    "hepatotoxicity": {
+      "source_file": "hepatotoxicity.parquet",
+      "source_sha256": "16c30ef6882d0a2e018dbc997b42bd9de411d0a1f9fd8872a5e486c618be3c34",
+      "cleaned_sha256": "4e232613dfb0e6a3daaf938140950c9744d0c36edd286fc784a8105c09dcd233",
+      "rows_source": 4341,
+      "rows_cleaned": 4341,
+      "upstream_model_eligible": 4212,
+      "analysis_eligible": 4137,
+      "unresolved_helm": 129,
+      "uncertain_chemistry_marker": 0,
+      "resolved_without_expected_helm_frame": 0,
+      "missing_patent": 0,
+      "missing_target_name": 3226,
+      "missing_or_nonfinite_endpoint": 99,
+      "invalid_or_missing_dose": 0,
+      "unique_exact_helm": 1881,
+      "exact_repeated_helm_rows": 3214
+    },
+    "neurotoxicity": {
+      "source_file": "neurotoxicity.parquet",
+      "source_sha256": "62b40fc65031a286f54419f7ea27a1840db0418e638dbc68c7234394fb982ca8",
+      "cleaned_sha256": "b1f1ebd075bfbe601afaa87b7bf68735cf7053e3792ceeeeaa49ef04e8513988",
+      "rows_source": 4900,
+      "rows_cleaned": 4900,
+      "upstream_model_eligible": 4896,
+      "analysis_eligible": 4892,
+      "unresolved_helm": 4,
+      "uncertain_chemistry_marker": 0,
+      "resolved_without_expected_helm_frame": 0,
+      "missing_patent": 0,
+      "missing_target_name": 139,
+      "missing_or_nonfinite_endpoint": 4,
+      "invalid_or_missing_dose": 192,
+      "unique_exact_helm": 3312,
+      "exact_repeated_helm_rows": 3137
+    }
+  },
+  "folds": {
+    "in_vitro_inhibition_folds.csv.gz": {
+      "rows": 134388,
+      "sha256": "ef8ba96295980c4083fd98637980e7143e23e23d57f6ee931240b40d9c71adc2",
+      "fold_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "mouse_hepatic_folds.csv.gz": {
+      "rows": 1778,
+      "sha256": "ba2110b24cd2b97925ababeff74f1f5ab2446b3308f90d594286179040406310",
+      "fold_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "mouse_neuro_folds.csv.gz": {
+      "rows": 2696,
+      "sha256": "875e092307e48379b69896e63158ac9719e7367b90e59ce941becdcff1c186dd",
+      "fold_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "oligoai_folds.csv.gz": {
+      "rows": 117780,
+      "sha256": "b036d1d26f5454f1dd9f565a2792b4d41f785cd2221f0fe8a3ebc71f1c6d3eed",
+      "fold_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "potency_folds.csv.gz": {
+      "rows": 7892,
+      "sha256": "9b8ed5697312d31359d6871808724f3865f596119c65af687924451e468160d9",
+      "fold_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "rat_hepatic_folds.csv.gz": {
+      "rows": 488,
+      "sha256": "845f39141a51317f26a9380feeb4355a2c510937f266547b3581447a3828aeb9",
+      "fold_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "rat_neuro_folds.csv.gz": {
+      "rows": 1774,
+      "sha256": "c385052dad804a40b0455b6c2378e87b32a1cbbcedb1c625f43513ef6b754c73",
+      "fold_values": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  },
+  "unique_exact_helm_all_endpoints": 165782,
+  "exact_helm_in_multiple_endpoints": 15095
+}

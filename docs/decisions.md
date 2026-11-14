@@ -1,5 +1,13 @@
 # Decisions and status
 
+- November 14 ASO Atlas integration: the user explicitly authorizes its released
+  data and lossless prepared tables under `data/aso_atlas_2/`. Import only commit
+  `f0b69b34367e1e6b578688231ec0b0236f7a2236` from the data branch; its parent RL
+  implementation is outside this integration. Preserve source files, attribution,
+  endpoint distinctions and provided fold definitions. This is data preparation,
+  not a new training result or automatic admission to the OligoGym runner. Define
+  assay/dose/chemistry contracts and audit split overlap before experiments.
+
 - Existing `main` repository and GitHub remote are preserved. Working project and import names are `oligo-design-engine` and `oligo_engine`.
 - Python 3.11 and Poetry 2.1.4 remain selected. Current core checks run locally on
   Python 3.11.13, Ruff 0.12.12 and pytest 8.4.2. Existing project lock is preserved;
