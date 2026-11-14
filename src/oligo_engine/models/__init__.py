@@ -1,1 +1,1 @@
-"""Future predictor and uncertainty boundary."""
+"""Fixture and HELM-hash diagnostic predictors with explicit uncertainty semantics."""

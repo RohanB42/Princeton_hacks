@@ -1,0 +1,9 @@
+# Executable synthetic plumbing fixture; not a measured-data experiment.
+dataset = "synthetic-contract-fixture"
+seeds = [0, 1, 2, 3, 4]
+
+[budget]
+initial_labels = 8
+batch_size = 7
+max_labels = 32
+pearson_threshold = 0.60
