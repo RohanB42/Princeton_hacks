@@ -3,7 +3,7 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
-  scaffold:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,5 +13,5 @@ jobs:
       - uses: abatilo/actions-poetry@v3
         with:
           poetry-version: '2.1.4'
-      - run: poetry sync --no-interaction
+      - run: poetry sync --with science --no-interaction
       - run: make lint format-check import-check test

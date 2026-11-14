@@ -1,3 +1,12 @@
 # Team workflow
 
-Three future areas, with no people assigned: model/evaluation owns upstream integration, predictor, splits, acquisition, reproducibility, and curve; design owns chemistry-constrained proposals after gates; surface/presentation owns a lightweight app and demo materials after interfaces settle. Use short branches and PRs into `main`. One integrator coordinates shared metadata, lockfile, configs, and interface changes. Suggested branch protection: require review and repository-health CI; hosting settings are not changed here.
+The disjoint ownership plan and dependencies are in
+[IMPLEMENTATION_TASKS.md](IMPLEMENTATION_TASKS.md). No contributors or worktrees
+have been assigned yet. The current integrator owns the initial contracts, fixture
+runner, shared docs/configs and source verification.
+
+Use short branches and PRs into `main`. The integrator coordinates metadata,
+lockfiles, configs and interface changes; other owners propose those edits. Preserve
+the executable pipeline. Suggested protection: review plus repository-health CI;
+hosting settings are not changed here. A research task needs tested code, reproducible
+config, results and an honest interpretation before closure.
