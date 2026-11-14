@@ -1,0 +1,3 @@
+# Agent guidance
+
+Before implementation, read `docs/project-context.md`, `docs/evaluation-protocol.md`, `docs/decisions.md`, and `docs/open-questions.md`. This repository is bootstrap only; roadmap items do not authorize implementation. Preserve test-label leakage boundaries, chemistry caveats, measured-label provenance, and the distinction between results and hypotheses. Verify a pinned OligoGym revision before using its APIs; never invent loader handles. Work in the assigned module and coordinate shared metadata, lockfiles, configs, and interfaces through an integrator. Run relevant checks, report status truthfully, and never commit secrets, datasets, PDFs, or weights.

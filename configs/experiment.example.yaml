@@ -1,0 +1,15 @@
+# Specification template only; no experiment runner exists.
+upstream_revision: null
+split:
+  headline: nucleobase_split
+  target_split_when_feasible: true
+  cluster_count_to_verify: 8
+  kmer_to_verify: true
+  kmer_max_to_verify: 3
+  strand_to_verify: RNA1
+comparison: [active_acquisition, random_acquisition, all_training_labels]
+minimum_seeds: 5
+initial_label_budget: null
+batch_size: null
+band_method: null
+full_data_tolerance: null

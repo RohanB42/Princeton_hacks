@@ -1,0 +1,6 @@
+# Future design only; no generator or reward implementation exists.
+chemistry: PS/2'-MOE
+requires_gate_2: true
+reward_weights: null
+target_accessibility: stretch_only
+boltz_rescoring: optional_post_ranking

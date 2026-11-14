@@ -1,0 +1,26 @@
+name: Task
+description: Scoped project work
+body:
+  - type: input
+    id: area
+    attributes:
+      label: Owner area
+      description: Model/evaluation, design, or surface/presentation
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and dependencies
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria and validation
+    validations:
+      required: true
+  - type: textarea
+    id: claims
+    attributes:
+      label: Scientific claim changes, if any

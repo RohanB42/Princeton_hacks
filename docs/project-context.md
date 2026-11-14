@@ -1,0 +1,3 @@
+# Project context
+
+Question: can an active-learning policy approach a comparable full-training-data model using fewer measured labels? This remains untested. It neither reproduces Creyon's proprietary engine nor proves proprietary data unnecessary. Planned components are (1) HELM plus target-context predictor with potency, immune, and MOE neurotox outputs; (2) measured-label acquisition loop; (3) optional PS/2'-MOE design agent; and (4) optional one-page surface. The predictor, loop, and reproducible learning curve are the irreducible future core. Shared encoder with separate heads is a proposal; heterogeneous datasets do not form one fully observed multi-endpoint table.

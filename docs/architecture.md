@@ -1,0 +1,5 @@
+# Planned architecture
+
+`data` will own upstream dataset identities, labels, sample IDs, and provenance. `features` will adapt verified HELM-aware upstream featurizers. `models` will compare small-data predictors and state uncertainty semantics. `acquisition` will select measured-label pool rows only. `evaluation` will own split manifests, fixed held-out tests, and learning curves. `design` is an optional chemistry-constrained hypothesis generator outside empirical evaluation. `reporting` will produce figures and logs. `app` is optional presentation work after interfaces settle. All modules are currently placeholders.
+
+Future dependencies: a pinned OligoGym revision is required for scientific work; OneHotEncoder is the proposed start. GaussianProcessModel and TabPFNModel are candidates, not validated substitutes; uncertainty needs calibration. ViennaRNA and transcript retrieval are optional design work; Boltz is optional post-ranking rescoring. No scientific stack is installed by this scaffold.
