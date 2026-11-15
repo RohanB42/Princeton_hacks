@@ -9,8 +9,8 @@ from math import isfinite
 from time import perf_counter
 from typing import Callable, Literal
 
-from oligo_engine.design.aso_space import TargetContext, candidate_identity, identity
 from oligo_engine.design.candidates import Candidate, build_helm
+from oligo_engine.design.context import TargetContext, candidate_identity, identity
 
 
 class BudgetExhausted(RuntimeError):
@@ -117,9 +117,6 @@ class CandidateScore:
     assay_identity: str
     assessment_id: str
     disagreement: tuple[tuple[str, float], ...]
-
-    def terminal_reward(self) -> float:
-        return self.reward if self.reward is not None else -1.0
 
 
 @dataclass(frozen=True)

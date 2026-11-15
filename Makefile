@@ -1,10 +1,8 @@
-.PHONY: setup setup-science setup-rl lint format format-check test import-check fixture data-check data-smoke
+.PHONY: setup setup-science lint format format-check test import-check fixture data-check data-smoke
 setup:
 	poetry sync
 setup-science:
 	poetry sync --with science
-setup-rl:
-	poetry sync --with science,rl
 lint:
 	poetry run ruff check .
 format:

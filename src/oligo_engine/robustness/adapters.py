@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Callable
 
 from oligo_engine.data.catalog import Catalog
-from oligo_engine.design.aso_space import identity
+from oligo_engine.provenance import identity
 from oligo_engine.robustness.contracts import (
     AuditObservation,
     AuditPrediction,

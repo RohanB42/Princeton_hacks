@@ -1,5 +1,11 @@
 # ASO environment: implementation and execution
 
+> Historical record: the target-window RL scaffold and its experiment runners
+> were removed on November 14 at the user's request. Commands for that scaffold
+> require the pre-removal checkout (`f26922f`); they are not current entry points.
+> Shared prediction/scoring utilities remain. Local retired runs were moved outside
+> the checkout; old artifact links below are historical locations.
+
 November 14, 2026. The user authorized execution after reviewing the implementation
 plan. The engineering environment, scorer boundary, search baselines and masked PPO
 fixture now run locally. **A real constrained ASO optimization benchmark is pending

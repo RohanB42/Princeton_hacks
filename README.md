@@ -4,13 +4,12 @@ Can sequential experiment selection improve siRNA efficacy prediction using fewe
 measured labels than random acquisition? This HackPrinceton project is building an
 open, auditable retrospective benchmark.
 
-**ASO design diagnostic (November 14, 19:10 EST).** A supported 20-mer MOE efficacy
-model now connects to the design environment. Its preselected top 20 ranked held-out
-recorded assays above random by 10.89 and 9.88 inhibition percentage points on two
-development targets. Three real-predictor PPO runs did not improve over the starting
-candidate on the final window; the expansion gate stopped larger runs. This is
-efficacy-only computational evidence, with safety and generated molecules unvalidated.
-See the [protocol, results and reproduction instructions](docs/supported-aso-results-2026-11-14.md).
+**ASO scaffold retired (November 14).** The original target-window RL experiment,
+PPO runtime and comparison runners have been removed at the user's request.
+Prediction, active learning, robustness auditing and the independent candidate app
+remain. The supported 20-mer efficacy model and measured ranking study are retained;
+historical optimizer findings are not a current molecular-design implementation.
+See [removal scope and verification](docs/updates/2026-11-14-2038-est-rl-scaffold-retirement.md).
 
 **Headline result (2026-11-14).** On Huesken (`Ichihara_2007_1`) with a one-hot
 Gaussian-process predictor and the official OligoGym `nucleobase` split,

@@ -1,5 +1,11 @@
 # Supported ASO efficacy and optimizer diagnostic
 
+> Historical record: the target-window RL scaffold and its experiment runners
+> were removed on November 14 at the user's request. Commands for that scaffold
+> require the pre-removal checkout (`f26922f`); they are not current entry points.
+> Shared prediction/scoring utilities remain. Local retired runs were moved outside
+> the checkout; old artifact links below are historical locations.
+
 Checkpoint: November 14, 2026, 19:10 EST (November 15, 00:10 UTC).
 This completes the ordered [execution plan](updates/2026-11-14-1845-est-supported-aso-execution.md).
 The measured ranking gate passed; the PPO expansion gate failed. Larger RL runs

@@ -1,5 +1,11 @@
 # ASO molecular-design RL environment: chat and implementation handoff
 
+> Historical record: the target-window RL scaffold and its experiment runners
+> were removed on November 14 at the user's request. Commands for that scaffold
+> require the pre-removal checkout (`f26922f`); they are not current entry points.
+> Shared prediction/scoring utilities remain. Local retired runs were moved outside
+> the checkout; old artifact links below are historical locations.
+
 Recorded November 14, 2026, 17:34 EST / 22:34 UTC.
 
 The molecular-design RL engineering environment is implemented and tested. It

@@ -3,8 +3,8 @@
 from dataclasses import asdict
 from typing import Protocol
 
-from oligo_engine.design.aso_space import TargetContext, candidate_identity
 from oligo_engine.design.candidates import DESIGNS, Candidate
+from oligo_engine.design.context import TargetContext, candidate_identity
 from oligo_engine.reward.chemistry import parse_helm
 from oligo_engine.reward.scoring import AssayProfile
 

@@ -1,5 +1,11 @@
 # RL scope correction, reward ablation and context audit
 
+> Historical record: the target-window RL scaffold and its experiment runners
+> were removed on November 14 at the user's request. Commands for that scaffold
+> require the pre-removal checkout (`f26922f`); they are not current entry points.
+> Shared prediction/scoring utilities remain. Local retired runs were moved outside
+> the checkout; old artifact links below are historical locations.
+
 Recorded November 14, 2026, 20:08 EST / November 15, 01:08 UTC.
 This update consolidates the side-conversation experiments and the subsequent
 discussion of the intended hackathon deliverable. It clarifies earlier statements

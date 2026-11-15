@@ -43,10 +43,10 @@ next_step = "Freeze a metadata-audited supported-context protocol; preserve inte
 [[studies]]
 id = "aso-design-optimizer-v1"
 track = "molecular-design"
-status = "completed_development"
+status = "retired"
 question = "Does PPO improve valid molecular designs beyond simpler search under imperfect rewards?"
 evidence = "docs/supported-aso-results-2026-11-14.md: exact-profile real efficacy model, 3 PPO seeds, equal local movement costs; no final-window PPO advantage. Larger-run validation gate failed."
-next_step = "Declare broader development windows and aligned terminal/best-visited objectives before another optimizer study; biological validation and compatible safety remain open."
+next_step = "The user removed the target-window scaffold and its executable experiments. Preserve historical findings; a replacement requires its own implementation and evaluation protocol."
 
 [[studies]]
 id = "supported-aso-ranking-v1"

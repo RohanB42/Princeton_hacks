@@ -1,5 +1,10 @@
 # Predictor robustness implementation and local execution
 
+Current scope after scaffold retirement: the target-window RL environment and its
+site-action perturbation bridge have been removed. Shared frozen inference, chemistry,
+recorded-pool auditing and generated-panel checks remain. See the
+[retirement record](updates/2026-11-14-2038-est-rl-scaffold-retirement.md).
+
 November 14, 2026. Implemented locally after fetching and fast-forwarding to
 `origin/main` at **6b6838b**. The existing uncommitted design spec and infrastructure
 link were preserved. No commits or pushes are part of this implementation request.
@@ -13,16 +18,16 @@ and a bounded measured-data execution, not a validated universal ASO guardrail.
 
 ## Current-main compatibility
 
-Main now includes a supported **20-mer** MOE efficacy bundle and real-surrogate PPO
-results. The original design spec's 19-mer-only references describe its earlier
+Main retains a supported **20-mer** MOE efficacy bundle and historical real-surrogate
+PPO results. The original design spec's 19-mer-only references describe its earlier
 snapshot. This implementation accepts original measured ASO lengths 2-20 without
-altering molecules and reuses the current 19/20-mer design-space API for legal site
-probes. A dedicated bridge supports the hash-verified 20-mer portable bundle after
+altering molecules. The former legal site-action probes were removed with the RL
+scaffold; generated-panel checks use pinned transcript and candidate identities. A dedicated bridge supports the hash-verified 20-mer portable bundle after
 checking its training membership and exact endpoint/units/context. No all-label
 deployment model is retroactively called held out.
 
-Existing supported-profile predictors, design/scoring/RL modules, raw datasets and
-their prior positive/negative results remain unchanged. Initial standalone audit
+Existing supported-profile predictors, candidate/scoring modules, raw datasets and
+their prior positive/negative results are preserved. Initial standalone audit
 models are fixed-recipe chemistry-aware Ridge and RF, using the current science
 group; no OligoGym import, invented API, new dependency or lockfile change is needed.
 A GP can supply named uncertainty through the audit protocol, but no new GP/LoRA
@@ -35,7 +40,7 @@ adapter or fit is claimed here.
 | `contracts.py` | Frozen label-free source records, predictions, four-way split and predictor protocol; distinct chemical/assay/source identities |
 | `splits.py` | Deterministic connected components for target or patent plus compound/natural-sequence links; complete partitions, quarantine and artifact-overlap checks |
 | `adapters.py` | Original matched ASOptimizer metadata, partition-scoped numeric outcome reads, fixed RF/Ridge fitting and frozen prediction, actual model-state hashes and portable-bundle bridge |
-| `perturbations.py` | Equivalent HELM serialization, malformed-input rejection, explicit supported-context changes and valid latest-main target-site shifts; variants never inherit labels |
+| `perturbations.py` | Equivalent HELM serialization, malformed-input rejection, explicit supported-context changes without an RL site-action bridge; variants never inherit labels |
 | `diagnostics.py` | Chemistry-track mismatch distance, full same-compound self-exclusion, explicit noncomparability and frozen fitting-reference percentiles |
 | `calibration.py` | Separate absolute-residual split-conformal interval implementation, exact finite-sample index and insufficient-calibration status; no target-shift coverage guarantee |
 | `guardrails.py` | Development-only fixed-grid threshold selection with overall/per-group retention and optional MAE target; explicit no-supported-policy result |
@@ -51,10 +56,8 @@ and runs the synthetic CLI. Remote CI was not executed by this local task.
 ## Run locally
 
 Use Python 3.11 and Poetry 2.1.4. The installed environment used Python 3.11.16,
-NumPy 1.26.4, scipy 1.15.3 and scikit-learn 1.4.0. Existing optional RL dependencies
-are unchanged. Install selected groups with `poetry sync --with science,rl` when
-both the audit and ASO RL runtimes are needed; reporting plots use the existing
-reporting dependency or the plotting stack already installed with RL.
+NumPy 1.26.4, scipy 1.15.3 and scikit-learn 1.4.0. Use `poetry sync --with science,reporting` for audit models and plots. The retired
+RL dependency group is no longer available.
 
 ```sh
 make lint format-check import-check test
@@ -166,9 +169,8 @@ Paired shortlist comparisons match cardinality to the smaller arm.
 
 Only random proposals and exhaustive ranking are admitted for the arbitrary source
 pool. Local/genetic/PPO methods are `not_applicable` without a declared graph; source
-records are never assigned invented transcript coordinates. For real 19/20-mer site
-spaces, the existing latest-main local-cost/RL implementation remains the optimizer
-boundary. The generated-archive bridge reports computational-only evidence and
+records are never assigned invented transcript coordinates. The former real-site local-cost/RL implementation is removed; no replacement
+optimizer integration is available. The generated-archive bridge reports computational-only evidence and
 does not establish evaluator independence or measured efficacy.
 
 The current report includes the primary metrics/risk-coverage plot, raw stage

@@ -57,11 +57,12 @@ diagnostic. It does not establish a validated real guardrail or augmentation res
    search; PPO is a later optimizer comparison. Never copy measured labels onto
    edited molecules or use the teacher as the only independent evaluator.
 4. **Molecular design:** one consumer of the common predictors and evaluation
-   infrastructure. Compare enumeration and simpler search alongside PPO. Reward
-   improvement alone is not evidence of better biological candidates.
+   infrastructure. The original target-window scaffold is retired and removed;
+   a replacement is not implemented. Any future optimizer study needs credible
+   controls and evidence beyond improvement in predicted reward.
 
-`configs/research/studies.toml` records explicit completed, infrastructure-only and
-planned status. Entries are handoff metadata, not automatic authorization or live
+`configs/research/studies.toml` records completed, infrastructure-only, planned and
+retired status. Entries are handoff metadata, not automatic authorization or live
 job tracking. Evidence on a different branch is identified as such.
 
 ## Commands

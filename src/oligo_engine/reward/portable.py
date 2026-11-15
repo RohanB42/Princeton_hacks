@@ -10,8 +10,8 @@ from dataclasses import asdict
 from math import isfinite
 from pathlib import Path
 
-from oligo_engine.design.aso_space import TargetContext, candidate_identity, identity
 from oligo_engine.design.candidates import Candidate, build_helm
+from oligo_engine.design.context import TargetContext, candidate_identity, identity
 from oligo_engine.reward.chemistry import parse_helm
 from oligo_engine.reward.scoring import (
     AssayProfile,

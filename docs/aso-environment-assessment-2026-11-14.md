@@ -1,5 +1,11 @@
 # ASO design environment: three bounded checks
 
+> Historical record: the target-window RL scaffold and its experiment runners
+> were removed on November 14 at the user's request. Commands for that scaffold
+> require the pre-removal checkout (`f26922f`); they are not current entry points.
+> Shared prediction/scoring utilities remain. Local retired runs were moved outside
+> the checkout; old artifact links below are historical locations.
+
 November 14, 2026. Assessed main revision `df90bb6` after the user requested about
 three tests and an assessment of whether generated candidates are promising.
 

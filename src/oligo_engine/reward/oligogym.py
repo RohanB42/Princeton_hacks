@@ -2,8 +2,8 @@
 
 from typing import Protocol
 
-from oligo_engine.design.aso_space import TargetContext, candidate_identity
 from oligo_engine.design.candidates import Candidate
+from oligo_engine.design.context import TargetContext, candidate_identity
 from oligo_engine.reward.scoring import AssayProfile, EndpointPrediction
 
 

@@ -13,7 +13,7 @@ from random import Random
 from statistics import fmean
 from time import perf_counter
 
-from oligo_engine.design.aso_space import identity
+from oligo_engine.provenance import identity
 from oligo_engine.robustness.adapters import fit_model, load_asoptimizer
 from oligo_engine.robustness.calibration import ResidualIntervals
 from oligo_engine.robustness.contracts import PARTITIONS, SCHEMA, records_hash
@@ -441,7 +441,7 @@ class AuditPipeline:
                 "unsupported_methods": {
                     "greedy": "not_applicable_without_source_pool_graph",
                     "genetic": "not_applicable_without_source_pool_graph",
-                    "ppo": "requires_real_transcript_space_use_existing_rl_bridge",
+                    "ppo": "not_implemented_retired_target_window_scaffold",
                 },
             },
             ("select-guardrail", "diagnose"),

@@ -14,17 +14,17 @@ from oligo_engine.reward.scoring import (
     ScorerError,
     ScoringSession,
 )
-from oligo_engine.rl.fixture import (
+from scoring_helpers import (
     ASSAY,
-    fixture_scorer,
-    fixture_session,
-    fixture_space,
+    candidate_panel,
+    constant_scorer,
+    scoring_session,
 )
 
 
 def test_percentile_ties_missingness_and_cache_cost():
-    space = fixture_space()
-    session = fixture_session(space, 1, 3)
+    space = candidate_panel()
+    session = scoring_session(space, 1, 3)
     candidate = space.candidate(space.start)
     first = session.score(candidate)
     assert first.reward == 0.15
@@ -43,8 +43,8 @@ def test_percentile_ties_missingness_and_cache_cost():
 
 
 def test_raw_screen_precedes_normalization_and_optional_is_advisory():
-    space = fixture_space()
-    objective = fixture_scorer()._endpoints[0]
+    space = candidate_panel()
+    objective = constant_scorer()._endpoints[0]
     metadata = replace(
         objective.manifest,
         endpoint_id="tox",
@@ -61,7 +61,7 @@ def test_raw_screen_precedes_normalization_and_optional_is_advisory():
         "synthetic",
     )
     score = scorer.score(space.candidate(1), space.target, ASSAY)
-    assert score.reward is None and score.terminal_reward() == -1
+    assert score.reward is None
     assert score.endpoints[1].raw == 20.0
     assert score.endpoints[1].reason == "SCREEN_MAXIMUM"
     with pytest.raises(ValueError, match="evidence"):
@@ -71,8 +71,8 @@ def test_raw_screen_precedes_normalization_and_optional_is_advisory():
 
 
 def test_wrong_context_rejects_without_call_and_failures_abort():
-    space = fixture_space()
-    scorer = fixture_scorer()
+    space = candidate_panel()
+    scorer = constant_scorer()
     with pytest.raises(ScorerError, match="fixed assay"):
         ScoringSession(scorer, space.target, replace(ASSAY, dosage_nm=11), 10, 20)
     score = scorer.score(space.candidate(1), space.target, replace(ASSAY, dosage_nm=11))
@@ -101,11 +101,11 @@ def test_wrong_context_rejects_without_call_and_failures_abort():
 
 
 def test_manifest_roles_reference_and_scorer_identity():
-    base = fixture_scorer().manifests[0]
+    base = constant_scorer().manifests[0]
     with pytest.raises(ValueError, match="reference"):
         replace(base, reference=())
-    space = fixture_space()
-    session = fixture_session(space)
+    space = candidate_panel()
+    session = scoring_session(space)
     session.scorer.identity = "mutated"
     with pytest.raises(ScorerError, match="changed"):
         session.score(space.candidate(1))
@@ -118,11 +118,11 @@ def test_manifest_roles_reference_and_scorer_identity():
         ),
         "synthetic",
     )
-    assert changed.identity != fixture_scorer().identity
+    assert changed.identity != constant_scorer().identity
 
 
 def test_alias_projection_preserves_molecular_tracks_and_original():
-    space = fixture_space()
+    space = candidate_panel()
     candidate = space.candidate(1)
     projected = atlas_helm(candidate, space.target)
     assert "[5meC]" in projected and "[m5C]" in candidate.helm
@@ -137,7 +137,7 @@ def test_trusted_artifact_hash_checked_before_reconstruction(tmp_path):
     path.write_bytes(b'{"constant":1}')
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
     artifact = TrustedArtifact(path, digest, "source-revision", "explicit-json-loader")
-    manifest = replace(fixture_scorer().manifests[0], artifact_hash=digest)
+    manifest = replace(constant_scorer().manifests[0], artifact_hash=digest)
     endpoint = load_endpoint(manifest, artifact, lambda raw: lambda c, t, a: 1.0)
     assert endpoint.manifest.artifact_hash == digest
     path.write_bytes(b"tampered")
@@ -161,8 +161,8 @@ def test_oligogym_frozen_bridge_retains_uncertainty_and_endpoint_identity():
                 }
             ]
 
-    space = fixture_space()
-    base = fixture_scorer().manifests[0]
+    space = candidate_panel()
+    base = constant_scorer().manifests[0]
     scorer = FrozenScorer(
         (
             FrozenEndpoint(

@@ -1,5 +1,11 @@
 # Supported ASO execution: authorized sequence
 
+> Historical record: the target-window RL scaffold and its experiment runners
+> were removed on November 14 at the user's request. Commands for that scaffold
+> require the pre-removal checkout (`f26922f`); they are not current entry points.
+> Shared prediction/scoring utilities remain. Local retired runs were moved outside
+> the checkout; old artifact links below are historical locations.
+
 November 14, 2026, 18:45 EST / 23:45 UTC. The user authorized saving/publishing the
 assessment and then executing the following sequence, rather than merely planning:
 

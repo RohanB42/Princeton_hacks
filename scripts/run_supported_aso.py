@@ -4,7 +4,6 @@ import argparse
 import hashlib
 import json
 from collections import Counter
-from dataclasses import asdict
 from pathlib import Path
 
 import numpy as np
@@ -12,15 +11,13 @@ import pyarrow.parquet as pq
 from sklearn.linear_model import Ridge
 from sklearn.model_selection import GroupKFold
 
-from oligo_engine.design.aso_space import TargetContext, identity
-from oligo_engine.design.candidates import tile
+from oligo_engine.provenance import identity
 from oligo_engine.reward.portable import (
     CHEMISTRY,
     PortableEfficacy,
     encode_sequence,
     supported_sequence,
 )
-from oligo_engine.reward.scoring import ScoringSession
 
 CONFIG = Path("configs/research/supported-aso-v1.json")
 COHORT_SHA = "bbc3edbef73f2f2b926cd1fcc63946f16d52238f994e99c620be9f756522165d"
@@ -375,49 +372,11 @@ def evaluate(output: Path) -> None:
     print(json.dumps(report, indent=2))
 
 
-def panel(output: Path, transcript_path: Path) -> None:
-    raw = json.loads(transcript_path.read_text())
-    # Sequence content is pinned even when the upstream REST ID lacks a version suffix.
-    target = TargetContext(
-        raw["gene"],
-        raw["transcript_id"],
-        raw["sequence"],
-        raw["species"],
-        raw["source"]
-        + "; sha256="
-        + hashlib.sha256(raw["sequence"].encode()).hexdigest(),
-    )
-    manifest = json.loads((output / "bundle-manifest.json").read_text())
-    model = PortableEfficacy(output / "efficacy.json", manifest["artifact_sha256"])
-    candidates = tile(
-        target.gene, target.transcript_id, target.sequence, chemistry=CHEMISTRY
-    )
-    # Fixed evenly-spaced panel; no selection using outcomes or final prediction scores.
-    indices = np.linspace(0, len(candidates) - 1, min(64, len(candidates)), dtype=int)
-    session = ScoringSession(model.scorer(), target, model.assay, 64, 64)
-    for i in indices:
-        session.score(candidates[i])
-    records = session.receipt()
-    records["target_manifest"] = asdict(target)
-    records["candidate_status"] = "unmeasured_hypotheses_no_safety_validation"
-    save(output / "real-panel.json", records)
-    # Verify that the same real candidate receives identical direct and env scores
-    # in the isolated optional RL runtime; that check is invoked separately.
-    print(
-        {
-            "target": target.gene,
-            "candidates": len(indices),
-            "scorer": session.scorer.identity,
-        }
-    )
-
-
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("phase", choices=["prepare", "fit", "evaluate", "panel"])
+    parser.add_argument("phase", choices=["prepare", "fit", "evaluate"])
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--prepared-root", type=Path)
-    parser.add_argument("--transcript", type=Path)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     if args.phase == "prepare":
@@ -426,12 +385,8 @@ def main() -> None:
         prepare(args.prepared_root, args.output)
     elif args.phase == "fit":
         fit(args.output)
-    elif args.phase == "evaluate":
-        evaluate(args.output)
     else:
-        if args.transcript is None:
-            parser.error("--transcript required")
-        panel(args.output, args.transcript)
+        evaluate(args.output)
 
 
 if __name__ == "__main__":

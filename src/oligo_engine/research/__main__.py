@@ -15,7 +15,7 @@ def load_catalog(path: Path) -> list[dict]:
         raise ValueError("unsupported catalog schema")
     studies = data.get("studies", [])
     required = {"id", "track", "status", "question", "next_step", "evidence"}
-    allowed = {"completed_development", "infrastructure_only", "planned"}
+    allowed = {"completed_development", "infrastructure_only", "planned", "retired"}
     seen = set()
     for study in studies:
         if set(study) != required:

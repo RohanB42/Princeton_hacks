@@ -1,8 +1,8 @@
-"""Typed, outcome-free representation and legal-site perturbation probes."""
+"""Typed, outcome-free representation and assay-context perturbation probes."""
 
 from dataclasses import asdict, dataclass, replace
 
-from oligo_engine.design.aso_space import ASODesignSpace, identity
+from oligo_engine.provenance import identity
 from oligo_engine.robustness.contracts import AuditObservation, chemistry
 
 
@@ -48,33 +48,6 @@ def representation_cases(
             )
         result.append((case, variant))
     return tuple(result)
-
-
-def site_shift(
-    space: ASODesignSpace,
-    position: int,
-    moves: int,
-    action: int,
-    endpoint: str,
-    units: str,
-    context: tuple[tuple[str, str], ...],
-) -> tuple[PerturbationCase, AuditObservation]:
-    updated = space.transition(position, moves, action)
-    parent, variant = space.candidate(position), space.candidate(updated)
-    key = identity({"space": space.identity, "position": updated, "action": action})
-    case = PerturbationCase(
-        parent.candidate_id, key, "legal_target_site_shift", True, variant.helm
-    )
-    row = AuditObservation(
-        key,
-        variant.helm,
-        space.target.gene,
-        endpoint,
-        units,
-        space.target.identity,
-        context,
-    )
-    return case, row
 
 
 def context_change(

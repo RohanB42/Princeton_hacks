@@ -5,7 +5,7 @@ from functools import cached_property
 from math import isfinite
 from typing import Protocol
 
-from oligo_engine.design.aso_space import identity
+from oligo_engine.provenance import identity
 from oligo_engine.reward.chemistry import ASOChemistry, parse_helm
 
 SCHEMA = "predictor-robustness-v1"

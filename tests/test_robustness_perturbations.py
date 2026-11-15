@@ -4,16 +4,14 @@ from dataclasses import asdict
 
 import pytest
 
-from oligo_engine.design.aso_space import Action, ASODesignSpace
-from oligo_engine.rl.fixture import fixture_space
 from oligo_engine.robustness.diagnostics import DomainReference
 from oligo_engine.robustness.fixture import SyntheticAuditModel, source
 from oligo_engine.robustness.generated import audit_generated_archive
 from oligo_engine.robustness.perturbations import (
     context_change,
     representation_cases,
-    site_shift,
 )
+from scoring_helpers import candidate_panel
 
 
 def test_equivalent_variants_retain_structure_and_malformed_is_rejected():
@@ -38,22 +36,8 @@ def test_context_probe_changes_identity_and_rejects_unsupported_context():
     assert not case.legal and variant is None
 
 
-def test_site_shift_uses_latest_main_20mer_space_and_recognition():
-    base = fixture_space()
-    space = ASODesignSpace(base.target, 1, 3, 3, "ps_moe_20_gapmer")
-    case, row = site_shift(
-        space, 1, 0, Action.RIGHT, "synthetic_potency", "fixture units", ()
-    )
-    assert row.helm == space.candidate(2).helm
-    assert len(row.sequence) == 20
-    assert case.measurement_status == "unmeasured_variant"
-    with pytest.raises(ValueError, match="Illegal"):
-        site_shift(space, 0, 0, Action.LEFT, "synthetic_potency", "fixture units", ())
-
-
 def test_generated_bridge_is_computational_only_and_checks_target_manifest():
-    base = fixture_space()
-    space = ASODesignSpace(base.target, 1, 3, 3, "ps_moe_20_gapmer")
+    space = candidate_panel("ps_moe_20_gapmer")
     candidate = space.candidate(1)
     receipt = {
         "target_manifest": asdict(space.target),

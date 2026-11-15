@@ -1,5 +1,12 @@
 # Project context
 
+November 14, 20:38 EST: the user retired the original target-window RL scaffold.
+Its environment, policy training, action space, fixture/search runners, configs,
+RL dependencies and CI job are removed. Shared inference/chemistry and the
+independent prediction, acquisition and robustness work remain. There is no
+replacement RL environment yet. See [removal details](updates/2026-11-14-2038-est-rl-scaffold-retirement.md).
+Earlier implementation statements below are historical, not current capabilities.
+
 November 14, 20:29 EST clarification: the robustness CLI fit fresh RF/Ridge audit
 models, not the existing GP/LoRA/Atlas checkpoints. Its exact fitting-context gate
 excluded all four final DGAT2 assay tuples (2,536 records), so the split and gate

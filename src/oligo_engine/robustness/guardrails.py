@@ -4,7 +4,7 @@ from dataclasses import asdict, dataclass
 from math import isfinite
 from statistics import fmean
 
-from oligo_engine.design.aso_space import identity
+from oligo_engine.provenance import identity
 
 
 def compound_risk(records: list[dict], labels: dict[str, float]) -> float | None:

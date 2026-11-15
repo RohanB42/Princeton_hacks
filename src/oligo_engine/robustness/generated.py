@@ -2,8 +2,8 @@
 
 from dataclasses import asdict
 
-from oligo_engine.design.aso_space import TargetContext, candidate_identity, identity
 from oligo_engine.design.candidates import Candidate
+from oligo_engine.design.context import TargetContext, candidate_identity, identity
 from oligo_engine.robustness.contracts import AuditObservation
 from oligo_engine.robustness.diagnostics import DomainReference
 

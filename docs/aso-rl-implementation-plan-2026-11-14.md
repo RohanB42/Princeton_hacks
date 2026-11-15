@@ -1,5 +1,11 @@
 # ASO environment implementation plan
 
+> Historical record: the target-window RL scaffold and its experiment runners
+> were removed on November 14 at the user's request. Commands for that scaffold
+> require the pre-removal checkout (`f26922f`); they are not current entry points.
+> Shared prediction/scoring utilities remain. Local retired runs were moved outside
+> the checkout; old artifact links below are historical locations.
+
 Prepared November 14, 2026 following the requested main sync, build-spec review,
 attachment review and review of all three files in `docs/updates/`.
 Status: planning deliverable; no ASO environment or training run implemented here.

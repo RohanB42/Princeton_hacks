@@ -36,7 +36,7 @@ def test_latest_main_portable_bundle_training_overlap_checked_before_use(tmp_pat
     from dataclasses import asdict
 
     from oligo_engine.reward.portable import CHEMISTRY
-    from oligo_engine.rl.fixture import ASSAY
+    from scoring_helpers import ASSAY
 
     path = tmp_path / "bundle.json"
     path.write_text(

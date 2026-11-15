@@ -4,8 +4,8 @@ from math import ceil, isfinite, sqrt
 from random import Random
 from statistics import fmean
 
-from oligo_engine.design.aso_space import identity
 from oligo_engine.evaluation.metrics import regression_metrics
+from oligo_engine.provenance import identity
 from oligo_engine.robustness.guardrails import compound_risk
 
 

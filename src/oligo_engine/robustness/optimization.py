@@ -6,7 +6,7 @@ from random import Random
 from time import perf_counter
 from typing import Callable
 
-from oligo_engine.design.aso_space import identity
+from oligo_engine.provenance import identity
 from oligo_engine.robustness.contracts import AuditObservation
 from oligo_engine.robustness.guardrails import GuardrailPolicy
 
@@ -22,8 +22,8 @@ def optimize(
 ) -> dict:
     """Uniform random proposals or fully charged enumeration on arbitrary source rows.
 
-    There is no invented transcript graph. Site-local/genetic/PPO comparisons use
-    the existing RL design-space bridge separately when a real space exists.
+    There is no invented transcript graph or RL integration. Only recorded-pool
+    random proposals and enumeration are implemented here.
     """
     if method not in ("random", "exhaustive"):
         raise ValueError("not_applicable: source pool has no declared proposal graph")
