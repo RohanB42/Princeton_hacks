@@ -195,3 +195,25 @@ integrate only compatible endpoint heads, and obtain independent candidate-quali
 evidence. If time forces the narrow scope, present it as target-site optimization,
 not a completed multi-objective ASO molecular designer. These are recommendations,
 not claims that this update implements the missing functionality.
+
+## Artifacts and integration status
+
+Local, ignored outputs:
+
+- [Matched-window report](../../artifacts/side-consistent-ppo-20261114/report.md)
+  and [curve](../../artifacts/side-consistent-ppo-20261114/comparison.png).
+- [Reward-ablation report](../../artifacts/side-ppo-reward-ablation-20261114/report.md)
+  and [figure](../../artifacts/side-ppo-reward-ablation-20261114/ablation.png), plus
+  frozen protocol, scripts, checkpoint hashes, costs and individual runs.
+- [Context evidence](../../artifacts/side-ppo-context-evidence-20261114/report.md),
+  full landscape scores and the executable synthetic observation counterexample.
+
+These links require this workstation's ignored artifacts; they are not distributed
+GitHub assets. Side-conversation ablation code and reward variants remain isolated
+and have **not** replaced the shared production environment. No data, weights,
+source modules or shared configs were changed by those experiments. This update
+is the requested documentation addition; it does not itself commit or push changes.
+
+All generated candidates remain unvalidated hypotheses. Predictor utility is not
+biological ground truth, missing safety is unknown, and no new measured-label
+savings, clinical benefit or general RL superiority has been established.
