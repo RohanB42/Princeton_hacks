@@ -4,6 +4,9 @@ Can sequential experiment selection improve siRNA efficacy prediction using fewe
 measured labels than random acquisition? This HackPrinceton project is building an
 open, auditable retrospective benchmark.
 
+The source and setup instructions for the ASO design and Bench Workspace website
+are in the [OligoAL website repository](https://github.com/hmartel222/oligoal-website).
+
 **ASO scaffold retired (November 14).** The original target-window RL experiment,
 PPO runtime and comparison runners have been removed at the user's request.
 Prediction, active learning, robustness auditing and the independent candidate app
