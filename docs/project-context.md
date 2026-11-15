@@ -1,5 +1,13 @@
 # Project context
 
+Latest ASO checkpoint (November 14, 19:10 EST): the ordered supported-profile study
+is complete. A separate exact 20-mer MOE efficacy bundle is integrated, with
+source-only fitting and positive recorded-assay top-20 ranking on two development
+targets. Three real-surrogate PPO runs showed no final-window advantage; the
+validation gate prevented larger runs. Safety and generated-molecule efficacy
+remain unvalidated. See [the full result](supported-aso-results-2026-11-14.md).
+The entries below preserve earlier project decisions and historical checkpoints.
+
 Current direction: November 13, 2026 revised implementation handoff, which supersedes
 conflicting claims in the November 11 v5 plan. Canonical specification:
 [SPEC.md](SPEC.md), [EVALUATION.md](EVALUATION.md), [interfaces.md](interfaces.md).

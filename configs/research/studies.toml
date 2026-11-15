@@ -43,7 +43,15 @@ next_step = "Define compatible chemistry counterfactuals, teacher/evaluator sepa
 [[studies]]
 id = "aso-design-optimizer-v1"
 track = "molecular-design"
-status = "planned"
-question = "Does PPO improve valid candidate selection beyond simpler search under imperfect rewards?"
-evidence = "ASO environment handoff and separate mock reward/siRNA pilot branches; integrated ASO result not established."
-next_step = "Verify portable endpoint bundles and one shared constrained scorer, then compare enumeration/random/greedy/genetic/PPO at matched costs."
+status = "completed_development"
+question = "Does PPO improve valid molecular designs beyond simpler search under imperfect rewards?"
+evidence = "docs/supported-aso-results-2026-11-14.md: exact-profile real efficacy model, 3 PPO seeds, equal local movement costs; no final-window PPO advantage. Larger-run validation gate failed."
+next_step = "Declare broader development windows and aligned terminal/best-visited objectives before another optimizer study; biological validation and compatible safety remain open."
+
+[[studies]]
+id = "supported-aso-ranking-v1"
+track = "prediction-and-transfer"
+status = "completed_development"
+question = "Does an exact-profile source-only efficacy model rank recorded held-out ASO assays above random?"
+evidence = "docs/supported-aso-results-2026-11-14.md: 2000 fitting labels, 1924 held-out records, top20 lift +10.89 pp ATXN2 and +9.88 pp DGAT2; development evidence only."
+next_step = "Audit patent families and compound/transcript mapping; predeclare additional held-out assays and an independent compatible evaluator."
