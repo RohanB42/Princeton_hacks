@@ -75,3 +75,28 @@ one patent, so this is conditional finite-pool ranking evidence, not independent
 replication across patents or proof of novel-molecule quality. The statistical
 calculation ran in memory; this paragraph records its output, not a committed
 standalone statistical test implementation.
+
+## Broader evaluation exposed an objective mismatch
+
+The initial synthetic comparison gave unrestricted proposals to some optimizers
+while PPO had to traverse intermediate sites. That confound was corrected before
+the subsequent real-surrogate local-search comparisons.
+
+The side-conversation expansion evaluated the three existing frozen policies on
+24 additional non-overlapping FGFR4 regions, across budgets 3/6/9 and seven methods:
+1,512 runs, not 1,512 independent tasks. All movement and validity checks passed.
+
+At budget nine, mean best-visited utility was PPO 0.637, genetic 0.796, random 0.786,
+greedy 0.737, left sweep 0.867 and right sweep 0.819. PPO visited only 2.06 distinct
+candidates on average. It lost to genetic search on 22 regions and tied on two.
+
+However, PPO had been trained to maximize **final-position utility**, whereas
+search returned the **best candidate visited**. On final-position utility, PPO
+averaged 0.540 versus random 0.522, genetic 0.507 and greedy 0.505. All paired
+window-bootstrap intervals for those PPO advantages included zero. Furthermore,
+the conventional algorithms were not designed to finish physically at their best
+site, so changing the reported metric alone did not fully align the comparison.
+
+The useful objective for a design tool that can return any evaluated candidate is
+best-discovered quality under budget. This motivated an explicit reward ablation,
+rather than interpreting the earlier metric as a general verdict on PPO.
