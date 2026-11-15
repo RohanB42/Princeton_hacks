@@ -60,3 +60,18 @@ one supported profile: human HepG2, electroporation, 4,500 nM, 24 hours. It pred
 inhibition percentage, converted to utility against a fixed training-prediction
 reference. That utility is not measured efficacy, calibrated uncertainty or a
 clinical safety score. See the [supported-profile study](../supported-aso-results-2026-11-14.md).
+
+## Predictor ranking evidence is separate from PPO evidence
+
+The model's predicted top 20 achieved mean measured inhibition of 72.35 versus a
+random expectation of 61.46 on ATXN2 (74 held-out records), and 64.65 versus 54.77
+on DGAT2 (1,828 records). PPO was not involved in this ranking test.
+
+A side-conversation post-hoc analysis sampled 200,000 random panels of 20 without
+replacement per target, seed 20261114. One-sided p-values were approximately
+0.00470 and 0.02391; Holm-adjusted values were 0.00940 and 0.02391. Two-sided
+absolute-centered values were 0.01427 and 0.05525. Each target's pool comes from
+one patent, so this is conditional finite-pool ranking evidence, not independent
+replication across patents or proof of novel-molecule quality. The statistical
+calculation ran in memory; this paragraph records its output, not a committed
+standalone statistical test implementation.
