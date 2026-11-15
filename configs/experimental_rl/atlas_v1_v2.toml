@@ -1,0 +1,14 @@
+# Fixed before outcome analysis. Assay-count diagnostic, positive if >80 points.
+partition_seed = 20261114
+source_fit_count = 12000
+source_cal_count = 2500
+min_campaign_size = 400
+initial_assays = 10
+total_assays = 50
+hit_threshold = 80.0
+ppo_steps = 8192
+ppo_seed = 613
+evaluation_seeds = [71, 72, 73, 74, 75]
+ridge_alpha = 10.0
+posterior_dimensions = 32
+checkpoints = [10, 25, 50]
