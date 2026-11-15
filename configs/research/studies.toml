@@ -35,10 +35,10 @@ next_step = "Fix a classical predictor and recorded compound-assay pool; compare
 [[studies]]
 id = "aso-surrogate-robustness-v1"
 track = "robustness-and-augmentation"
-status = "planned"
+status = "infrastructure_only"
 question = "Does constrained augmentation improve independently measured robustness beyond regularization?"
-evidence = "No real-only/augmented/regularization factorial result yet."
-next_step = "Define compatible chemistry counterfactuals, teacher/evaluator separation and equal real-label budgets; start with held-out prediction and simple search."
+evidence = "Local robustness audit pipeline, known synthetic failure fixture and ASOptimizer zero-context-coverage diagnostic; docs/predictor-robustness-implementation.md. No augmentation factorial or validated real guardrail."
+next_step = "Freeze a metadata-audited supported-context protocol; preserve internal-development status, exact outcome boundaries and independent evaluation before augmentation."
 
 [[studies]]
 id = "aso-design-optimizer-v1"

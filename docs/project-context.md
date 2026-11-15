@@ -1,5 +1,14 @@
 # Project context
 
+Local predictor robustness implementation (November 14): after syncing main at
+`6b6838b`, added four-way grouped audits, frozen RF/Ridge adapters, perturbations,
+domain/uncertainty diagnostics, calibration/abstention and sealed pool search.
+The known synthetic exploitation fixture works. The frozen ASOptimizer held-out
+target has zero admitted assay-context coverage; accuracy and a real guardrail
+remain undefined. Checks pass 212 core tests and 3 optional robustness science
+tests. See [implementation and scope](predictor-robustness-implementation.md).
+No augmentation, new biological validation or Gate 1 closure is claimed.
+
 Latest ASO checkpoint (November 14, 19:10 EST): the ordered supported-profile study
 is complete. A separate exact 20-mer MOE efficacy bundle is integrated, with
 source-only fitting and positive recorded-assay top-20 ranking on two development

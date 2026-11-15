@@ -1,0 +1,19 @@
+{
+  "schema": "predictor-robustness-v1",
+  "source": "fixture",
+  "purpose": "fixture_only",
+  "split_strategy": "target_id",
+  "seed": 1729,
+  "model": "synthetic",
+  "diagnostic": "uncertainty",
+  "thresholds": [0.0, 5.0, 10.0, 20.0, 40.0, 80.0],
+  "minimum_retention": 0.5,
+  "maximum_mae": null,
+  "reference_cap": 64,
+  "perturbation_parents": 8,
+  "optimizer_seeds": [0, 1, 2, 3, 4],
+  "query_budget": 20,
+  "shortlist_k": 5,
+  "direction": "higher_is_better",
+  "prior_exposure": "synthetic_fixture"
+}

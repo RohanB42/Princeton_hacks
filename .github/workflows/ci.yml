@@ -15,6 +15,8 @@ jobs:
           poetry-version: '2.1.4'
       - run: poetry sync --with science --no-interaction
       - run: make lint format-check import-check test
+      - run: poetry run pytest -q tests/test_robustness_optional.py
+      - run: poetry run python -m oligo_engine.robustness run --output artifacts/robustness-ci
   aso-rl-fixture:
     runs-on: ubuntu-latest
     steps:

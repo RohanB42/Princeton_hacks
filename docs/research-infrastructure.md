@@ -36,6 +36,12 @@ earlier results rather than retroactively replacing their splits.
 
 ## Independent research tracks
 
+The [predictor robustness design specification](predictor-robustness-design-spec.md)
+defines held-out groups, perturbations, diagnostics and exploitation tests.
+The subsequent [local implementation](predictor-robustness-implementation.md) adds
+the audit pipeline, a known-failure fixture and an ASOptimizer context-support
+diagnostic. It does not establish a validated real guardrail or augmentation result.
+
 1. **Prediction and target transfer:** classical versus frozen/adapted encoders,
    chemistry/context ablations and a bounded optimization/regularization study.
    Keep gradient and validation allocations matched when isolating duration. Use
