@@ -1,5 +1,12 @@
 # Project context
 
+November 14, 20:29 EST clarification: the robustness CLI fit fresh RF/Ridge audit
+models, not the existing GP/LoRA/Atlas checkpoints. Its exact fitting-context gate
+excluded all four final DGAT2 assay tuples (2,536 records), so the split and gate
+were incompatible. This should have been a metadata preflight stop, not a measured
+robustness conclusion. See the [diagnosis and corrective plan](updates/2026-11-14-2029-est-robustness-zero-coverage-correction.md).
+No replacement experiment or gate change is implemented by that update.
+
 Local predictor robustness implementation (November 14): after syncing main at
 `6b6838b`, added four-way grouped audits, frozen RF/Ridge adapters, perturbations,
 domain/uncertainty diagnostics, calibration/abstention and sealed pool search.
