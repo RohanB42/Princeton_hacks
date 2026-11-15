@@ -37,3 +37,26 @@ The original project distinction remains: molecular design and experimental
 selection are different research problems. Standalone candidate-selection RL was
 dropped; conventional ranking/shortlisting remains useful. This update concerns
 the molecular-design prototype, not a new active-learning or assay-allocation study.
+
+## What the current environment actually does
+
+A fixed target transcript supplies candidate binding windows. The chemistry is a
+20-mer MOE 5 / DNA 10 / MOE 5 gapmer with full PS backbone and methylated cytosines.
+Choosing a window determines its complementary ASO sequence; the agent does not
+independently invent arbitrary bases or modify chemistry.
+
+Actions are STOP, LEFT and RIGHT. LEFT shifts the target window by one nucleotide
+toward lower transcript coordinates; RIGHT shifts it toward higher coordinates.
+For example, target positions 101–120 become 100–119 or 102–121. These are binding
+site changes, not physical rotations or changes in molecular orientation.
+
+The evaluated local spaces have 17 candidate sites, an eight-move horizon and up
+to nine unique evaluations including the starting candidate. Conventional jump
+proposals pay for every intermediate local move; caches and budgets are separate
+per run. Enumerating all 17 sites is a separate, higher-scoring-budget reference.
+
+The frozen position-one-hot Ridge predictor was fitted on 2,000 measured ASOs in
+one supported profile: human HepG2, electroporation, 4,500 nM, 24 hours. It predicts
+inhibition percentage, converted to utility against a fixed training-prediction
+reference. That utility is not measured efficacy, calibrated uncertainty or a
+clinical safety score. See the [supported-profile study](../supported-aso-results-2026-11-14.md).
