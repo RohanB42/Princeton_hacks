@@ -1,0 +1,31 @@
+{
+  "purpose": "source_only_development_diagnostic",
+  "chemistry": "ps_moe_20_gapmer",
+  "profile_selection": "largest training-supported exact MOE profile with >=3 training patent IDs and >=100 metadata-matching external holdout rows; no efficacy outcomes inspected",
+  "assay": {
+    "cell_line": "HepG2", "cell_line_species": "human",
+    "transfection_method": "Electroporation", "dosage_nm": 4500.0,
+    "treatment_period_hrs": 24.0
+  },
+  "exclude_ambiguous_target_pattern": "^EXON[0-9]*$",
+  "training_access": "existing source_train_ids only; no target adaptation",
+  "assessment_access": "matching source_validation_ids only, scored after predictions and top20 IDs frozen",
+  "reserved_campaigns": "never scored",
+  "deduplication": "first immutable ID per natural sequence within each partition",
+  "assessment_exclusions": "same length Hamming <=2 or exact one-base shift from any eligible source-training sequence",
+  "model": "one-hot ACGT 20-position Ridge with intercept",
+  "alpha_grid": [0.1, 10.0, 100.0],
+  "selection": "3-fold GroupKFold over connected target/patent/near-sequence components; lowest mean validation MSE; no final assessment access",
+  "top_k": 20,
+  "minimum_target_rows": 30,
+  "reporting": "target-level top20 measured mean minus exact random expectation; Pearson, RMSE, MAE, seed-free fixed ranking",
+  "provisional_readiness_gate": "at least 2 evaluable targets, target-macro top20 lift >0 and positive on >=2 targets; a diagnostic gate, not statistical confirmation",
+  "safety": "unknown; no toxicity screen or clinical claim",
+  "optimizer_seeds": [7, 17, 27],
+  "optimizer_initial_steps": 2048,
+  "optimizer_expanded_steps": 8192,
+  "optimizer_unique_budget": 10,
+  "optimizer_horizon": 8,
+  "optimizer_access": "all methods must execute and pay for identical local transitions",
+  "expanded_rl_gate": "run only if model readiness passes and initial costed PPO comparison shows improvement over strongest local search on validation-only windows; never use final-window measured labels"
+}

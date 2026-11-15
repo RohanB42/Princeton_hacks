@@ -1,0 +1,21 @@
+{
+  "purpose": "real_predictor_single_window_policy_transfer_diagnostic",
+  "training_gene": "DGAT2",
+  "validation_gene": "CFB",
+  "final_gene": "FGFR4",
+  "start_rule": "floor((transcript_length - 20) / 2)",
+  "radius": 8,
+  "horizon": 8,
+  "seeds": [7, 17, 27],
+  "initial_steps": 2048,
+  "expanded_steps": 8192,
+  "unique_budgets": [6, 10],
+  "request_budget": 100,
+  "expansion_validation_budget": 10,
+  "expansion_rule": "mean validation best-visited PPO utility must strictly exceed every active local control mean by >1e-12; decision before any final-window comparison",
+  "controls": ["unchanged", "random", "greedy", "genetic"],
+  "proposal_access": "identical +/-1 transitions; every intermediate evaluation and revisit charged; common movement horizon",
+  "reference": "unrestricted enumeration of the shared reachable region, costed separately",
+  "measurement_access": "only provisional readiness boolean; no measured outcomes in policy, selection, or final-window optimizer evaluation",
+  "claims": "surrogate optimization only; one training/validation/final window; no new-target biological validation or safety claim"
+}
