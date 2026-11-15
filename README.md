@@ -184,3 +184,10 @@ The five-seed GP development study in active-learning-development.md uses a
 half-uncertainty/half-coverage hybrid and initial-label-only kernel selection.
 It differs from acquisition-comparison.md's uncertainty-prefiltered diversity
 policy and predictor protocol. Their outcomes must not be pooled.
+
+## Sequential research portal handoff
+
+See [the implementation handoff](docs/research-portal-implementation-handoff.md)
+and the user-authorized [3×32 PPO model package](model_checkpoints/experimental-selection-ppo-3x32-v1/README.md).
+This is a retrospective research checkpoint, not an implemented live feedback service
+or a demonstrated improvement over the strongest heuristic.

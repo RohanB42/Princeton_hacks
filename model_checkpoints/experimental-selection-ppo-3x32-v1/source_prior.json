@@ -1,0 +1,32 @@
+{
+  "model": "atlas-chemistry-assay-hashed-ridge",
+  "fit_identity": "bfd6a0019479593c52b24d9f70fabf4f8036201a58c6cf6ba8d1dafa09438eab",
+  "calibration_identity": "2ff29350fd139af3c0d1a6efdde01232099d9e5a44374c40b874a6ceae3401a3",
+  "fit_count": 12000,
+  "calibration_count": 2500,
+  "noise_assumption_std": 27.6458174390697,
+  "model_identity": "fb851252e1e1e7c502f48f7ffb1c410b7f3b487c150ee510f9f197679da138b6",
+  "source_cal_metrics": {
+    "rows": 2500,
+    "rmse": 27.6458174390697,
+    "mae": 22.63661385840786,
+    "nll": 4.7384129817044425,
+    "crps": 15.621851793026398,
+    "scale_error_spearman": null,
+    "intervals": {
+      "0.5": {
+        "coverage": 0.448,
+        "mean_width": 37.2936409968892
+      },
+      "0.8": {
+        "coverage": 0.8024,
+        "mean_width": 70.85908123959997
+      },
+      "0.9": {
+        "coverage": 0.924,
+        "mean_width": 90.9466461693841
+      }
+    }
+  },
+  "parameters_sha256": "e8aa5a42e0eb479366c7ea9583d1a65210b2aa946c2e356446f039be0828b3c6"
+}

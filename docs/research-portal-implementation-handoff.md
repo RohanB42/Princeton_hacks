@@ -78,10 +78,11 @@ duplicate distinct-candidate hit credit.
 
 ## Current research implementation
 
-Repository: `RohanB42/Princeton_hacks`. Work is currently on local branch
-`codex/experimental-selection-600`; substantial changes are uncommitted and unpushed.
-Another chat must verify the files exist rather than assuming GitHub contains them.
-Do not mix or discard unrelated pending robustness or research changes.
+Repository: `RohanB42/Princeton_hacks`. The experimental-selection implementation, configs, tests and selected 3x32 PPO
+model package are now published with this handoff. The package is under
+`model_checkpoints/experimental-selection-ppo-3x32-v1/`. Seed 613 was selected by
+its highest recorded development score, not final-target outcomes. Unrelated
+robustness work and the editable portal rendering remain local.
 
 Relevant code:
 
@@ -338,10 +339,11 @@ SciPy 1.15.3, sklearn 1.4.0, pandas 2.2.3 and PyArrow 21.0.0. Check destination
 platform compatibility. Run `make lint format-check import-check test` plus
 optional RL/science checks in their pinned environment.
 
-Do not commit researcher data, credentials, generated run artifacts or new RL
-weights. The repository's previous prediction-checkpoint publication exception
-does not automatically authorize publishing these new policies. Serve approved
-model artifacts separately with verified hashes and provenance. No project license
+Do not commit researcher data, credentials or generated outcome ledgers. The
+user explicitly authorized this selected PPO policy, matching source predictor
+and provenance package after reviewing the publication scope. This exception
+does not authorize other policies or future weights. Verify package hashes
+before loading approved artifacts. No project license
 or dataset redistribution rights should be newly assumed by this handoff.
 
 ## Initial instruction for the implementation chat
