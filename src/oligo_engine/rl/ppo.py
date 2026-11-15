@@ -7,7 +7,7 @@ from dataclasses import asdict
 from pathlib import Path
 from time import perf_counter
 
-from oligo_engine.rl.environment import ACTION_SCHEMA, OBSERVATION_SCHEMA, ASOEnv
+from oligo_engine.rl.environment import ACTION_SCHEMA, ASOEnv
 from oligo_engine.rl.search import summarize
 
 RUNTIME = {
@@ -109,7 +109,7 @@ def train(
         "seed": seed,
         "steps": steps,
         "action_schema": ACTION_SCHEMA,
-        "observation_schema": OBSERVATION_SCHEMA,
+        "observation_schema": train_env.observation_schema,
         "observation_shape": train_env.observation_space.shape,
         "scorer_identity": train_env.session.scorer.identity,
         "assay": asdict(train_env.session.assay),
@@ -157,7 +157,7 @@ def load_policy(output: Path, env: ASOEnv) -> object:
     expected = (
         manifest["scorer_identity"] == env.session.scorer.identity
         and manifest["action_schema"] == list(ACTION_SCHEMA)
-        and manifest["observation_schema"] == OBSERVATION_SCHEMA
+        and manifest["observation_schema"] == env.observation_schema
         and manifest["observation_shape"] == list(env.observation_space.shape)
         and manifest["assay"] == asdict(env.session.assay)
         and manifest["horizon"] == env.design_space.horizon

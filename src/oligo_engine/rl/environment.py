@@ -23,12 +23,19 @@ class ASOEnv(gym.Env):
         if design_space.target != session.target:
             raise ValueError("Scorer target and design-space manifest disagree")
         self.design_space, self.session = design_space, session
+        if any(
+            m.role != "advisory" and m.chemistry != design_space.chemistry
+            for m in session.scorer.manifests
+        ):
+            raise ValueError("Required model and design-space chemistry disagree")
+        length = design_space.length
+        self.observation_schema = OBSERVATION_SCHEMA.replace("19x4", f"{length}x4")
         self.action_space = spaces.Discrete(3)
         # Each head has bounded utility, available flag and normalized raw value.
         self.observation_space = spaces.Box(
             -1.0,
             1.0,
-            shape=(19 * 4 + 6 + 3 * len(session.scorer.manifests),),
+            shape=(length * 4 + 6 + 3 * len(session.scorer.manifests),),
             dtype=np.float32,
         )
         self.position = design_space.start
@@ -39,7 +46,8 @@ class ASOEnv(gym.Env):
     def _observation(self) -> np.ndarray:
         candidate = self.design_space.candidate(self.position)
         values = [float(base == b) for base in candidate.sequence for b in "ACGT"]
-        extent = max(1, len(self.design_space.target.sequence) - 19)
+        length = self.design_space.length
+        extent = max(1, len(self.design_space.target.sequence) - length)
         values.extend(
             (
                 self.position / extent,
@@ -47,8 +55,8 @@ class ASOEnv(gym.Env):
                 / max(1, self.design_space.radius),
                 (self.design_space.horizon - self.moves) / self.design_space.horizon,
                 candidate.gc_fraction,
-                candidate.cpg_count / 18,
-                candidate.longest_g_run / 19,
+                candidate.cpg_count / (length - 1),
+                candidate.longest_g_run / length,
             )
         )
         for endpoint in self.current_score.endpoints:

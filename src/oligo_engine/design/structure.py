@@ -40,7 +40,7 @@ def _residue_name(base: str, strand: str, in_wing: bool, chemistry: str) -> str:
     if strand == "B":
         return {"A": "  A", "C": "  C", "G": "  G", "U": "  U"}.get(base, "  N")
     if in_wing:
-        return "MOE" if chemistry == "ps_moe_gapmer" else "OMe"
+        return "MOE" if chemistry in {"ps_moe_gapmer", "ps_moe_20_gapmer"} else "OMe"
     return {"A": " DA", "C": " DC", "G": " DG", "T": " DT"}.get(base, " DN")
 
 

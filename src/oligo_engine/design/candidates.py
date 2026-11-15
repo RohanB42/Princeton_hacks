@@ -4,12 +4,14 @@ Everything here is label-free and deterministic. Nothing in this module consults
 measured label, a model, or a held-out partition: it turns a target transcript into
 candidate oligonucleotides and computes sequence-derived properties of them.
 
-Two chemistries are supported, each chosen to match a training set exactly rather
-than to be generally expressive:
+Explicit chemistry templates are supported; structural support alone does not
+establish predictor applicability:
 
 * ``ps_moe_gapmer`` - 5-10-4 2'-MOE wings over a DNA core, full phosphorothioate,
-  5-methylcytosine throughout. This is the chemistry of ``MOE_Neurotox_1`` and the
-  chemistry Dr. Sun identified as what the field actually runs.
+  5-methylcytosine throughout. Only 26 MOE_Neurotox_1 structures exactly match it;
+  many other 19-mers use mixed PS/PO backbones or different wing arrangements.
+* ``ps_moe_20_gapmer`` - 5-10-5, full PS and methylcytosine, with a separate
+  Atlas-derived efficacy profile. This does not inherit the 19-mer safety model.
 * ``ps_2ome_gapmer`` - 5-10-5 2'-O-methyl wings over a DNA core, full
   phosphorothioate. This is the chemistry of the Alharbi 2020 TLR screens.
 
@@ -31,11 +33,13 @@ COMPLEMENT = str.maketrans("ACGTU", "TGCAA")
 # matching predictor was fitted on, because the fitted featurizer has a fixed width
 # and a candidate outside it cannot be encoded at all.
 #
-# * ps_moe_gapmer: MOE_Neurotox_1's most common molecule is a 19-mer with a 5-monomer
-#   5' wing, a 10-monomer DNA core and a 4-monomer 3' wing (2,006 of 2,437 rows).
+# * ps_moe_gapmer: MOE_Neurotox_1 includes 2,006 19-mers, but only 26 exactly
+#   match this full-PS 5-10-4 template; do not equate length with chemistry coverage.
 # * ps_2ome_gapmer: every one of Alharbi 2020's 192 ASOs is a 20-mer 5-10-5.
 DESIGNS = {
     "ps_moe_gapmer": {"length": 19, "wing5": 5, "wing3": 4},
+    # Separate Atlas-supported profile; never relabel the legacy 19-mer model.
+    "ps_moe_20_gapmer": {"length": 20, "wing5": 5, "wing3": 5},
     "ps_2ome_gapmer": {"length": 20, "wing5": 5, "wing3": 5},
 }
 CHEMISTRIES = tuple(DESIGNS)
@@ -105,7 +109,7 @@ def build_helm(
     last = len(sequence) - 1
     for index, base in enumerate(sequence):
         in_wing = index < wing5 or index > last - wing3
-        if chemistry == "ps_moe_gapmer":
+        if chemistry in {"ps_moe_gapmer", "ps_moe_20_gapmer"}:
             # Every cytosine in MOE_Neurotox_1 is 5-methylcytosine, in core and wing.
             symbol = "[m5C]" if base == "C" else base
             sugar = "[moe]" if in_wing else "d"

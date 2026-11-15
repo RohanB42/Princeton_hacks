@@ -103,6 +103,29 @@ def test_horizon_is_terminal_and_rejection_is_finite():
     assert env.observation_space.contains(obs)
 
 
+def test_twenty_base_environment_and_required_chemistry_gate():
+    from oligo_engine.reward.portable import CHEMISTRY
+
+    legacy = fixture_space()
+    space = replace(legacy, chemistry=CHEMISTRY)
+    objective = fixture_session(legacy).scorer._endpoints[0]
+    head = FrozenEndpoint(
+        replace(objective.manifest, chemistry=CHEMISTRY), lambda c, t, a: 0.5
+    )
+    scorer = FrozenScorer((head,), "twenty-base-test")
+    session = ScoringSession(scorer, space.target, ASSAY, 10, 100)
+    env = ASOEnv(space, session)
+    observation, _ = env.reset()
+    assert observation.shape == (80 + 6 + 3,)
+    assert "onehot20x4" in env.observation_schema
+    assert env.observation_space.contains(observation)
+    observation, _, _, _, _ = env.step(Action.RIGHT)
+    assert env.observation_space.contains(observation)
+    assert len(space.candidate(env.position).sequence) == 20
+    with pytest.raises(ValueError, match="chemistry"):
+        ASOEnv(space, fixture_session(legacy))
+
+
 def test_ppo_learns_known_fixture_optimum_and_reload_identity(tmp_path):
     verify_runtime()
     train_space, validation = fixture_space("TRAIN"), fixture_space("VALIDATION")

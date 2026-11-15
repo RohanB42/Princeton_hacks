@@ -7,6 +7,7 @@ from enum import IntEnum
 from functools import cached_property
 
 from oligo_engine.design.candidates import (
+    DESIGNS,
     Candidate,
     build_helm,
     reverse_complement,
@@ -56,8 +57,11 @@ class ASODesignSpace:
     start: int
     radius: int = 8
     horizon: int = 8
+    chemistry: str = "ps_moe_gapmer"
 
     def __post_init__(self) -> None:
+        if self.chemistry not in {"ps_moe_gapmer", "ps_moe_20_gapmer"}:
+            raise ValueError("Unsupported design-space chemistry")
         if any(type(v) is not int for v in (self.start, self.radius, self.horizon)):
             raise ValueError("Integer space bounds required")
         if self.radius < 0 or self.horizon < 1:
@@ -71,10 +75,17 @@ class ASODesignSpace:
         return {
             c.start: c
             for c in tile(
-                self.target.gene, self.target.transcript_id, self.target.sequence
+                self.target.gene,
+                self.target.transcript_id,
+                self.target.sequence,
+                chemistry=self.chemistry,
             )
             if abs(c.start - self.start) <= min(self.radius, self.horizon)
         }
+
+    @property
+    def length(self) -> int:
+        return DESIGNS[self.chemistry]["length"]
 
     @property
     def identity(self) -> str:
@@ -117,17 +128,19 @@ class ASODesignSpace:
 def candidate_identity(candidate: Candidate, target: TargetContext) -> str:
     """Chemical/site identity is separate from the existing display identifier."""
     window = target.sequence[candidate.start : candidate.end]
+    if candidate.chemistry not in {"ps_moe_gapmer", "ps_moe_20_gapmer"}:
+        raise ValueError("Candidate does not match pinned transcript/template")
+    length = DESIGNS[candidate.chemistry]["length"]
     if (
         candidate.gene != target.gene
         or candidate.transcript_id != target.transcript_id
         or candidate.start < 0
         or candidate.end > len(target.sequence)
-        or candidate.end - candidate.start != 19
-        or len(window) != 19
+        or candidate.end - candidate.start != length
+        or len(window) != length
         or set(window) - set("ACGT")
         or candidate.target_window != window
         or candidate.sequence != reverse_complement(window)
-        or candidate.chemistry != "ps_moe_gapmer"
         or candidate.helm != build_helm(candidate.sequence, candidate.chemistry)
     ):
         raise ValueError("Candidate does not match pinned transcript/template")

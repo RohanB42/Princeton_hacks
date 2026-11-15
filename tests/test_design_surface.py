@@ -96,9 +96,11 @@ def test_sequence_flags_follow_their_definitions():
     assert gc_fraction("GCAT") == 0.5
 
 
-def test_pdb_is_column_aligned_and_labelled_as_a_schematic():
-    sequence = "CGTAACAGTAGAGACGCCA"
-    pdb = duplex_pdb(sequence, "ps_moe_gapmer", 5, 4, "test")
+@pytest.mark.parametrize("chemistry", ["ps_moe_gapmer", "ps_moe_20_gapmer"])
+def test_pdb_is_column_aligned_and_labelled_as_a_schematic(chemistry):
+    design = DESIGNS[chemistry]
+    sequence = ("ACGT" * 5)[: design["length"]]
+    pdb = duplex_pdb(sequence, chemistry, design["wing5"], design["wing3"], "test")
     assert "NOT A PREDICTED STRUCTURE" in pdb
     atoms = [line for line in pdb.splitlines() if line.startswith("ATOM")]
     assert len(atoms) == len(sequence) * 3 * 2  # three pseudo-atoms, two strands
@@ -111,6 +113,9 @@ def test_pdb_is_column_aligned_and_labelled_as_a_schematic():
         assert line[76:78].strip() in {"P", "C", "N"}
     assert sum(1 for line in atoms if line[21] == "A") == len(sequence) * 3
     assert {line[12:16].strip() for line in atoms} == {"P", "C1'", "N1"}
+    assert sum(line[17:20] == "MOE" for line in atoms) == 3 * (
+        design["wing5"] + design["wing3"]
+    )
 
 
 def test_pasted_sequences_are_accepted_as_fasta_or_raw():

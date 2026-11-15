@@ -294,7 +294,10 @@ class ScoringSession:
             raise ValueError("Positive integer scoring budgets required")
         if any(
             m.role != "advisory"
-            and (m.context != assay or m.chemistry != "ps_moe_gapmer")
+            and (
+                m.context != assay
+                or m.chemistry not in {"ps_moe_gapmer", "ps_moe_20_gapmer"}
+            )
             for m in scorer.manifests
         ):
             raise ScorerError(

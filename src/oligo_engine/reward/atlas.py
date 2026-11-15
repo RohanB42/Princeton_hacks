@@ -4,7 +4,7 @@ from dataclasses import asdict
 from typing import Protocol
 
 from oligo_engine.design.aso_space import TargetContext, candidate_identity
-from oligo_engine.design.candidates import Candidate
+from oligo_engine.design.candidates import DESIGNS, Candidate
 from oligo_engine.reward.chemistry import parse_helm
 from oligo_engine.reward.scoring import AssayProfile
 
@@ -14,10 +14,13 @@ def atlas_helm(candidate: Candidate, target: TargetContext) -> str:
     candidate_identity(candidate, target)
     projected = candidate.helm.replace("[m5C]", "[5meC]")
     parsed = parse_helm(projected)
+    design = DESIGNS[candidate.chemistry]
+    length, left, right = design["length"], design["wing5"], design["wing3"]
     if (
         parsed.natural_rna != candidate.sequence.replace("T", "U")
-        or parsed.sugars != ("MOE",) * 5 + ("DNA",) * 10 + ("MOE",) * 4
-        or parsed.links != ("PS",) * 18 + ("END",)
+        or parsed.sugars
+        != ("MOE",) * left + ("DNA",) * (length - left - right) + ("MOE",) * right
+        or parsed.links != ("PS",) * (length - 1) + ("END",)
         or parsed.terminal != "none"
     ):
         raise ValueError("Atlas projection lost molecular structure")
