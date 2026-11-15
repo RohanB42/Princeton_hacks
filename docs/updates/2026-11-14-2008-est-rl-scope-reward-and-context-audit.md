@@ -174,3 +174,24 @@ On final regions, perfect advance choice of sweep direction would yield 0.9004,
 versus fixed right 0.8548 and current aligned PPO 0.8232. That oracle reads unqueried
 scores and is only an upper bound. Some context-dependent improvement is possible,
 but the current tiny space also makes simple search a strong practical solution.
+
+## Implications for the hackathon and next evaluation
+
+The restricted task is a plausible reason for limited differentiation between PPO
+and conventional search. It tests neither broad chemistry-aware molecular design
+nor the full proposed multi-objective system. Complexity alone will not guarantee
+an RL advantage, and the task should not be enlarged merely to manufacture a win.
+
+Recommended next discriminating study: keep aligned rewards fixed and cross
+original versus diversified training landscapes with original versus flank-enriched
+observations. Match budgets and compute; evaluate on fresh regions/genes. Only
+provide sequence context available without an assay; do not give PPO free
+unqueried predictor scores. Test search-history features separately. Preserve both
+directional sweeps, credible conventional optimizers and costed enumeration.
+
+The broader deliverable needs an explicit remaining-work plan: establish predictor
+support for meaningful chemistry/length choices, add those constrained actions,
+integrate only compatible endpoint heads, and obtain independent candidate-quality
+evidence. If time forces the narrow scope, present it as target-site optimization,
+not a completed multi-objective ASO molecular designer. These are recommendations,
+not claims that this update implements the missing functionality.
