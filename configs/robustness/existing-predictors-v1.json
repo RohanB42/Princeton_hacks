@@ -1,0 +1,94 @@
+{
+  "schema": "existing-predictor-replay-v1",
+  "purpose": "previously_evaluated_internal_replay",
+  "seed": 1729,
+  "minimum_retention": 0.5,
+  "minimum_development_rows": 10,
+  "minimum_final_rows": 10,
+  "required_coverage": 1.0,
+  "query_budget": 50,
+  "shortlist_k": 5,
+  "optimizer_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "huesken": {
+    "protocol": "artifacts/rl_design/main_predictors_v1/protocol.json",
+    "protocol_sha256": "ec437086c785c48ba276d6b24865c9278cf1c3cc1929e57202e2ce29e09873a1",
+    "primary": "artifacts/rl_design/main_predictors_v1/gp.joblib",
+    "primary_sha256": "cc02246146ad20a4a528226fd062fcb1e6ca2158c0e69eb14191e2025eaf4b11",
+    "secondary": "artifacts/rl_design/main_predictors_v1/rf.joblib",
+    "secondary_sha256": "79891edebeb50bb74d4bee3e205ede0bcb9a63fcb8c7b4abc80ad65f6025f96c",
+    "sklearn": "1.4.0",
+    "diagnostic": "uncertainty",
+    "thresholds": [
+      0,
+      1,
+      2,
+      5,
+      10,
+      20,
+      30,
+      50,
+      100,
+      1000000
+    ]
+  },
+  "atlas": {
+    "protocol": "artifacts/aso_atlas/first_pilot_final/protocol.json",
+    "protocol_sha256": "5ff700626376199d29be8d59aa32494b18e5825a060747e878e59e8503d830b3",
+    "manifest": "artifacts/aso_atlas/first_pilot_final/bundle_manifest.json",
+    "manifest_sha256": "a4ee8b150f8fc0ffb9a43526baa3d7d3093fbcded2119276f25e722df4826e9f",
+    "primary": "artifacts/aso_atlas/first_pilot_final/ridge.joblib",
+    "primary_sha256": "36540d896a9f4b54a9aead80d492a64a10e3fafb4afeb5c1bf48d3dbfa28c609",
+    "secondary": "artifacts/aso_atlas/first_pilot_final/hgb.joblib",
+    "secondary_sha256": "9e8c4ff1391ee846fb72f0e65bd69aebca3a47b77ac39e98a9037b08006623bd",
+    "source": "data/aso_atlas_2/cleaned/in_vitro_inhibition.parquet",
+    "source_sha256": "77b5334b21a4fb86f99821852e7e83a50488649f887cad52b3d7c29ff8941285",
+    "sklearn": "1.7.2",
+    "diagnostic": "disagreement",
+    "thresholds": [
+      0,
+      1,
+      2,
+      5,
+      10,
+      20,
+      40,
+      80,
+      1000000
+    ],
+    "assay": {
+      "cell_line": "HepG2",
+      "cell_line_species": "human",
+      "transfection_method": "Electroporation",
+      "dosage_nm": 4500.0,
+      "treatment_period_hrs": 24.0
+    }
+  },
+  "minimum_supported_components": 3,
+  "supported": {
+    "primary": "model_checkpoints/supported-aso-v1/efficacy.json",
+    "primary_sha256": "44f975ae47c1a073ec52bde1e3403baa21de8a1b0b733e4bcac1a9b236252a84",
+    "source": "data/aso_atlas_2/cleaned/in_vitro_inhibition.parquet",
+    "source_sha256": "77b5334b21a4fb86f99821852e7e83a50488649f887cad52b3d7c29ff8941285",
+    "diagnostic": "distance",
+    "thresholds": [
+      0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      1
+    ],
+    "minimum_development_groups": 2,
+    "minimum_final_groups": 2
+  }
+}
