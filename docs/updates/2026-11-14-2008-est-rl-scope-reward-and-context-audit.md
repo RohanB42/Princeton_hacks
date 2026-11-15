@@ -119,3 +119,30 @@ reporting-only validation; twelve fresh FGFR4 regions supplied final evaluation.
 No checkpoint selection or stopping used these evaluations. Final regions excluded
 the earlier FGFR4 regions. Different episode lengths can still change the realized
 step allocation across the common cyclic training pool; those costs were logged.
+
+| Reward at 8,192 steps | Best visited utility | Final-position utility | Distinct candidates / 9 |
+|---|---:|---:|---:|
+| Terminal | 0.7638 | 0.7129 | 3.57 |
+| Best-terminal | 0.8232 | 0.5406 | 8.63 |
+| Incremental | 0.8232 | 0.5238 | 9.00 |
+
+The predeclared best-terminal minus terminal contrast was +0.05936 on best-visited
+utility, with a paired window-bootstrap 95% interval [0.02075, 0.10410]. A
+supplementary bootstrap resampling both seeds and regions gave [0.00701, 0.13987].
+These are conditional development intervals within one evaluation gene.
+
+Thus reward alignment improved exploration and best-discovered scores in this
+setup. It did not establish an additional benefit of incremental over best-terminal
+reward at 8,192 steps, nor PPO superiority: genetic search averaged 0.8335, and
+aligned PPO minus genetic was −0.01029 with interval [−0.05853, 0.03640].
+
+The action audit is important: incremental PPO moved LEFT eight times on all 60
+final rollouts, exactly matching a fixed left sweep. Best-terminal PPO did so on
+55/60. This is improved exploration, not demonstrated adaptive design reasoning.
+
+Checks covered 31 short paths across all three reward definitions, known-optimum
+behavior, zero duplicate gain on revisits, reset isolation, scorer parity, budget
+limits and deterministic checkpoint reload. A missing provenance attribute in the
+isolated inference-cache wrapper interrupted baseline receipt reporting after all
+training finished. The reporting field was added in a separate recovery entrypoint;
+evaluation was repeated with identical frozen checkpoints, without retraining.
