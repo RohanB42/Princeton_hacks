@@ -146,3 +146,31 @@ limits and deterministic checkpoint reload. A missing provenance attribute in th
 isolated inference-cache wrapper interrupted baseline receipt reporting after all
 training finished. The reporting field was added in a separate recovery entrypoint;
 evaluation was repeated with identical frozen checkpoints, without retraining.
+
+## Evidence for a directional shortcut and missing context
+
+Frozen-landscape inspection found a distribution shift in the useful direction:
+
+| Policy role | Regions | Left better | Right better | Tied | Mean left sweep | Mean right sweep |
+|---|---:|---:|---:|---:|---:|---:|
+| Training: DGAT2 | 12 | 7 | 4 | 1 | 0.8186 | 0.7719 |
+| Validation: CFB | 6 | 1 | 4 | 1 | 0.8270 | 0.8409 |
+| Evaluation: FGFR4 | 12 | 3 | 8 | 1 | 0.8232 | 0.8548 |
+
+Always going left is therefore a useful average training shortcut, but transfers
+poorly when the preferred direction changes. This supports limited training
+coverage as an explanation; it does not prove that adding genes alone will fix it.
+
+The observations also omit flanking transcript bases and a visited-site/score map;
+the MLP is not recurrent. A synthetic counterexample held the complete observation
+and action mask identical while changing unobserved flanks. In one context the
+best attainable utility after LEFT versus RIGHT was 0.6465 versus 0.5205; in another
+it was 0.5600 versus 0.6730. The eight-move reachable sets establish strictly
+opposite optimal first actions. A policy seeing identical observations cannot
+distinguish these two states. This proves an information limitation in general,
+not the size of its contribution to empirical failures on real transcripts.
+
+On final regions, perfect advance choice of sweep direction would yield 0.9004,
+versus fixed right 0.8548 and current aligned PPO 0.8232. That oracle reads unqueried
+scores and is only an upper bound. Some context-dependent improvement is possible,
+but the current tiny space also makes simple search a strong practical solution.
