@@ -1,5 +1,12 @@
 # Project context
 
+November 14, 21:00 EST: the consolidated replacement design is
+[FINAL_MOLECULAR_DESIGN_RL_SPEC.md](FINAL_MOLECULAR_DESIGN_RL_SPEC.md). It defines
+chemistry-aware construction, real checkpoint integration, context/history-aware
+observations, archive-aligned rewards, matched-query optimizer evaluation and
+independent evidence gates. It supersedes conflicting old RL implementation
+choices; the replacement is a specification, not implemented functionality.
+
 November 14, 20:38 EST: the user retired the original target-window RL scaffold.
 Its environment, policy training, action space, fixture/search runners, configs,
 RL dependencies and CI job are removed. Shared inference/chemistry and the

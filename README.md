@@ -11,6 +11,10 @@ remain. The supported 20-mer efficacy model and measured ranking study are retai
 historical optimizer findings are not a current molecular-design implementation.
 See [removal scope and verification](docs/updates/2026-11-14-2038-est-rl-scaffold-retirement.md).
 
+The intended replacement is defined in the
+[final molecular-design RL specification](docs/FINAL_MOLECULAR_DESIGN_RL_SPEC.md).
+It is a design and acceptance contract; the new environment is not yet implemented.
+
 **Headline result (2026-11-14).** On Huesken (`Ichihara_2007_1`) with a one-hot
 Gaussian-process predictor and the official OligoGym `nucleobase` split,
 uncertainty-driven acquisition beats random acquisition at matched label budgets:
