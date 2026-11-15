@@ -1,0 +1,219 @@
+# RL scope correction, reward ablation and context audit
+
+Recorded November 14, 2026, 20:08 EST / November 15, 01:08 UTC.
+This update consolidates the side-conversation experiments and the subsequent
+discussion of the intended hackathon deliverable. It clarifies earlier statements
+that the molecular-design environment was implemented: **a constrained target-site
+search prototype exists; the full proposed ASO molecular-design system does not.**
+
+## Scope and expectation correction
+
+The user supplied a broader specification: chemistry-aware ASO design with
+biologically compatible efficacy/risk predictors, constrained design actions,
+independent evaluation, and a scientist-facing workflow. Starting with a narrow
+prototype was reasonable for verification, but treating that prototype as the
+completed environment was an execution and communication failure. The limited
+predictor coverage is a dependency to resolve, not an implicit reduction of the
+agreed deliverable.
+
+Implemented and tested:
+
+- Gymnasium/MaskablePPO interaction, legality masks, bounded episodes, scoring
+  ledgers, frozen inference, reproducible checkpoints and conventional search.
+- A fixed-chemistry, 20-nucleotide ASO binding-window search with a real efficacy
+  predictor and explicit unknown safety status.
+- Matched-cost optimizer diagnostics, a controlled reward-objective ablation and
+  a follow-up observation/training-context audit.
+
+Not completed:
+
+- Supported chemistry-editing actions, variable lengths or gap/wing design.
+- An integrated, applicable multi-endpoint efficacy/toxicity reward system.
+- Independent biological evaluation of generated candidates or demonstrated PPO
+  superiority over credible optimizers.
+- The complete scientist-facing molecular-design workflow.
+
+The original project distinction remains: molecular design and experimental
+selection are different research problems. Standalone candidate-selection RL was
+dropped; conventional ranking/shortlisting remains useful. This update concerns
+the molecular-design prototype, not a new active-learning or assay-allocation study.
+
+## What the current environment actually does
+
+A fixed target transcript supplies candidate binding windows. The chemistry is a
+20-mer MOE 5 / DNA 10 / MOE 5 gapmer with full PS backbone and methylated cytosines.
+Choosing a window determines its complementary ASO sequence; the agent does not
+independently invent arbitrary bases or modify chemistry.
+
+Actions are STOP, LEFT and RIGHT. LEFT shifts the target window by one nucleotide
+toward lower transcript coordinates; RIGHT shifts it toward higher coordinates.
+For example, target positions 101–120 become 100–119 or 102–121. These are binding
+site changes, not physical rotations or changes in molecular orientation.
+
+The evaluated local spaces have 17 candidate sites, an eight-move horizon and up
+to nine unique evaluations including the starting candidate. Conventional jump
+proposals pay for every intermediate local move; caches and budgets are separate
+per run. Enumerating all 17 sites is a separate, higher-scoring-budget reference.
+
+The frozen position-one-hot Ridge predictor was fitted on 2,000 measured ASOs in
+one supported profile: human HepG2, electroporation, 4,500 nM, 24 hours. It predicts
+inhibition percentage, converted to utility against a fixed training-prediction
+reference. That utility is not measured efficacy, calibrated uncertainty or a
+clinical safety score. See the [supported-profile study](../supported-aso-results-2026-11-14.md).
+
+## Predictor ranking evidence is separate from PPO evidence
+
+The model's predicted top 20 achieved mean measured inhibition of 72.35 versus a
+random expectation of 61.46 on ATXN2 (74 held-out records), and 64.65 versus 54.77
+on DGAT2 (1,828 records). PPO was not involved in this ranking test.
+
+A side-conversation post-hoc analysis sampled 200,000 random panels of 20 without
+replacement per target, seed 20261114. One-sided p-values were approximately
+0.00470 and 0.02391; Holm-adjusted values were 0.00940 and 0.02391. Two-sided
+absolute-centered values were 0.01427 and 0.05525. Each target's pool comes from
+one patent, so this is conditional finite-pool ranking evidence, not independent
+replication across patents or proof of novel-molecule quality. The statistical
+calculation ran in memory; this paragraph records its output, not a committed
+standalone statistical test implementation.
+
+## Broader evaluation exposed an objective mismatch
+
+The initial synthetic comparison gave unrestricted proposals to some optimizers
+while PPO had to traverse intermediate sites. That confound was corrected before
+the subsequent real-surrogate local-search comparisons.
+
+The side-conversation expansion evaluated the three existing frozen policies on
+24 additional non-overlapping FGFR4 regions, across budgets 3/6/9 and seven methods:
+1,512 runs, not 1,512 independent tasks. All movement and validity checks passed.
+
+At budget nine, mean best-visited utility was PPO 0.637, genetic 0.796, random 0.786,
+greedy 0.737, left sweep 0.867 and right sweep 0.819. PPO visited only 2.06 distinct
+candidates on average. It lost to genetic search on 22 regions and tied on two.
+
+However, PPO had been trained to maximize **final-position utility**, whereas
+search returned the **best candidate visited**. On final-position utility, PPO
+averaged 0.540 versus random 0.522, genetic 0.507 and greedy 0.505. All paired
+window-bootstrap intervals for those PPO advantages included zero. Furthermore,
+the conventional algorithms were not designed to finish physically at their best
+site, so changing the reported metric alone did not fully align the comparison.
+
+The useful objective for a design tool that can return any evaluated candidate is
+best-discovered quality under budget. This motivated an explicit reward ablation,
+rather than interpreting the earlier metric as a general verdict on PPO.
+
+## Controlled reward ablation
+
+Fifteen new policies were trained: three reward definitions × five seeds
+(107, 117, 127, 137, 147). Each received 8,192 steps with a fixed 2,048-step
+checkpoint. Architecture, hyperparameters, actions, observations and budgets were
+matched. All arms received current-state features plus best-so-far utility and
+remaining unique-score budget.
+
+- **Terminal:** reward the final candidate's utility.
+- **Best-terminal:** reward the best utility encountered at episode end.
+- **Incremental:** reward increases in best-so-far utility at each step.
+
+With discount factor 1, incremental and best-terminal returns differ by the fixed
+starting utility. Twelve DGAT2 regions supplied training; six CFB regions supplied
+reporting-only validation; twelve fresh FGFR4 regions supplied final evaluation.
+No checkpoint selection or stopping used these evaluations. Final regions excluded
+the earlier FGFR4 regions. Different episode lengths can still change the realized
+step allocation across the common cyclic training pool; those costs were logged.
+
+| Reward at 8,192 steps | Best visited utility | Final-position utility | Distinct candidates / 9 |
+|---|---:|---:|---:|
+| Terminal | 0.7638 | 0.7129 | 3.57 |
+| Best-terminal | 0.8232 | 0.5406 | 8.63 |
+| Incremental | 0.8232 | 0.5238 | 9.00 |
+
+The predeclared best-terminal minus terminal contrast was +0.05936 on best-visited
+utility, with a paired window-bootstrap 95% interval [0.02075, 0.10410]. A
+supplementary bootstrap resampling both seeds and regions gave [0.00701, 0.13987].
+These are conditional development intervals within one evaluation gene.
+
+Thus reward alignment improved exploration and best-discovered scores in this
+setup. It did not establish an additional benefit of incremental over best-terminal
+reward at 8,192 steps, nor PPO superiority: genetic search averaged 0.8335, and
+aligned PPO minus genetic was −0.01029 with interval [−0.05853, 0.03640].
+
+The action audit is important: incremental PPO moved LEFT eight times on all 60
+final rollouts, exactly matching a fixed left sweep. Best-terminal PPO did so on
+55/60. This is improved exploration, not demonstrated adaptive design reasoning.
+
+Checks covered 31 short paths across all three reward definitions, known-optimum
+behavior, zero duplicate gain on revisits, reset isolation, scorer parity, budget
+limits and deterministic checkpoint reload. A missing provenance attribute in the
+isolated inference-cache wrapper interrupted baseline receipt reporting after all
+training finished. The reporting field was added in a separate recovery entrypoint;
+evaluation was repeated with identical frozen checkpoints, without retraining.
+
+## Evidence for a directional shortcut and missing context
+
+Frozen-landscape inspection found a distribution shift in the useful direction:
+
+| Policy role | Regions | Left better | Right better | Tied | Mean left sweep | Mean right sweep |
+|---|---:|---:|---:|---:|---:|---:|
+| Training: DGAT2 | 12 | 7 | 4 | 1 | 0.8186 | 0.7719 |
+| Validation: CFB | 6 | 1 | 4 | 1 | 0.8270 | 0.8409 |
+| Evaluation: FGFR4 | 12 | 3 | 8 | 1 | 0.8232 | 0.8548 |
+
+Always going left is therefore a useful average training shortcut, but transfers
+poorly when the preferred direction changes. This supports limited training
+coverage as an explanation; it does not prove that adding genes alone will fix it.
+
+The observations also omit flanking transcript bases and a visited-site/score map;
+the MLP is not recurrent. A synthetic counterexample held the complete observation
+and action mask identical while changing unobserved flanks. In one context the
+best attainable utility after LEFT versus RIGHT was 0.6465 versus 0.5205; in another
+it was 0.5600 versus 0.6730. The eight-move reachable sets establish strictly
+opposite optimal first actions. A policy seeing identical observations cannot
+distinguish these two states. This proves an information limitation in general,
+not the size of its contribution to empirical failures on real transcripts.
+
+On final regions, perfect advance choice of sweep direction would yield 0.9004,
+versus fixed right 0.8548 and current aligned PPO 0.8232. That oracle reads unqueried
+scores and is only an upper bound. Some context-dependent improvement is possible,
+but the current tiny space also makes simple search a strong practical solution.
+
+## Implications for the hackathon and next evaluation
+
+The restricted task is a plausible reason for limited differentiation between PPO
+and conventional search. It tests neither broad chemistry-aware molecular design
+nor the full proposed multi-objective system. Complexity alone will not guarantee
+an RL advantage, and the task should not be enlarged merely to manufacture a win.
+
+Recommended next discriminating study: keep aligned rewards fixed and cross
+original versus diversified training landscapes with original versus flank-enriched
+observations. Match budgets and compute; evaluate on fresh regions/genes. Only
+provide sequence context available without an assay; do not give PPO free
+unqueried predictor scores. Test search-history features separately. Preserve both
+directional sweeps, credible conventional optimizers and costed enumeration.
+
+The broader deliverable needs an explicit remaining-work plan: establish predictor
+support for meaningful chemistry/length choices, add those constrained actions,
+integrate only compatible endpoint heads, and obtain independent candidate-quality
+evidence. If time forces the narrow scope, present it as target-site optimization,
+not a completed multi-objective ASO molecular designer. These are recommendations,
+not claims that this update implements the missing functionality.
+
+## Artifacts and integration status
+
+Local, ignored outputs:
+
+- [Matched-window report](../../artifacts/side-consistent-ppo-20261114/report.md)
+  and [curve](../../artifacts/side-consistent-ppo-20261114/comparison.png).
+- [Reward-ablation report](../../artifacts/side-ppo-reward-ablation-20261114/report.md)
+  and [figure](../../artifacts/side-ppo-reward-ablation-20261114/ablation.png), plus
+  frozen protocol, scripts, checkpoint hashes, costs and individual runs.
+- [Context evidence](../../artifacts/side-ppo-context-evidence-20261114/report.md),
+  full landscape scores and the executable synthetic observation counterexample.
+
+These links require this workstation's ignored artifacts; they are not distributed
+GitHub assets. Side-conversation ablation code and reward variants remain isolated
+and have **not** replaced the shared production environment. No data, weights,
+source modules or shared configs were changed by those experiments. This update
+is the requested documentation addition; it does not itself commit or push changes.
+
+All generated candidates remain unvalidated hypotheses. Predictor utility is not
+biological ground truth, missing safety is unknown, and no new measured-label
+savings, clinical benefit or general RL superiority has been established.
