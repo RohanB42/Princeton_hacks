@@ -41,3 +41,8 @@ transcriptome_indexes/
 .venv-*/
 *.npy
 *.npz
+
+# November 14 explicit user request to publish existing prediction checkpoints.
+# Keep all other weights, upstream backbones and run artifacts ignored.
+!model_checkpoints/**/*.pt
+!model_checkpoints/**/*.pth

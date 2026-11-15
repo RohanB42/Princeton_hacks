@@ -27,3 +27,10 @@ supersedes conflicting v5 claims. Roadmaps alone do not authorize new work.
   and audit before model integration. Never commit secrets, other datasets, PDFs,
   weights or generated run artifacts. Do not
   publish or select a project license without owner review of rights.
+
+- November 14 checkpoint-publication exception: the user explicitly requested
+  committing/pushing the existing prediction checkpoints listed in
+  `model_checkpoints/manifest.json`. Those trained weights and their provenance
+  metadata may be versioned under `model_checkpoints/`. This does not authorize
+  other generated run artifacts, RL policy weights, new training, or redistribution
+  of the separately downloaded RNA-FM backbone; its verified source/hash is recorded.
