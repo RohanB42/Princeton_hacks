@@ -100,3 +100,22 @@ site, so changing the reported metric alone did not fully align the comparison.
 The useful objective for a design tool that can return any evaluated candidate is
 best-discovered quality under budget. This motivated an explicit reward ablation,
 rather than interpreting the earlier metric as a general verdict on PPO.
+
+## Controlled reward ablation
+
+Fifteen new policies were trained: three reward definitions × five seeds
+(107, 117, 127, 137, 147). Each received 8,192 steps with a fixed 2,048-step
+checkpoint. Architecture, hyperparameters, actions, observations and budgets were
+matched. All arms received current-state features plus best-so-far utility and
+remaining unique-score budget.
+
+- **Terminal:** reward the final candidate's utility.
+- **Best-terminal:** reward the best utility encountered at episode end.
+- **Incremental:** reward increases in best-so-far utility at each step.
+
+With discount factor 1, incremental and best-terminal returns differ by the fixed
+starting utility. Twelve DGAT2 regions supplied training; six CFB regions supplied
+reporting-only validation; twelve fresh FGFR4 regions supplied final evaluation.
+No checkpoint selection or stopping used these evaluations. Final regions excluded
+the earlier FGFR4 regions. Different episode lengths can still change the realized
+step allocation across the common cyclic training pool; those costs were logged.
