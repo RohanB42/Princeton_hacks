@@ -4,6 +4,9 @@ Can sequential experiment selection improve siRNA efficacy prediction using fewe
 measured labels than random acquisition? This HackPrinceton project is building an
 open, auditable retrospective benchmark.
 
+The source and setup instructions for the ASO design and Bench Workspace website
+are in the [OligoAL website repository](https://github.com/hmartel222/oligoal-website).
+
 **ASO scaffold retired (November 14).** The original target-window RL experiment,
 PPO runtime and comparison runners have been removed at the user's request.
 Prediction, active learning, robustness auditing and the independent candidate app
@@ -13,7 +16,43 @@ See [removal scope and verification](docs/updates/2026-11-14-2038-est-rl-scaffol
 
 The intended replacement is defined in the
 [final molecular-design RL specification](docs/FINAL_MOLECULAR_DESIGN_RL_SPEC.md).
-It is a design and acceptance contract; the new environment is not yet implemented.
+The replacement environment, frozen-model adapters, PPO/baselines, local interface
+and artifact pipeline are now implemented. The combined real-model profile remains
+a development diagnostic: expanded efficacy applicability and independent evidence
+are not qualified. The [no-COMMIT failure is repaired](docs/molecular-construction-fix.md);
+optimizer comparisons remain mixed and do not establish PPO superiority. See the
+[implementation, commands, results and remaining gates](docs/molecular-design-implementation.md).
+The [shared-candidate policy revision](docs/molecular-policy-repair.md) addresses
+site transfer, training coverage and sparse learning feedback while preserving the
+archive reward and separately accounting for predictor-query costs.
+The [two-track data-scaling investigation](docs/molecular-data-scaling-plan.md)
+audits measured predictor data and policy experience, with staged protocols and
+explicit applicability, leakage and attribution constraints.
+The [eight-target comparison and scientific experiments](docs/molecular-scientific-experiments.md)
+add two frozen-policy development evaluations and execute separate predictor-support,
+PPO-attribution and generalization audits. Independent biological confirmation and
+a general PPO advantage remain unestablished.
+The [compatible-data follow-up](docs/molecular-compatible-data-experiment.md)
+extends exposure and near-sequence checks before fitting. A separate
+[censored-IC50 experiment preparation](docs/censored-ic50-policy-experiment.md)
+implements bounded-outcome adjudication. The subsequent
+[Harrison handoff assessment](docs/experimental-selection-handoff-assessment.md)
+locates the original V3/Qwen work in an unavailable, unpushed local checkout;
+its reported results remain separate from locally reproduced experiments.
+Three new investigations are complete: a
+[72-run recorded-panel Qwen pilot](docs/ic50-qwen-from-scratch.md), an
+[evaluation-data audit](docs/molecular-evaluation-data-expansion.md), and a
+[162-setting exact planning comparison](docs/value-of-planning-experiment.md).
+The separate 100 nM Qwen pilot found increased discovery credit from upper bounds,
+without a Qwen acquisition advantage. In the explicit small-panel planning model,
+greedy was optimal in 108 settings and one-step rollout in 150; neither result
+establishes performance on the original two-stage V3 benchmark.
+The final [adaptive-dose extension](docs/adaptive-dose-response-experiment.md)
+compares individual concentration purchases on 240 assessment ASOs: decision-aware
+selection used 1.683 measurements per ASO versus 1.592 for fixed early stopping,
+without establishing the prespecified incremental benefit. All four investigations
+and the historical handoff assessment are in the
+[consolidated results](docs/ASO_EXPERIMENTS_CONSOLIDATED_RESULTS.md).
 
 **Headline result (2026-11-14).** On Huesken (`Ichihara_2007_1`) with a one-hot
 Gaussian-process predictor and the official OligoGym `nucleobase` split,
@@ -184,3 +223,10 @@ The five-seed GP development study in active-learning-development.md uses a
 half-uncertainty/half-coverage hybrid and initial-label-only kernel selection.
 It differs from acquisition-comparison.md's uncertainty-prefiltered diversity
 policy and predictor protocol. Their outcomes must not be pooled.
+
+## Sequential research portal handoff
+
+See [the implementation handoff](docs/research-portal-implementation-handoff.md)
+and the user-authorized [3×32 PPO model package](model_checkpoints/experimental-selection-ppo-3x32-v1/README.md).
+This is a retrospective research checkpoint, not an implemented live feedback service
+or a demonstrated improvement over the strongest heuristic.

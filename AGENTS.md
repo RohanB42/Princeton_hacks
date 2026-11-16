@@ -34,3 +34,12 @@ supersedes conflicting v5 claims. Roadmaps alone do not authorize new work.
   metadata may be versioned under `model_checkpoints/`. This does not authorize
   other generated run artifacts, RL policy weights, new training, or redistribution
   of the separately downloaded RNA-FM backbone; its verified source/hash is recorded.
+
+- November 15 explicit model-publication exception: the user requested publishing
+  the selected experimental-selection PPO model after being informed of the RL
+  weight restriction and publication scope. The seed-613 3x32 policy, matching
+  source Ridge parameters and provenance under
+  `model_checkpoints/experimental-selection-ppo-3x32-v1/`, together with supporting
+  inference/training code, pinned dependencies, configs, tests and documentation,
+  may be committed and pushed. This does not authorize other new weights, raw
+  researcher data or generated outcome ledgers.

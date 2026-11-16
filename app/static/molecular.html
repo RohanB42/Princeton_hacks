@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OligoAL · Molecular design</title><link rel="stylesheet" href="/styles.css">
+<style>
+main{max-width:1200px;margin:40px auto;padding:0 24px}h1{font-size:36px;margin-bottom:8px}
+.notice{border-left:4px solid var(--warn);padding:16px;background:var(--raised);margin:24px 0}
+form{display:flex;gap:16px;flex-wrap:wrap;align-items:end}label{display:grid;gap:6px}
+select,input,button{font:inherit;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--raised);color:var(--ink)}
+button{background:var(--accent);color:var(--surface);cursor:pointer}button:disabled{opacity:.5}
+.metrics{display:flex;gap:36px;margin:28px 0}.metrics strong{display:block;font-size:26px}
+.scroll{overflow:auto}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px;border-bottom:1px solid var(--line)}
+td.seq{font:13px var(--mono)}details{margin:20px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere}
+#status{min-height:28px;margin-top:18px}a{margin-right:16px}
+</style>
+<main><p>OLIGOAL / RESEARCH WORKSPACE</p><h1>Molecular design</h1>
+<p>Explore binding sites and chemical designs within a declared profile under a fixed evaluation budget.</p>
+<div class="notice"><strong id="scope">Loading profile…</strong><p id="claim"></p><span id="risk"></span></div>
+<form id="search"><label>Campaign<select id="campaign"></select></label><label>Optimizer<select id="method"></select></label>
+<label>Scoring requests<input id="budget" type="number" min="1" value="12" required></label>
+<label>Search seed<input id="seed" type="number" value="0" required></label>
+<label>Panel size<input id="size" type="number" min="1" max="100" value="10" required></label>
+<label>Panel diversity<select id="diversity"><option value="0">Quality first</option><option value="0.25">Moderate diversity</option><option value="0.5">Higher diversity</option></select></label>
+<button id="run" disabled>Evaluate designs</button></form>
+<p id="status" role="status" aria-live="polite"></p>
+<section id="results" hidden><div class="metrics"><div>Initial quality<strong id="initial"></strong></div><div>Best eligible quality<strong id="quality"></strong></div><div>Requests used<strong id="requests"></strong></div><div>Eligible panel<strong id="count"></strong></div></div>
+<p><a id="csv">Download panel CSV</a><a id="receipt">Download run receipt</a></p>
+<div class="scroll"><table><thead><tr><th>ASO sequence</th><th>Length</th><th>Site</th><th>Pattern</th><th>Endpoint predictions</th></tr></thead><tbody id="rows"></tbody></table></div>
+<h2>Matched runs in this session</h2><p>Same campaign, request cap and search seed. A single run does not establish superiority.</p><table><thead><tr><th>Method</th><th>Initial quality</th><th>Final quality</th><th>Requests used</th></tr></thead><tbody id="comparisons"></tbody></table>
+<details><summary>Query history and evidence</summary><pre id="audit"></pre></details></section>
+<details><summary>Profile coverage</summary><pre id="coverage"></pre></details></main>
+<script>
+const el=id=>document.getElementById(id);let profile;const comparisons=new Map();
+function selectCampaign(){const c=profile.campaigns[Number(el('campaign').value)];el('budget').max=c.max_requests;el('budget').value=c.max_requests;el('scope').textContent=c.purpose==='fixture'?'Synthetic engineering fixture':c.purpose==='multi_endpoint_diagnostic'?'Multi-endpoint development diagnostic · efficacy extrapolation':c.applicability==='extrapolation_stress'?'Extrapolation stress test · efficacy only':c.purpose==='full'?'Multi-endpoint profile · see qualification evidence':'Restricted efficacy diagnostic';el('run').disabled=c.status==='blocked';el('coverage').textContent=JSON.stringify(c,null,2)}
+fetch('/api/profile').then(r=>r.json()).then(p=>{profile=p;p.campaigns.forEach((c,i)=>el('campaign').add(new Option(c.gene+' · '+c.transcript,i)));p.methods.forEach(m=>el('method').add(new Option(m,m)));el('claim').textContent=p.claim;el('risk').textContent='Risk assessment: '+p.risk;selectCampaign()}).catch(e=>el('status').textContent=e.message);
+el('campaign').onchange=selectCampaign;
+el('search').onsubmit=async event=>{event.preventDefault();el('run').disabled=true;el('status').textContent='Evaluating complete molecular proposals…';try{const response=await fetch('/api/search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({campaign:Number(el('campaign').value),method:el('method').value,requests:Number(el('budget').value),seed:Number(el('seed').value),panel_size:Number(el('size').value),diversity:Number(el('diversity').value)})});const result=await response.json();if(!response.ok)throw new Error(result.error);const a=result.artifact;const key=[el('campaign').value,el('budget').value,el('seed').value].join(':');if(!comparisons.has(key))comparisons.set(key,new Map());comparisons.get(key).set(el('method').value,a.run);el('comparisons').replaceChildren();for(const [method,run] of comparisons.get(key)){const tr=document.createElement('tr');for(const v of [method,run.initial_quality.toFixed(3),run.final_quality.toFixed(3),run.requests]){const td=document.createElement('td');td.textContent=v;tr.append(td)}el('comparisons').append(tr)}el('initial').textContent=a.run.initial_quality.toFixed(3);el('quality').textContent=a.run.final_quality.toFixed(3);el('requests').textContent=a.run.requests;el('count').textContent=a.panel.length;el('rows').replaceChildren();for(const row of a.panel){const tr=document.createElement('tr');const d=row.design;const values=[d.sequence,d.sequence.length,`${d.start}–${d.start+d.sequence.length}`,d.pattern,row.predictions.map(p=>`${p.endpoint}: ${p.raw===null?'unknown':p.raw.toFixed(3)} ${p.units} (${p.status})`).join('; ')];values.forEach((v,i)=>{const td=document.createElement('td');td.textContent=v;if(i===0)td.className='seq';tr.append(td)});el('rows').append(tr)}el('csv').href=`/runs/${result.run_id}.csv`;el('receipt').href=`/runs/${result.run_id}.json`;el('audit').textContent=JSON.stringify({evidence:a.evidence,end_reason:a.run.end_reason,query_history:a.run.trace},null,2);el('results').hidden=false;el('status').textContent=a.panel.length<Number(el('size').value)?'Search complete. Fewer eligible distinct molecules were found than the requested panel size.':'Search complete. Predictions remain unvalidated.'}catch(e){el('status').textContent='Search failed: '+e.message}finally{el('run').disabled=false}};
+</script></html>

@@ -1,0 +1,19 @@
+# Frozen before source fitting, policy training or final pool outcome access.
+partition_seed = 20261114
+source_fit_count = 12000
+source_cal_count = 2500
+min_campaign_size = 400
+candidate_pool_size = 600
+initial_assays = 10
+total_assays = 50
+hit_threshold = 80.0
+hidden_layers = [64, 64, 64]
+ppo_steps = 8192
+policy_seeds = [613, 614, 615, 616, 617]
+evaluation_seeds = [71, 72, 73, 74, 75]
+ridge_alpha = 10.0
+posterior_dimensions = 32
+checkpoints = [10, 25, 50]
+methods = ["random", "mean", "source_mean", "ppo"]
+budget_dollars_context = 30000
+dollar_mapping = "unresolved_no_verified_assay_price"

@@ -1,0 +1,89 @@
+{
+  "hidden_layers": [
+    32,
+    32,
+    32
+  ],
+  "policy_parameters": 5642,
+  "selected_steps": 1024,
+  "checkpoint_sha256": "65e1bd78391e19909256c446ebfa1990a9e628b5099486686c9c4debbae3b517",
+  "training_decisions": 8192,
+  "validation_episodes": 48,
+  "history": [
+    {
+      "steps": 1024,
+      "development_mean_hits": 12.666666666666666
+    },
+    {
+      "steps": 2048,
+      "development_mean_hits": 9.833333333333334
+    },
+    {
+      "steps": 3072,
+      "development_mean_hits": 12.5
+    },
+    {
+      "steps": 4096,
+      "development_mean_hits": 12.5
+    },
+    {
+      "steps": 5120,
+      "development_mean_hits": 12.5
+    },
+    {
+      "steps": 6144,
+      "development_mean_hits": 12.5
+    },
+    {
+      "steps": 7168,
+      "development_mean_hits": 9.833333333333334
+    },
+    {
+      "steps": 8192,
+      "development_mean_hits": 9.833333333333334
+    }
+  ],
+  "reload_ledger_equal": true,
+  "training_seed": 613,
+  "wall_seconds": 4.492335874994751,
+  "manifest_identity": "aaf7882fa42472f073a5fbed4e5a5a854c44c54b99a084f0a72d2f2755289146",
+  "source_model_identity": "fb851252e1e1e7c502f48f7ffb1c410b7f3b487c150ee510f9f197679da138b6",
+  "action_schema": [
+    "RANDOM",
+    "MEAN",
+    "SEQ_DIVERSITY",
+    "CHEM_DIVERSITY",
+    "LATENT",
+    "TOTAL",
+    "HYBRID",
+    "SOURCE_MEAN",
+    "STOP"
+  ],
+  "observation_schema": [
+    "assay_fraction",
+    "episodes_remaining_pool_fraction",
+    "observed_best",
+    "confirmed_hit_fraction",
+    "last_outcome",
+    "last_hit",
+    "mean_q10",
+    "mean_q50",
+    "mean_q90",
+    "max_mean",
+    "latent_q50",
+    "latent_q90",
+    "chem_coverage_gap",
+    "updated_label_fraction",
+    "log_dose",
+    "log_treatment_hours"
+  ],
+  "train_campaigns": [
+    "F7",
+    "NLRP3",
+    "STAT3"
+  ],
+  "dev_campaigns": [
+    "DMPK",
+    "PLN"
+  ]
+}

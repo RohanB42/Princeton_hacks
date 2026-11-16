@@ -17,3 +17,15 @@ jobs:
       - run: make lint format-check import-check test
       - run: poetry run pytest -q tests/test_robustness_optional.py
       - run: poetry run python -m oligo_engine.robustness run --output artifacts/robustness-ci
+  molecular-rl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: abatilo/actions-poetry@v3
+        with:
+          poetry-version: '2.1.4'
+      - run: make setup-molecular
+      - run: make molecular-test

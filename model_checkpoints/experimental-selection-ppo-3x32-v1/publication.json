@@ -1,0 +1,26 @@
+{
+  "authorization": "Explicit user instruction \"publish the model\" after the publication scope and prior auto-review rejection were explained, November 15 2026",
+  "selection": "highest recorded development mean hits among seeds 613-617; not selected by final target performance",
+  "selected_policy_seed": 613,
+  "development_mean_hits": 12.666666666666666,
+  "architecture": [
+    32,
+    32,
+    32
+  ],
+  "policy_parameters": 5642,
+  "source_run": "experimental-selection-available/run-v1",
+  "files_sha256": {
+    "partition_manifest.json": "8d547164aa54883a2f3068b14a06669cf123486a38bd4baff45d2f7dc05f042f",
+    "policy_manifest.json": "476adce85cc7d247ca5672805b70c0b16764054e1a64e0b76702a09d3d09c509",
+    "source_prior.json": "168f78013a9aabb1fbfffb3efcc58c0454a43a76da52d1d8ca7ab339aab93a03",
+    "source_parameters.npz": "e8aa5a42e0eb479366c7ea9583d1a65210b2aa946c2e356446f039be0828b3c6",
+    "policy.zip": "65e1bd78391e19909256c446ebfa1990a9e628b5099486686c9c4debbae3b517"
+  },
+  "caveats": [
+    "retrospective development evidence",
+    "not validated for live researchers",
+    "no established advantage over strongest heuristic",
+    "policy and matching source-prior parameters only; no raw data or outcome ledgers published"
+  ]
+}
