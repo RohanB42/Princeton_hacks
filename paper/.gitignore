@@ -1,0 +1,20 @@
+.tex-runtime/
+.render-deps/
+.mplconfig/
+rendered/
+__pycache__/
+AAAI_AI2ASE_Short/*.aux
+AAAI_AI2ASE_Short/*.log
+AAAI_AI2ASE_Short/*.blg
+AAAI_AI2ASE_Short/*.bbl
+AAAI_AI2ASE_Short/build-*.txt
+.source-check/
+
+# Superseded local drafts and editor checkpoints.
+revisions/
+
+# Publish only the requested final manuscript and vector figure PDFs.
+!OLIGARCH-anonymous-review.pdf
+!AAAI_AI2ASE_Short/figures/prediction.pdf
+!AAAI_AI2ASE_Short/figures/molecular.pdf
+!AAAI_AI2ASE_Short/figures/measurement_planning.pdf
