@@ -32,6 +32,23 @@ torch = "2.3.1"
 pandas = "2.2.3"
 pyarrow = "21.0.0"
 
+[tool.poetry.group.molecular-rl]
+optional = true
+
+[tool.poetry.group.molecular-rl.dependencies]
+numpy = "1.26.4"
+gymnasium = "1.1.1"
+stable-baselines3 = "2.6.0"
+sb3-contrib = "2.6.0"
+torch = "2.3.1"
+
+[tool.poetry.group.molecular-data]
+optional = true
+
+[tool.poetry.group.molecular-data.dependencies]
+pandas = "2.2.3"
+pyarrow = "21.0.0"
+
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.12.0"
 pytest = "^8.4.0"
