@@ -1,0 +1,31 @@
+{
+  "pdf_pages": 9,
+  "references_start_page": 9,
+  "main_text_pages": 8,
+  "references_on_separate_page": true,
+  "main_text_within_eight_pages": true,
+  "letter_size": true,
+  "embedded_fonts": 16,
+  "font_types": [
+    "Type0",
+    "Type1"
+  ],
+  "type3_fonts": false,
+  "pdf_author": "",
+  "unresolved_latex_references": false,
+  "overflowing_boxes": false,
+  "related_work_completed": true,
+  "requested_title_exact": true,
+  "internal_version_labels_removed": true,
+  "planning_means_recomputed": {
+    "optimal": 1.2985912832754634,
+    "greedy": 1.2604817708333333,
+    "bayesian_rollout": 1.2964686771797844,
+    "random": 0.6911706349206348
+  },
+  "planning_cells": 162,
+  "fixed_readout_reduction_percent": 63.82575757575758,
+  "pretraining_matches_or_exceeds_targets": 6,
+  "pdf_sha256": "8e470169fad03c25c6c6a97837f9b9c1e83419310a8c89063c1d9b8643e99355",
+  "visual_review": "Rendered pages inspected separately; not inferred from these automated checks."
+}
