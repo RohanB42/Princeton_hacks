@@ -1,0 +1,23 @@
+{
+  "schema": "dgat2-existing-transfer-v1",
+  "purpose": "previously_studied_development_representation_assay_transfer",
+  "atlas_source": "data/aso_atlas_2/cleaned/in_vitro_inhibition.parquet",
+  "source_seeds": [510, 511, 512],
+  "source_budgets": [2869, 4781],
+  "minimum_eligible_rows": 50,
+  "query_seeds": [0, 1, 2, 3, 4],
+  "query_budget": 50,
+  "shortlist_k": 5,
+  "primary_disagreement_threshold": 20,
+  "disagreement_thresholds": [10, 20, 40],
+  "runtime": {
+    "numpy": "1.26.4",
+    "scipy": "1.15.3",
+    "scikit-learn": "1.4.0",
+    "pandas": "2.2.3",
+    "xgboost": "2.1.4",
+    "pyarrow": "21.0.0",
+    "joblib": "1.5.2"
+  },
+  "limits": "Encoded HELM view; metadata methylation conflict remains unresolved. No model selection or tuning on DGAT2 outcomes. Seen target, not target-held-out validation."
+}

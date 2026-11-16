@@ -1056,3 +1056,283 @@ The entries below cover all 64 numbered sources. Long author lists use BibTeX’
   doi = {10.1080/01621459.1958.10501452}
 }
 ```
+
+## Addendum: additional precedent and methodology (November 16, 2026)
+
+This addendum extends the review with papers identified in the OligoAL Bedrock
+note. It is deliberately appended so the original review text and its existing
+claims remain unchanged. The references below sharpen the positioning of OligoAL:
+the benchmark form, retrospective replay, policy-comparison statistics, and
+selective-label limitations already have substantial precedent. The defensible
+OligoAL contribution is therefore narrower: an ASO-specific decision environment
+with linked assay structure, concentration-level choices, explicit eligibility,
+and (if recovered and verified) an exact-planning reference.
+
+### Additional benchmark precedent
+
+**GeneDisco: A Benchmark for Experimental Design in Drug Discovery** (Mehrjou et
+al., ICLR 2022) is the closest missing benchmark citation. GeneDisco evaluates
+batch active-learning policies on real interventional genetic experiments, with
+curated tasks, common metrics, and baseline implementations. OligoAL should not
+claim to be the first benchmark for active experimental design in drug discovery.
+Its narrower distinction is the oligonucleotide modality, linked assay choices,
+dose-level decisions, and assay-eligibility/provenance contract.
+
+**LabBench: Can AI Agents Decide What Experiment to Run Next?** (Reilly, Damon,
+and McKinnon, 2026 preprint) is a relevant retrospective decision benchmark. It
+constructs held-out tasks from real wet-lab records, withholds the historical
+decision, and scores an agent against a rubric tied to the recorded experiment.
+OligoAL differs in its measured-hit and budgeted-acquisition estimands, but should
+not claim that retrospective replay with hidden outcomes is unprecedented. The
+current Qwen comparison is an interface study unless all policies receive the
+same information and legal action set.
+
+**DiscoBAX**, **Neural Design for Genetic Perturbation Experiments**, and later
+work on temporal-difference acquisition for perturbation discovery extend the
+GeneDisco line. They are useful evidence that learned acquisition and intervention
+set discovery are established methodological areas rather than OligoAL's algorithmic
+novelty.
+
+### Active-search and policy-comparison foundations
+
+**Efficient Nonmyopic Active Search** (Jiang et al., ICML 2017, PMLR 70:
+1714--1723) proves a worst-case hardness result for active search and introduces
+a budget-aware nonmyopic policy. The theorem supports describing exact dynamic
+programming as a planning-headroom reference; it does not by itself predict that
+greedy will win on an ASO task. Report modeled headroom as a domain-specific
+measurement, not as a new theorem.
+
+**Bayesian Optimal Active Search and Surveying** (Garnett et al., 2012) provides
+the Bayesian decision-theoretic foundation for rare-hit search under a label
+budget. **Nonmyopic Multifidelity Active Search** (Nguyen, Modiri, and Garnett,
+ICML 2021, PMLR 139:8109--8118) is especially close to OligoAL's source-prior
+plus measured-assay structure: it formalizes cheap noisy surrogates alongside an
+expensive oracle and derives a budget-aware policy. These papers make the
+prediction-versus-assay distinction part of an established lineage.
+
+**Amortized Nonmyopic Active Search via Deep Imitation Learning** and related
+learned-policy work weaken any claim that PPO or a learned acquisition policy is
+itself novel. OligoAL's contribution should be the biological task and audit
+contract, followed by an empirical comparison against strong simple controls.
+
+### Statistical reporting for stochastic policy comparisons
+
+**Deep Reinforcement Learning at the Edge of the Statistical Precipice**
+(Agarwal et al., NeurIPS 2021) and the accompanying `rliable` library show that
+point estimates over a small number of runs can reverse algorithm rankings.
+For OligoAL, add individual-run records, per-target paired effects, an
+interquartile mean as a robustness summary, stratified bootstrap intervals, and
+probability-of-improvement plots. These summaries complement the predeclared
+target-macro mean; they do not create independent targets from repeated seeds.
+
+**Ji et al.** (WACV 2023) document hardware and initialization effects in deep
+active-learning comparisons. **CDALBench** (Werner et al., 2024) uses repeated
+evaluations to examine whether an acquisition method is consistently best. These
+references support freezing hardware, software, policy seeds, replay seeds,
+checkpoint selection, and action spaces before final evaluation.
+
+The OligoAL comparison must separate policies with different observation or
+action menus. A Qwen policy given six choices cannot be placed in the same
+algorithm leaderboard as a policy selecting from the full eligible pool. Keep
+that result as an interface or agent study and report matched-action comparisons
+separately.
+
+### Retrospective replay, support, and selective labels
+
+Offline-policy-evaluation terminology makes the central limitation precise.
+**Doubly Robust Policy Evaluation and Learning** (Dudik, Langford, and Li,
+ICML 2011) combines an outcome model with logged action propensities. It is
+relevant only when logging probabilities and action support are available. Patent
+screening records are often close to deterministic expert logs, so actions never
+performed have no recoverable outcomes. No estimator can repair absent support.
+
+**The Selective Labels Problem** (Lakkaraju et al., 2017/2018) provides the
+broader missing-outcome framing: labels are observed conditional on an earlier
+decision. OligoAL should state that its direct replay estimand is identifiable
+only inside a fully measured recorded candidate pool. Claims about new molecules,
+unperformed assay contexts, or prospective laboratory savings require new evidence.
+
+**Retrospective Bayesian optimization and active-learning replay** in materials,
+drug-discovery, and nucleic-acid settings provide precedent for evaluating a policy
+against a fully labeled held-out pool. The protocol must still preserve the
+behavior-policy support boundary and disclose advancement and patent-selection
+bias.
+
+**Farquhar, Gal, and Rainforth** (ICLR 2021) analyze the distribution shift caused
+by active acquisition and propose PURE/LURE corrections. This is relevant to
+learning-curve interpretation: an actively acquired training set need not estimate
+the population distribution, and correction can help in underparameterized models
+but may not help in overparameterized ones. Treat it as a sensitivity analysis,
+not an automatic correction.
+
+**Lowell, Lipton, and Wallace** (EMNLP-IJCNLP 2019) show that retrospective
+active-learning gains often fail to generalize across models and tasks. This is a
+core limitation for OligoAL: a gain in a historical replay does not establish a
+prospective assay benefit. **Lüth et al.** (NeurIPS 2023) catalogue active-learning
+evaluation pitfalls and emphasize comparisons against simple, cheap alternatives.
+
+### Data and benchmark documentation
+
+**Datasheets for Datasets** (Gebru et al., Communications of the ACM 2021) should
+guide the derived decision-benchmark documentation. The OligoAL datasheet should
+record motivation, source patent selection, assay and chemistry attrition,
+duplicate/near-duplicate handling, missing context, recommended uses, prohibited
+interpretations, and unknown provenance. “Unknown to the authors” is preferable to
+an inferred answer.
+
+**Pre-registration for Predictive Modeling** (Hofman et al., 2023) and
+**Preregistration for Experiments with AI Agents** (Vaccaro, PMLR 306, 2026)
+support freezing target roles, model/policy selection, action menus, thresholds,
+budgets, primary contrasts, secondary-test families, and stopping rules before
+final outcomes. The existing Huesken protocol's separation of exploratory and
+fresh-seed analyses is a useful project precedent.
+
+**Volk and Abolhasani** (Nature Communications 2024) argue that autonomous-lab
+resource claims should report material or measurement use per experiment rather
+than only aggregate savings. For OligoAL, report concentrations per ASO, assay
+panels per campaign, QC failures, and the denominator used for every percentage.
+A retrospective reduction in counted measurements is not a laboratory-cost
+estimate unless the cost mapping is independently specified.
+
+### Oligonucleotide prediction and design precedents
+
+The ASO Atlas/OligoAI record should be represented accurately. Hill et al.'s
+2026 *Molecular Therapy: Nucleic Acids* paper introduced the ASO Atlas used to
+train OligoAI and reported model-guided experimental validation. ASO Atlas 2.0 is
+a separate versioned release and manuscript extension. The two should not be
+presented as unrelated contributions, but the Atlas 2.0 data release can be cited
+separately when its versioned counts are used.
+
+**ASOptimizer** (Hwang et al., *Molecular Therapy: Nucleic Acids*, 2024) and
+**OligoWalk** are important comparison points because OligoAI reports results
+against them. **PFRED** (Sciabola et al., PLOS ONE 2020) explicitly frames
+siRNA/ASO design as enumerate-then-select. These references make clear that
+candidate ranking and candidate-set selection predate OligoAL; the project adds a
+budgeted measured-outcome acquisition formulation.
+
+### Censored potency and dose-response methods to add before E2/E4
+
+The potency sections need a dedicated censored-measurement review before they are
+headline evidence. **COBALT** (Karlova et al., UAI 2026, PMLR 337:2713--2743)
+provides a censored-normal likelihood and acquisition treatment. **C-BALD**
+(Bayesian Active Learning for Censored Regression) is a related censored-regression
+acquisition reference. **Turnbull's nonparametric estimator** (1976) is relevant
+when IC50 values are interval-censored rather than exactly observed. For bounded
+IC50 values, preserve lower/upper bounds and fit-status metadata; do not replace a
+bound with its censoring threshold.
+
+**Optimal serial dilutions designs for drug discovery experiments** (Donev and
+Tobias, 2011) supplies the design-of-concentration precedent. **Inclusion of
+Control Data in Fits to Concentration--Response Curves Improves Estimates of
+Half-Maximal Concentrations** (La et al., 2023) supports retaining control wells
+and reporting curve-fit uncertainty. The four-parameter logistic model, fit
+constraints, minimum dose support, replicate handling, failed-fit rule, and
+classification threshold must all be frozen before comparing stopping policies.
+
+For E4, report measurement count and decision reliability jointly. A result such
+as zero disagreements among resolved historical panels is not an independent
+biological validation. Keep unresolved panels in the denominator and report QC
+failures explicitly. If a future live assay can stop at arbitrary times, use
+time-uniform confidence sequences (Howard et al., 2021) or an explicitly validated
+group-sequential procedure instead of ordinary fixed-sample intervals checked
+repeatedly.
+
+### Revised positioning paragraph
+
+OligoAL should state that OligoGym established standardized oligonucleotide
+prediction benchmarks; Hill et al. established large-scale ASO efficacy prediction
+and model-guided screening; GeneDisco established benchmarked active experimental
+design for drug discovery; and LabBench established retrospective wet-lab decision
+replay for AI agents. OligoAL's narrower contribution is an auditable ASO assay
+decision environment with explicit measured-label access, linked assay and dose
+structure, and a comparison of simple, Bayesian, and learned policies under
+matched budgets. Any stronger claim requires recovered artifacts and independently
+reserved target campaigns.
+
+### Added references
+
+```bibtex
+@inproceedings{mehrjou2022genedisco,
+  author = {Mehrjou, Arash and Soleymani, Mohammad and Jesson, Andrew and Notin, Pascal and Gal, Yarin and Bauer, Stefan and Schwab, Patrick},
+  title = {GeneDisco: A Benchmark for Experimental Design in Drug Discovery},
+  booktitle = {International Conference on Learning Representations},
+  year = {2022},
+  url = {https://arxiv.org/abs/2110.11875}
+}
+
+@inproceedings{jiang2017efficient,
+  author = {Jiang, Shali and Malkomes, Gustavo and Converse, Geoff and Shofner, Alyssa and Moseley, Benjamin and Garnett, Roman},
+  title = {Efficient Nonmyopic Active Search},
+  booktitle = {Proceedings of the 34th International Conference on Machine Learning},
+  series = {Proceedings of Machine Learning Research},
+  volume = {70},
+  pages = {1714--1723},
+  year = {2017},
+  url = {https://proceedings.mlr.press/v70/jiang17d.html}
+}
+
+@inproceedings{agarwal2021precipice,
+  author = {Agarwal, Rishabh and Schwarzer, Max and Castro, Pablo Samuel and Courville, Aaron and Bellemare, Marc},
+  title = {Deep Reinforcement Learning at the Edge of the Statistical Precipice},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume = {34},
+  year = {2021},
+  url = {https://agarwl.github.io/rliable/}
+}
+
+@inproceedings{dudik2011doubly,
+  author = {Dudik, Miroslav and Langford, John and Li, Lihong},
+  title = {Doubly Robust Policy Evaluation and Learning},
+  booktitle = {Proceedings of the 28th International Conference on Machine Learning},
+  year = {2011},
+  url = {https://icml.cc/2011/papers/554_icmlpaper.pdf}
+}
+
+@article{gebru2021datasheets,
+  author = {Gebru, Timnit and Morgenstern, Jamie and Vecchione, Briana and Vaughan, Jennifer Wortman and Wallach, Hanna and Daume III, Hal and Crawford, Kate},
+  title = {Datasheets for Datasets},
+  journal = {Communications of the ACM},
+  volume = {64},
+  number = {12},
+  pages = {86--92},
+  year = {2021},
+  doi = {10.1145/3458723}
+}
+
+@article{lowell2019active,
+  author = {Lowell, David and Lipton, Zachary C. and Wallace, Byron C.},
+  title = {Practical Obstacles to Deploying Active Learning},
+  journal = {Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing},
+  year = {2019},
+  url = {https://aclanthology.org/D19-1223/}
+}
+
+@article{farquhar2021active,
+  author = {Farquhar, Sebastian and Gal, Yarin and Rainforth, Tom},
+  title = {On Statistical Bias in Active Learning},
+  journal = {International Conference on Learning Representations},
+  year = {2021},
+  url = {https://openreview.net/forum?id=6H2DMPW2f0}
+}
+
+@article{la2023control,
+  author = {La, Van Ngoc Thuy and Nicholson, Stanley and Haneef, Amna and Kang, Lulu and Minh, David D. L.},
+  title = {Inclusion of Control Data in Fits to Concentration--Response Curves Improves Estimates of Half-Maximal Concentrations},
+  journal = {Journal of Medicinal Chemistry},
+  volume = {66},
+  pages = {12751--12761},
+  year = {2023},
+  doi = {10.1021/acs.jmedchem.3c00107}
+}
+
+@article{howard2021confidence,
+  author = {Howard, Steven R. and Ramdas, Aaditya and McAuliffe, Jon D. and Sekhon, Jasjeet S.},
+  title = {Time-Uniform, Nonparametric, Nonasymptotic Confidence Sequences},
+  journal = {The Annals of Statistics},
+  volume = {49},
+  number = {2},
+  pages = {1055--1080},
+  year = {2021},
+  doi = {10.1214/20-AOS1991}
+}
+```
