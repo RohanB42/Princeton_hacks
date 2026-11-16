@@ -1,0 +1,97 @@
+{
+  "repository_revision": "0fc68c6669c7fb6f31b1a59b7f2a71346ad59fcb",
+  "recovered_report_refs": {
+    "codex/atlas-lora-scaling": "f197d797121db3b08428dbbca9b479fbc4926328",
+    "origin/codex/experimental-selection-rl": "1b92731f8b401ff112e4c8628eb0bf2504142f31"
+  },
+  "files": [
+    {
+      "path": "docs/acquisition-comparison.md",
+      "sha256": "b1bc658f45f59a58531c9aa469c450ce81f4d1f6e1396ea3e3fa5bf532c88fd7"
+    },
+    {
+      "path": "docs/updates/2026-11-14-1150-est.md",
+      "sha256": "0322145e37e6179cc2e5436e94b36339b2e021bb53b0e20c1e724912dc9e085f"
+    },
+    {
+      "path": "docs/gate1-efficacy-reproduction.md",
+      "sha256": "bb8ea2aa859ab9ba18229c03c6b8666ac4f408f229538bd0d8eae6c626a226c4"
+    },
+    {
+      "path": "docs/rnafm-lora-comparison.md",
+      "sha256": "5bd1611a487c1efdba4634d4a729f7c556da9db36db393c9d9b30a6cfe02e5b1"
+    },
+    {
+      "path": "docs/experimental-selection-600-results.md",
+      "sha256": "002c12ad60b9fb033a83f266db4b12a18c2e25e604872cff14ce0449b4750af6"
+    },
+    {
+      "path": "docs/experimental-selection-600-protocol.md",
+      "sha256": "95811c74636fc36c24e06e7bd049ca7c75623e950b6e6a098ebedcd03734b896"
+    },
+    {
+      "path": "docs/experimental-selection-handoff-assessment.md",
+      "sha256": "d3f8c9065585ed2a7792db9a3fbc9e96fad862d355aa9347bba0891f3677bcae"
+    },
+    {
+      "path": "docs/ic50-qwen-from-scratch.md",
+      "sha256": "122cdd81ed000deabfec2e22767ab5a5c345f087a82aba087c80599a18fc8362"
+    },
+    {
+      "path": "docs/adaptive-dose-response-experiment.md",
+      "sha256": "452c6f96320df1d91390bbd4333150411542b4cf5a024e2012bee7a9b807c242"
+    },
+    {
+      "path": "docs/value-of-planning-experiment.md",
+      "sha256": "3af8204dcc9f80fcad266216552b68dfc8cab2087ea6d5bfb01e9de4f7600e50"
+    },
+    {
+      "path": "docs/molecular-scientific-experiments.md",
+      "sha256": "47241efd55dd1a8a1e04798b7e6202abadef978813428f3255cee43ff3b6bf46"
+    },
+    {
+      "path": "docs/molecular-ppo-attribution-experiment.md",
+      "sha256": "0771b4786e1d109baef56f7ea2e7c61bbea2aa1d3bdc3e6ead653afdaa10d146"
+    },
+    {
+      "path": "docs/molecular-policy-repair.md",
+      "sha256": "4b2968632fb08d5d22ff025386f328967e7c5c1d71ca841b0491532d15a52936"
+    },
+    {
+      "path": "docs/molecular-validity-experiment.md",
+      "sha256": "af8240170fa4a6d212b3fbc2fb2311ed5b210c85c87bb345b98aba1f16692e49"
+    },
+    {
+      "path": "docs/molecular-generalization-experiment.md",
+      "sha256": "ba709de2617d48c04d5937356ffa5e5c64d112aedc17c58e6c8fe31c8894ebb1"
+    },
+    {
+      "path": "data/aso_atlas_2/release/upstream_manifest.json",
+      "sha256": "1cde1282c404e5326b10403623999c16093e65cd093726d9ff5ce3eaaa764e66"
+    },
+    {
+      "path": "paper/evidence/atlas-scaling-original.md",
+      "sha256": "45af627972f016e1b4af81554932ff9201aaf94c7c5fd4bbacd30bd2acac94ec"
+    },
+    {
+      "path": "paper/evidence/experimental-selection-v1-v2-original.md",
+      "sha256": "bc51928df62c09d192fbe6d963c472a8f178f166ee0b03dcf2bb802b730d0b18"
+    }
+  ],
+  "template_files": {
+    "aaai2027.sty": "01990f8d3716f8e39c5b28a7478f3ac6e28630d1161de6105a7217f5e7f60e43",
+    "aaai2027.bst": "5db7765ba99de5c1e4686f9b3940a0add9c5e702f2164514462bec130ccb6e3c",
+    "AnonymousSubmission2027.tex": "95a9e0ee566c6f76276c9dcad09a83637542dac168383213252671daec3408ab"
+  },
+  "manuscript_revision": {
+    "name": "OLIGARCH",
+    "tex_sha256": "2c1eadf17f85f626bd5ca91212693dd477fab9e794ad2fedf6032855bba167ce",
+    "bib_sha256": "c1b856ad73d3b3dd786773f6815b0c4c0416a2eb1eed3f3ccce0b929f204152c",
+    "template_unchanged": true,
+    "readability_revision": true,
+    "related_work_completed": true,
+    "architecture_figure_removed": true,
+    "reference_count": 20,
+    "narrative_validity_revision": true
+  }
+}

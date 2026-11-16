@@ -1,0 +1,22 @@
+[
+  {
+    "path": "artifacts/adaptive-dose-response-v1/report.json",
+    "sha256": "49bfbec02d4f43bb78d9cd4f14ea69e2bbdbc04d238e5d9ac16ce2d70c456ae2"
+  },
+  {
+    "path": "artifacts/molecular-ppo-attribution-v1/analysis.json",
+    "sha256": "1f31641c9312678a365875214428ccb1c4c8b5f8393c16bf77b33c8dd63ef6c8"
+  },
+  {
+    "path": "artifacts/value-of-planning-v1/grid.csv",
+    "sha256": "54741301fc16d3c3cb66222efb85899a880cc43a2767ce972270b02e7ff3325a"
+  },
+  {
+    "path": "docs/acquisition-comparison.md",
+    "sha256": "b1bc658f45f59a58531c9aa469c450ce81f4d1f6e1396ea3e3fa5bf532c88fd7"
+  },
+  {
+    "path": "docs/updates/2026-11-14-1150-est.md",
+    "sha256": "0322145e37e6179cc2e5436e94b36339b2e021bb53b0e20c1e724912dc9e085f"
+  }
+]
