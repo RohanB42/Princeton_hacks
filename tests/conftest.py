@@ -17,6 +17,8 @@ def pytest_configure(config):
 
 def pytest_ignore_collect(collection_path, config):
     selected = " ".join(str(arg) for arg in config.invocation_params.args)
+    if collection_path.name == "test_molecular_rl_optional.py":
+        return "molecular_rl_optional" not in selected
     if collection_path.name == "test_robustness_optional.py":
         return "robustness_optional" not in selected and "-m robustness" not in selected
     if collection_path.name.startswith("test_rnafm"):

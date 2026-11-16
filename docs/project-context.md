@@ -1,5 +1,106 @@
 # Project context
 
+November 15 final adaptive-dose extension: the user-authorized
+[per-concentration experiment](adaptive-dose-response-experiment.md) ran on 93
+development and 240 experiment-held-out assessment panels, with settings sealed
+before assessment access. At apparent absolute IC50 <=500 nM, fixed early stopping
+used 1.592 measurements/ASO, decision-aware Bayesian selection 1.683 and
+information gain 2.817, versus 4.400 for the full grid. Decision-aware selection
+made one false positive and two false negatives; fixed and information gain made
+none against resolved references. All early-stop methods classified the sole
+reference-unresolved panel, failing the prespecified unresolved-assertion check.
+TMPRSS6 showed a descriptive target-specific reduction, not a general advantage.
+No PPO or further tuning ran. The integrated suite passed 330 tests. See Section 9
+of the [consolidated results](ASO_EXPERIMENTS_CONSOLIDATED_RESULTS.md).
+
+November 15 completed follow-ups and later handoff: the
+[new recorded-panel IC50 pilot](ic50-qwen-from-scratch.md) executed 72 arms and
+108 actual local Qwen2.5-3B choices. At its frozen 100 nM threshold, bound credit
+raised F7 new-hit means from 1.667 to 2.000 for Qwen, random and GC-bin greedy;
+Qwen's acquisition gain under a common evaluator was zero. STAT3/NLRP3 had no
+qualifying panels at that cutoff. A separate
+[planning study](value-of-planning-experiment.md) solved 162 four-candidate model
+settings exactly: greedy was optimal in 108, one-step rollout in 150. Three PPO
+training seeds did not beat greedy. These are model-based diagnostic results.
+The [evaluation-data audit](molecular-evaluation-data-expansion.md) preserves all
+304 reserved risk records, with 226 surviving a stricter full-release linkage
+sensitivity; it also identifies 1,008 KCNQ2 and 463 PTBP1 records for retrospective
+transfer evaluation, plus eight external records with incomplete assay metadata.
+Those leads are not newly certified independent validation cohorts.
+
+The subsequently supplied [Harrison handoff](experimental-selection-handoff-assessment.md)
+explains that original experimental-selection V3/Qwen3 runs exist in an unpushed
+local checkout unavailable here. Its 500 nM endpoint, mandatory screen gate,
+costs and source Ridge priors differ from the new pilot and planning model.
+Its NLRP3 split and KCNQ2 training exposure also limit independent-cohort claims;
+exact historical membership remains unavailable. Preserve earlier results and
+the new pilot's frozen protocol. Integrated lint, format, import and 318 core
+tests passed; generated data, model weights and run artifacts remain ignored.
+Earlier follow-up entries below describe the evidence available at their time.
+
+November 15 compatible-data and IC50 follow-ups: two user-requested agents checked
+additional compatible measured data and prepared a censored-potency comparison.
+The [corrected compatible-data audit](molecular-compatible-data-experiment.md)
+recovers 427 additional protected IDs from 244 provenance receipts and the newly
+published experimental-selection manifest. Near-sequence/patent links plus a
+conservative cross-source quarantine leave 298 rows for one active pattern at
+HepG2/4,000 nM/24 h, all in one MECP2 component; no independent fitting/assessment
+cohort is certified and no new fit ran. The current 4,500 nM context still has no
+verified exact pattern matches. The [IC50 work](censored-ic50-policy-experiment.md)
+implements and tests point/bound/unknown adjudication, but runs only synthetic
+checks: the accessible experimental-selection branches use single-dose inhibition
+and do not contain the claimed completed potency V3/Qwen runs. The user does not
+know their location and authorized another remote check; fetching all remote
+branches found no newer implementation. Origin/main is 046ef5f; no merge
+or active-model/profile change occurred. Earlier Atlas reserved targets have
+documented later experimental-selection exposure; preserve their existing roles
+without describing them as globally untouched.
+Integrated follow-up checks passed lint, formatting, imports and all 282 core tests.
+
+November 15 scientific experiments: the requested eight-target table now includes
+new APOC3/ANGPTL3 evaluations under frozen v3 policies (60 runs, 480 requests,
+960 endpoint-head calls; all budgets filled without duplicate queries). Three
+agents executed full-release metadata applicability, original-360-run attribution
+and exposure/generalization audits. See the [integrated results and experiment
+sequence](molecular-scientific-experiments.md). Other assay contexts contain exact
+chemistry support, but preserved data roles prevent pooling it into a qualified
+full-profile cohort. PPO's incremental benefit remains mixed and no independent
+final groups are certified. No new fitting or measured-outcome access occurred;
+new targets are explicitly development-exposed, not final confirmation.
+
+November 15 data-scaling investigation: two user-requested agents audited measured
+predictor data and policy pretraining/PPO experience. The [integrated plan](molecular-data-scaling-plan.md)
+records that policy pretraining already covers 36% of its small training catalog,
+while the active efficacy development cohort uses about 2% of broadly eligible
+Atlas rows. A metadata-only full-release check found no verified exact matches to
+the current efficacy chemistry/context among parsable rows. Existing larger
+classical checkpoints and a completed prior negative neural scaling study were
+located; historical split overlap prevents a clean size-curve interpretation.
+No new fitting or outcome reads occurred. The requested Git fetch and pull of
+origin/main found HEAD already current at 62f68d9; local changes were preserved.
+
+November 15 policy revision: the user authorized addressing the corrected PPO's
+weak optimizer performance. The optional `candidate-v3` policy shares sequence/
+chemistry scoring across absolute sites, supports return-preserving forced-step
+collapse and costed training-only surrogate pretraining. The broader fixed study
+uses six training genes, two validation genes and four development evaluation
+genes. See [implementation and protocol](molecular-policy-repair.md). These changes
+do not qualify the scientific predictors or establish optimizer superiority.
+The completed 360-run diagnostic has higher full-pipeline means than random and
+greedy on DGAT2, CFB, FGFR4 and TTR; F9 slightly favors greedy, and every legal F12
+candidate fails the unchanged diagnostic risk screen. Pretrained no-PPO controls
+show that PPO's incremental benefit is not established. Tests pass 230 core and
+ten optional RL checks. See the same report for costs, roles and paired results.
+
+Latest correction: the user requested diagnosis and repair of PPO's no-COMMIT
+failure. The default complete-proposal decoder now prevents editor cycles and
+cached-parent recommits, and requires one new proposal before campaign STOP.
+The three-seed matched rerun completes seven new designs per eight-request
+evaluation; the molecular reward and screening bounds are unchanged. See
+[molecular-construction-fix.md](molecular-construction-fix.md). Legacy artifacts
+remain replayable explicitly. Full scientific applicability/independent evaluation
+remain unqualified; historical entries below retain their original scope.
+
 November 14, 21:00 EST: the consolidated replacement design is
 [FINAL_MOLECULAR_DESIGN_RL_SPEC.md](FINAL_MOLECULAR_DESIGN_RL_SPEC.md). It defines
 chemistry-aware construction, real checkpoint integration, context/history-aware
@@ -115,3 +216,14 @@ Atlas artifact parity, assay/transcript profiles, screening validation and the
 locked real benchmark remain pending; expanded Gate 1 and endpoint separation are
 unchanged. No source datasets, model weights or generated artifacts were modified
 or published by this implementation.
+
+Latest user-authorized replacement: the retired RL scaffold is replaced by the
+molecular construction package documented in
+[molecular-design-implementation.md](molecular-design-implementation.md), following
+FINAL_MOLECULAR_DESIGN_RL_SPEC.md. Grammar, frozen scoring, PPO and controls,
+resume, panels and local UI run end to end. A separate development mouse-risk head
+is available; expanded efficacy support and independent final evidence remain
+blocked. Earlier statements that no app/design agent exists are historical.
+Synthetic and bounded real diagnostics are unfavorable to PPO; the full scientific
+system remains unqualified. Gate 1 is unchanged. No new data, weights or run
+artifacts were published.

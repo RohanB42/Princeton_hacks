@@ -609,3 +609,8 @@ risk weights or automatic novelty/uncertainty guarantees, this specification win
 Historical numbers above retain their original qualifications. The new environment,
 expanded chemistry grammar, integrated applicable safety heads and independent
 design-value result remain work to be implemented and demonstrated.
+
+Implementation status after explicit user authorization is recorded separately in
+[molecular-design-implementation.md](molecular-design-implementation.md). This
+specification remains the acceptance contract; the implementation report does not
+waive the scientific gates above.

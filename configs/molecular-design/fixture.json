@@ -1,0 +1,2244 @@
+{
+  "bundle": {
+    "kind": "fixture"
+  },
+  "campaigns": [
+    {
+      "name": "fixture-1000",
+      "partition": "training",
+      "profile": {
+        "applicability": "supported_context",
+        "hypervolume_reference": [],
+        "name": "synthetic-molecular-v1",
+        "objective": "constrained_efficacy",
+        "patterns": [
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          }
+        ],
+        "purpose": "fixture"
+      },
+      "requests": 12,
+      "starts": [
+        [
+          0,
+          "fixture-8-MOE",
+          "none"
+        ]
+      ],
+      "target": {
+        "coordinates": "zero_based_half_open",
+        "gene": "synthetic-1000",
+        "intervals": [
+          [
+            0,
+            32
+          ]
+        ],
+        "sequence": "TATGATCTCCCGTCGCTCATCTTCATCCAGCG",
+        "source": "generated fixture",
+        "species": "synthetic",
+        "transcript": "synthetic-1000.1",
+        "transcript_type": "cdna"
+      },
+      "tokens": 240
+    },
+    {
+      "name": "fixture-1001",
+      "partition": "training",
+      "profile": {
+        "applicability": "supported_context",
+        "hypervolume_reference": [],
+        "name": "synthetic-molecular-v1",
+        "objective": "constrained_efficacy",
+        "patterns": [
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          }
+        ],
+        "purpose": "fixture"
+      },
+      "requests": 12,
+      "starts": [
+        [
+          0,
+          "fixture-8-MOE",
+          "none"
+        ]
+      ],
+      "target": {
+        "coordinates": "zero_based_half_open",
+        "gene": "synthetic-1001",
+        "intervals": [
+          [
+            0,
+            32
+          ]
+        ],
+        "sequence": "ACATCTGTCAATCCAATCAGTATAGGCTACAC",
+        "source": "generated fixture",
+        "species": "synthetic",
+        "transcript": "synthetic-1001.1",
+        "transcript_type": "cdna"
+      },
+      "tokens": 240
+    },
+    {
+      "name": "fixture-1002",
+      "partition": "training",
+      "profile": {
+        "applicability": "supported_context",
+        "hypervolume_reference": [],
+        "name": "synthetic-molecular-v1",
+        "objective": "constrained_efficacy",
+        "patterns": [
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          }
+        ],
+        "purpose": "fixture"
+      },
+      "requests": 12,
+      "starts": [
+        [
+          0,
+          "fixture-8-MOE",
+          "none"
+        ]
+      ],
+      "target": {
+        "coordinates": "zero_based_half_open",
+        "gene": "synthetic-1002",
+        "intervals": [
+          [
+            0,
+            32
+          ]
+        ],
+        "sequence": "TCCCGTCATACCATACCGTGATGAATAATGCT",
+        "source": "generated fixture",
+        "species": "synthetic",
+        "transcript": "synthetic-1002.1",
+        "transcript_type": "cdna"
+      },
+      "tokens": 240
+    },
+    {
+      "name": "fixture-1003",
+      "partition": "training",
+      "profile": {
+        "applicability": "supported_context",
+        "hypervolume_reference": [],
+        "name": "synthetic-molecular-v1",
+        "objective": "constrained_efficacy",
+        "patterns": [
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          }
+        ],
+        "purpose": "fixture"
+      },
+      "requests": 12,
+      "starts": [
+        [
+          0,
+          "fixture-8-MOE",
+          "none"
+        ]
+      ],
+      "target": {
+        "coordinates": "zero_based_half_open",
+        "gene": "synthetic-1003",
+        "intervals": [
+          [
+            0,
+            32
+          ]
+        ],
+        "sequence": "TGCTTTTAGATTAGGACAGCACTGACTAGTCG",
+        "source": "generated fixture",
+        "species": "synthetic",
+        "transcript": "synthetic-1003.1",
+        "transcript_type": "cdna"
+      },
+      "tokens": 240
+    },
+    {
+      "name": "fixture-1004",
+      "partition": "validation",
+      "profile": {
+        "applicability": "supported_context",
+        "hypervolume_reference": [],
+        "name": "synthetic-molecular-v1",
+        "objective": "constrained_efficacy",
+        "patterns": [
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          }
+        ],
+        "purpose": "fixture"
+      },
+      "requests": 12,
+      "starts": [
+        [
+          0,
+          "fixture-8-MOE",
+          "none"
+        ]
+      ],
+      "target": {
+        "coordinates": "zero_based_half_open",
+        "gene": "synthetic-1004",
+        "intervals": [
+          [
+            0,
+            32
+          ]
+        ],
+        "sequence": "TACCGACGACACACCAGTGAATATAGACATGT",
+        "source": "generated fixture",
+        "species": "synthetic",
+        "transcript": "synthetic-1004.1",
+        "transcript_type": "cdna"
+      },
+      "tokens": 240
+    },
+    {
+      "name": "fixture-1005",
+      "partition": "validation",
+      "profile": {
+        "applicability": "supported_context",
+        "hypervolume_reference": [],
+        "name": "synthetic-molecular-v1",
+        "objective": "constrained_efficacy",
+        "patterns": [
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          }
+        ],
+        "purpose": "fixture"
+      },
+      "requests": 12,
+      "starts": [
+        [
+          0,
+          "fixture-8-MOE",
+          "none"
+        ]
+      ],
+      "target": {
+        "coordinates": "zero_based_half_open",
+        "gene": "synthetic-1005",
+        "intervals": [
+          [
+            0,
+            32
+          ]
+        ],
+        "sequence": "TTTGGCTAGGCAAGAGTAGCAGATCTGAGGGT",
+        "source": "generated fixture",
+        "species": "synthetic",
+        "transcript": "synthetic-1005.1",
+        "transcript_type": "cdna"
+      },
+      "tokens": 240
+    },
+    {
+      "name": "fixture-1006",
+      "partition": "final",
+      "profile": {
+        "applicability": "supported_context",
+        "hypervolume_reference": [],
+        "name": "synthetic-molecular-v1",
+        "objective": "constrained_efficacy",
+        "patterns": [
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          }
+        ],
+        "purpose": "fixture"
+      },
+      "requests": 12,
+      "starts": [
+        [
+          0,
+          "fixture-8-MOE",
+          "none"
+        ]
+      ],
+      "target": {
+        "coordinates": "zero_based_half_open",
+        "gene": "synthetic-1006",
+        "intervals": [
+          [
+            0,
+            32
+          ]
+        ],
+        "sequence": "GACTACGACGCATAGAGAGAAGGAATATTTGG",
+        "source": "generated fixture",
+        "species": "synthetic",
+        "transcript": "synthetic-1006.1",
+        "transcript_type": "cdna"
+      },
+      "tokens": 240
+    },
+    {
+      "name": "fixture-1007",
+      "partition": "final",
+      "profile": {
+        "applicability": "supported_context",
+        "hypervolume_reference": [],
+        "name": "synthetic-molecular-v1",
+        "objective": "constrained_efficacy",
+        "patterns": [
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          }
+        ],
+        "purpose": "fixture"
+      },
+      "requests": 12,
+      "starts": [
+        [
+          0,
+          "fixture-8-MOE",
+          "none"
+        ]
+      ],
+      "target": {
+        "coordinates": "zero_based_half_open",
+        "gene": "synthetic-1007",
+        "intervals": [
+          [
+            0,
+            32
+          ]
+        ],
+        "sequence": "ACGCCACATGAATCCAAAGTGGCAGGACAATA",
+        "source": "generated fixture",
+        "species": "synthetic",
+        "transcript": "synthetic-1007.1",
+        "transcript_type": "cdna"
+      },
+      "tokens": 240
+    },
+    {
+      "name": "fixture-1008",
+      "partition": "final",
+      "profile": {
+        "applicability": "supported_context",
+        "hypervolume_reference": [],
+        "name": "synthetic-molecular-v1",
+        "objective": "constrained_efficacy",
+        "patterns": [
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          }
+        ],
+        "purpose": "fixture"
+      },
+      "requests": 12,
+      "starts": [
+        [
+          0,
+          "fixture-8-MOE",
+          "none"
+        ]
+      ],
+      "target": {
+        "coordinates": "zero_based_half_open",
+        "gene": "synthetic-1008",
+        "intervals": [
+          [
+            0,
+            32
+          ]
+        ],
+        "sequence": "TGAAACAGAGGCTCACCACTGAACCGCCATTG",
+        "source": "generated fixture",
+        "species": "synthetic",
+        "transcript": "synthetic-1008.1",
+        "transcript_type": "cdna"
+      },
+      "tokens": 240
+    },
+    {
+      "name": "fixture-1009",
+      "partition": "final",
+      "profile": {
+        "applicability": "supported_context",
+        "hypervolume_reference": [],
+        "name": "synthetic-molecular-v1",
+        "objective": "constrained_efficacy",
+        "patterns": [
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          }
+        ],
+        "purpose": "fixture"
+      },
+      "requests": 12,
+      "starts": [
+        [
+          0,
+          "fixture-8-MOE",
+          "none"
+        ]
+      ],
+      "target": {
+        "coordinates": "zero_based_half_open",
+        "gene": "synthetic-1009",
+        "intervals": [
+          [
+            0,
+            32
+          ]
+        ],
+        "sequence": "CATATCCCGAACCATCAGTACGCCTCTACTTG",
+        "source": "generated fixture",
+        "species": "synthetic",
+        "transcript": "synthetic-1009.1",
+        "transcript_type": "cdna"
+      },
+      "tokens": 240
+    },
+    {
+      "name": "fixture-1010",
+      "partition": "final",
+      "profile": {
+        "applicability": "supported_context",
+        "hypervolume_reference": [],
+        "name": "synthetic-molecular-v1",
+        "objective": "constrained_efficacy",
+        "patterns": [
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-8-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-MOE",
+            "sugars": [
+              "MOE",
+              "MOE",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "MOE",
+              "MOE"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          },
+          {
+            "evidence": "synthetic construction fixture, not measured support",
+            "links": [
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS",
+              "PS"
+            ],
+            "methyl_c": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "name": "fixture-10-cEt",
+            "sugars": [
+              "cEt",
+              "cEt",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "DNA",
+              "cEt",
+              "cEt"
+            ],
+            "terminals": [
+              "none"
+            ],
+            "wing3": 2,
+            "wing5": 2
+          }
+        ],
+        "purpose": "fixture"
+      },
+      "requests": 12,
+      "starts": [
+        [
+          0,
+          "fixture-8-MOE",
+          "none"
+        ]
+      ],
+      "target": {
+        "coordinates": "zero_based_half_open",
+        "gene": "synthetic-1010",
+        "intervals": [
+          [
+            0,
+            32
+          ]
+        ],
+        "sequence": "CATTTCCTCAGGCTTGAAGCCCACTAAAAAAG",
+        "source": "generated fixture",
+        "species": "synthetic",
+        "transcript": "synthetic-1010.1",
+        "transcript_type": "cdna"
+      },
+      "tokens": 240
+    }
+  ],
+  "methods": [
+    "initial",
+    "random",
+    "greedy",
+    "genetic",
+    "sweep"
+  ],
+  "panel_size": 10,
+  "qualification": "Synthetic engineering",
+  "schema": "molecular-study-v1",
+  "seeds": [
+    700,
+    701,
+    702,
+    703,
+    704
+  ],
+  "training": {
+    "batch_size": 64,
+    "decoder": "transactional-v2",
+    "epochs": 4,
+    "rollout_tokens": 256,
+    "seed": 700,
+    "total_tokens": 2048,
+    "validation_interval": 1024
+  }
+}
