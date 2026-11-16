@@ -51,3 +51,10 @@ claimed before the paired five-seed runs and reporting finish.
 
 Cut lines: debug Gate 1 before novel modeling; cut generation/RL before acquisition;
 cut UI to static figures if it threatens evaluation; freeze before submission.
+
+Latest assignment: the user's explicit full molecular-design implementation request
+supersedes the earlier unassigned RL roadmap. The integrator owns the new
+`molecular_design/` package, scripts, tests, local app, optional dependencies,
+profiles and documentation on `feature/molecular-design-v1`. No subagents were
+used. See molecular-design-implementation.md for executed checks, negative PPO
+results and open scientific gates; engineering completion does not close A/E/F.
